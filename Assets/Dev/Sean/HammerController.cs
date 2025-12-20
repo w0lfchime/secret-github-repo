@@ -43,6 +43,9 @@ public class HammerController : MonoBehaviour
 
             transform.position = movement;
 
+            // Debug.Log(transform.position);
+            // Debug.Log(previousDirection);
+
             speed = Vector3.Distance(transform.position, previousDirection) / Time.deltaTime;
             previousDirection = transform.position;
         }
@@ -50,28 +53,25 @@ public class HammerController : MonoBehaviour
 
     public void OnCollisionEnter(Collision col) {
         Debug.Log("Collision entered");
+        Debug.Log(speed);
 
         if(col.gameObject.tag == "Enemy")
         {
-            if(speed > 1)
+            Debug.Log("Hit an enemy with velovity: " + speed);
+            Hittable hit = col.gameObject.GetComponent<Hittable>();
+
+            hit.health -= damage;
+
+            if(hit.health <= 0)
             {
-                Debug.Log("Hit an enemy with velovity: " + speed);
-                Hittable hit = col.gameObject.GetComponent<Hittable>();
+                pc.exp += hit.expAmount;
+                Destroy(col.gameObject);
 
-                hit.health -= damage;
-
-                if(hit.health <= 0)
+                if(pc.exp >= pc.expToNextLevelUp)
                 {
-                    pc.exp += hit.expAmount;
-                    Destroy(col.gameObject);
-
-                    if(pc.exp >= pc.expToNextLevelUp)
-                    {
-                        pc.levelUp();
-                    }
+                    pc.levelUp();
                 }
             }
-            
         }
     }
 }
