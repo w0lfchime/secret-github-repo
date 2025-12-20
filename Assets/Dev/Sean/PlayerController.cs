@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public float health = 10f;
     public bool canMove = true;
     public int exp = 0;
+    public int expToNextLevelUp = 10;
     public Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,8 +23,12 @@ public class PlayerController : MonoBehaviour
 
             rb.linearVelocity = (new Vector3(horizontalInput, 0f, verticalInput)) * speed;
         }
-        
+    }
 
-
+    public void levelUp()
+    {
+        // do something to get a new item!
+        expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
+        Debug.Log("Leveled up");
     }
 }

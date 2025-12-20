@@ -6,6 +6,7 @@ public class HammerController : MonoBehaviour
     public float speed = 0f;
     public Camera mainCam;
     public GameObject player;
+    public PlayerController pc;
     public Rigidbody rb;
     private Vector3 mousePosition;
     private Vector3 previousDirection;
@@ -16,6 +17,7 @@ public class HammerController : MonoBehaviour
         Vector3 initialDirection = transform.position - player.transform.position;
         transform.position = player.transform.position + initialDirection.normalized * 5;
         previousDirection = transform.position;
+        pc = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -51,12 +53,23 @@ public class HammerController : MonoBehaviour
 
         if(col.gameObject.tag == "Enemy")
         {
-            if(speed > 5)
+            if(speed > 1)
             {
                 Debug.Log("Hit an enemy with velovity: " + speed);
                 Hittable hit = col.gameObject.GetComponent<Hittable>();
 
                 hit.health -= damage;
+
+                if(hit.health <= 0)
+                {
+                    pc.exp += hit.expAmount;
+                    Destroy(col.gameObject);
+
+                    if(pc.exp >= pc.expToNextLevelUp)
+                    {
+                        pc.levelUp();
+                    }
+                }
             }
             
         }

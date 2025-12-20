@@ -171,6 +171,7 @@ MonoBehaviour:
   speed: 5
   mainCam: {fileID: 1643466784}
   player: {fileID: 975818816}
+  pc: {fileID: 0}
   rb: {fileID: 640392148}
   groundLayer:
     serializedVersion: 2
@@ -313,6 +314,7 @@ MonoBehaviour:
   health: 10
   canMove: 1
   exp: 0
+  expToNextLevelUp: 10
   rb: {fileID: 975818822}
 --- !u!136 &975818818
 CapsuleCollider:
@@ -920,6 +922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  expAmount: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
