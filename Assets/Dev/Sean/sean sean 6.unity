@@ -2353,6 +2353,9 @@ MonoBehaviour:
   prefabList:
   - {fileID: 8042472986232136279, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
   - {fileID: 4685341880029374423, guid: e11733477a05c014990a72be0eb4eab9, type: 3}
+  spawnParticleEffect: {fileID: 241680018325970102, guid: 3fe397105f93aac4a9675fe7a83f212a, type: 3}
+  pickupScale: 1.5
+  particleHeightOffset: 0.5
 --- !u!4 &997858264
 Transform:
   m_ObjectHideFlags: 0
@@ -4714,6 +4717,18 @@ PrefabInstance:
     - target: {fileID: 8042472986232136279, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
       propertyPath: m_Name
       value: HealthPIckup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767768727128691294, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 13.021
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767768727128691294, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 13.021
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767768727128691294, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 13.021
       objectReference: {fileID: 0}
     - target: {fileID: 8767768727128691294, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
       propertyPath: m_LocalPosition.x

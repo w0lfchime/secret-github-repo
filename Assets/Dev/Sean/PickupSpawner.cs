@@ -6,6 +6,10 @@ using UnityEngine;
 public class PickupSpawner : MonoBehaviour
 {
     public List<GameObject> prefabList;
+    public GameObject spawnParticleEffect;
+    public float pickupScale = 1.5f;
+    public float particleHeightOffset = 0.5f;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,6 +30,14 @@ public class PickupSpawner : MonoBehaviour
         GameObject newPickup = GameObject.Instantiate(prefabList[toSpawn]);
         UnityEngine.Vector3 newLocation = new UnityEngine.Vector3(Random.Range(-16, 1), -7, Random.Range(-13, 6));
         newPickup.transform.position = newLocation;
+        newPickup.transform.localScale = UnityEngine.Vector3.one * pickupScale;
+        
+        
+        if (spawnParticleEffect != null)
+        {
+            UnityEngine.Vector3 particlePosition = newLocation + new UnityEngine.Vector3(0, particleHeightOffset, 0);
+            GameObject.Instantiate(spawnParticleEffect, particlePosition, UnityEngine.Quaternion.identity);
+        }
         
         StartCoroutine(spawnPickup());
     }
