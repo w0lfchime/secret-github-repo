@@ -22,6 +22,7 @@ public class AlexHammerCopy : MonoBehaviour
     private float rotationTraveled;
     public float bodyLeanAmount = 30;
     public float CameraShakeAmount, CameraShakeTime;
+    public float knockback = 1000;
 
     void Update()
     {
@@ -102,15 +103,12 @@ public class AlexHammerCopy : MonoBehaviour
                 Debug.Log("Hit an enemy with velovity: " + speed);
                 Hittable hit = col.gameObject.GetComponent<Hittable>();
 
-                hit.health -= damage * Mathf.Abs(speed/limit);
+                hit.health -= damage * Mathf.Abs(speed/limit) * (hit.iced+.5f);
 
-                col.gameObject.GetComponent<SplineEnemyMotor>().enabled = false;
-                //col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * 1000);
+                col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * Mathf.Abs(speed) * knockback);
 
                 if(hit.health <= 0)
                 {
-                    StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(CameraShakeTime, CameraShakeAmount));
-
                     speed = -speed/2;
                     spinMultiplier = -spinMultiplier;
 
@@ -122,6 +120,8 @@ public class AlexHammerCopy : MonoBehaviour
                     {
                         pc.levelUp();
                     }
+
+                    StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(CameraShakeTime, CameraShakeAmount));
                 }
             }
         }
