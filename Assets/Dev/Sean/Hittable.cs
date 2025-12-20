@@ -10,6 +10,7 @@ public class Hittable : MonoBehaviour
     public float damage = 5;
     public float attackSpeed = 1f;
     public int expAmount;
+    public TetraShatter shatter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

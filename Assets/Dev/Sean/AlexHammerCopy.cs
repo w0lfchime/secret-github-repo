@@ -4,6 +4,7 @@ public class AlexHammerCopy : MonoBehaviour
 {
     public Transform hammer;
     public Transform hammerHead;
+    public Transform wizardBody;
     public Rigidbody rb;
     public PlayerController pc;
     public GameObject hammerParticles;
@@ -19,6 +20,7 @@ public class AlexHammerCopy : MonoBehaviour
     private bool clicking, clickUp;
     public float rotationToHit = 10;
     private float rotationTraveled;
+    public float bodyLeanAmount = 30;
 
     void Update()
     {
@@ -63,6 +65,7 @@ public class AlexHammerCopy : MonoBehaviour
         rb.angularVelocity = Vector3.up * speed;
 
         rotationTraveled+=Mathf.Abs(speed)*Time.deltaTime;
+        wizardBody.eulerAngles = new Vector3(Mathf.Abs(speed)/limit * bodyLeanAmount, wizardBody.eulerAngles.y, wizardBody.eulerAngles.z);
 
         // pc.speed = Mathf.Abs(speed)+5;
     }
@@ -93,6 +96,7 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
+                    col.gameObject.GetComponent<Hittable>().shatter.Shatter();
                     pc.exp += hit.expAmount + (int)additionalExp;
                     Destroy(col.gameObject);
 
