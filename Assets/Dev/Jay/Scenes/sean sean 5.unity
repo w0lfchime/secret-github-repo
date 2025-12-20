@@ -1540,6 +1540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d31de050e6de5c4faeb41c2c8c4a43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   cageHealth: 500
   pc: {fileID: 833788484}
 --- !u!65 &790316679
@@ -1729,6 +1730,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  hammerMaterial: {fileID: 0}
 --- !u!54 &833788483
 Rigidbody:
   m_ObjectHideFlags: 0
