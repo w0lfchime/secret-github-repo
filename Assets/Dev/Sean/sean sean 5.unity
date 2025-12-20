@@ -2168,6 +2168,9 @@ MonoBehaviour:
   speed: 5
   maxHealth: 10
   health: 1
+  maxMana: 10
+  mana: 1
+  manaRegenTime: 2
   regenTime: 2
   canMove: 1
   exp: 0
