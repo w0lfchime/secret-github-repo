@@ -424,6 +424,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  hammerMaterial: {fileID: -876546973899608171, guid: 9609329af23f85f448570d760a322a19, type: 3}
 --- !u!1 &1429524091
 GameObject:
   m_ObjectHideFlags: 0

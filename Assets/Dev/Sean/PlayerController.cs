@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        StartCoroutine(regen());
     }
 
     // Update is called once per frame
@@ -43,5 +44,22 @@ public class PlayerController : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void heal(float healAmount)
+    {
+        health += healAmount;
+
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
+
+    public IEnumerator regen()
+    {
+        yield return new WaitForSeconds(regenTime);
+        heal(1);
+        StartCoroutine(regen());
     }
 }
