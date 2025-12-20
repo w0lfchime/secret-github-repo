@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5def8db927e904e986b990d580d0a0, type: 3}
   m_Name: TestItem3
   m_EditorClassIdentifier: 
-  itemName: Test Item 1
+  itemName: Test Item 3
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  description: This is test item 1
-  itemColor: {r: 1, g: 0, b: 0, a: 1}
+  description: This is test item 3
+  itemColor: {r: 0, g: 0.06282711, b: 1, a: 1}
