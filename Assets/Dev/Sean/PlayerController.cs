@@ -3,7 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
+    public float maxHealth = 10f;
     public float health = 10f;
+    public float regenTime = 2f;
     public bool canMove = true;
     public int exp = 0;
     public int expToNextLevelUp = 10;
