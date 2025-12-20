@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TetraShatter : MonoBehaviour
@@ -8,21 +9,30 @@ public class TetraShatter : MonoBehaviour
     [Header("Shard Lifetime")]
     [Min(0.01f)] public float shardLifetime = 1.0f;
 
-    [Header("Tetrahedron Shape")]
-    [Tooltip("Scales how far the tetra apex is pushed along the triangle normal. " +
-             "Computed as avgEdgeLength * tetraHeightFactor.")]
-    [Range(0.05f, 2.0f)] public float tetraHeightFactor = 0.35f;
+    [Header("Resolution")]
+    [Min(1)] public int trianglesPerShard = 8;
 
-    [Header("Shard Physics")]
+    [Header("Chunk Thickness")]
+    [Range(0.01f, 2.0f)] public float thicknessFactor = 0.20f;
+
+    [Header("Physics (NO colliders)")]
     public float impulseStrength = 2.5f;
-    public Vector3 impulseBias = Vector3.up; // small upward pop
+    public Vector3 impulseBias = Vector3.up;
+    public float directionalForceWeight = 1.0f;
     public float randomTorque = 5f;
-    [Min(0.0001f)] public float shardMass = 0.02f;
+    [Min(0.0001f)] public float shardMass = 0.05f;
+    public bool useGravity = true;
+    public float linearDrag = 0f;
+    public float angularDrag = 0.05f;
+
+    [Header("Rendering")]
+    public bool disableShadowsOnShards = true;
 
     [Header("Safety / Performance")]
-    public int maxTrianglesTotal = 3000; // across all child meshes
+    public int maxTrianglesTotal = 6000;
     public bool hideOriginalRenderers = true;
     public bool disableOriginalColliders = true;
+    public bool useContainer = true;
 
     void Update()
     {
@@ -32,40 +42,49 @@ public class TetraShatter : MonoBehaviour
 
     public void Shatter()
     {
-        ShatterHierarchy(gameObject);
+        ShatterInternal(gameObject, Vector3.zero, false, Vector3.zero);
     }
-    public void ShatterHierarchy(GameObject root)
-    {
-        if (!root)
-        {
-            Debug.LogError("TetraShatter.ShatterHierarchy: root is null.");
-            return;
-        }
 
-        var meshFilters = root.GetComponentsInChildren<MeshFilter>(includeInactive: false);
-        if (meshFilters.Length == 0)
-        {
-            Debug.LogError($"TetraShatter: No MeshFilter found under '{root.name}'. If this is SkinnedMeshRenderer, you need a baked-mesh version.");
-            return;
-        }
+    public void Shatter(Vector3 forceDirectionWorld)
+    {
+        ShatterInternal(gameObject, forceDirectionWorld, false, Vector3.zero);
+    }
+
+    public void Shatter(Vector3 forceDirectionWorld, Vector3 forceOriginWorld)
+    {
+        ShatterInternal(gameObject, forceDirectionWorld, true, forceOriginWorld);
+    }
+
+    private void ShatterInternal(GameObject root, Vector3 forceDirWorld, bool useOrigin, Vector3 originWorld)
+    {
+        if (!root) return;
+
+        var meshFilters = root.GetComponentsInChildren<MeshFilter>(false);
+        if (meshFilters.Length == 0) return;
 
         if (hideOriginalRenderers)
-        {
             foreach (var r in root.GetComponentsInChildren<Renderer>())
                 r.enabled = false;
-        }
 
         if (disableOriginalColliders)
-        {
             foreach (var c in root.GetComponentsInChildren<Collider>())
                 c.enabled = false;
+
+        Transform rootT = root.transform;
+
+        GameObject container = null;
+        if (useContainer)
+        {
+            container = new GameObject(root.name + "_CHUNK_SHARDS");
+            container.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
-        GameObject container = new GameObject(root.name + "_TETRA_SHARDS");
-        container.transform.position = Vector3.zero;
-        container.transform.rotation = Quaternion.identity;
+        Vector3 biasNorm = impulseBias.sqrMagnitude > 0.00001f ? impulseBias.normalized : Vector3.zero;
+        Vector3 dirNorm = forceDirWorld.sqrMagnitude > 0.00001f ? forceDirWorld.normalized * directionalForceWeight : Vector3.zero;
 
-        int spawned = 0;
+        var verts = new List<Vector3>(trianglesPerShard * 6);
+        var tris = new List<int>(trianglesPerShard * 24);
+
         int triBudgetRemaining = maxTrianglesTotal;
 
         foreach (var mf in meshFilters)
@@ -73,196 +92,130 @@ public class TetraShatter : MonoBehaviour
             var mr = mf.GetComponent<MeshRenderer>();
             if (!mr) continue;
 
-            Mesh srcMesh = mf.sharedMesh;
-            if (!srcMesh) continue;
+            Mesh src = mf.sharedMesh;
+            if (!src || !src.isReadable) continue;
 
-            if (!srcMesh.isReadable)
-            {
-                Debug.LogError($"TetraShatter: Mesh '{srcMesh.name}' on '{mf.name}' is NOT readable. Enable Read/Write Enabled in import settings.");
-                continue;
-            }
-
-            // Count triangles in this mesh
-            int meshTriCount = 0;
-            for (int s = 0; s < srcMesh.subMeshCount; s++)
-                meshTriCount += srcMesh.GetTriangles(s).Length / 3;
-
-            if (meshTriCount <= 0) continue;
-
-            if (meshTriCount > triBudgetRemaining)
-            {
-                Debug.LogWarning($"TetraShatter: Triangle budget exceeded. Skipping '{mf.name}'. Needs {meshTriCount}, remaining {triBudgetRemaining}.");
-                continue;
-            }
-
-            triBudgetRemaining -= meshTriCount;
-
-            Material[] mats = mr.sharedMaterials;
+            int subCount = src.subMeshCount;
+            Vector3[] v = src.vertices;
             Transform t = mf.transform;
 
-            Vector3[] v = srcMesh.vertices;
-            Vector3[] n = srcMesh.normals;
-            Vector2[] uv = srcMesh.uv;
-
-            bool hasNormals = n != null && n.Length == v.Length;
-            bool hasUVs = uv != null && uv.Length == v.Length;
-
-            for (int sub = 0; sub < srcMesh.subMeshCount; sub++)
+            for (int sub = 0; sub < subCount; sub++)
             {
-                int[] tris = srcMesh.GetTriangles(sub);
-                Material mat = (sub < mats.Length) ? mats[sub] : null;
+                int[] srcTris = src.GetTriangles(sub);
+                int triCount = srcTris.Length / 3;
+                if (triCount > triBudgetRemaining) continue;
 
-                for (int i = 0; i < tris.Length; i += 3)
+                triBudgetRemaining -= triCount;
+                Material mat = mr.sharedMaterials[sub];
+
+                int triIndex = 0;
+                int shardIndex = 0;
+
+                while (triIndex < triCount)
                 {
-                    int i0 = tris[i];
-                    int i1 = tris[i + 1];
-                    int i2 = tris[i + 2];
+                    int take = Mathf.Min(trianglesPerShard, triCount - triIndex);
+                    verts.Clear();
+                    tris.Clear();
 
-                    // World positions of triangle
-                    Vector3 w0 = t.TransformPoint(v[i0]);
-                    Vector3 w1 = t.TransformPoint(v[i1]);
-                    Vector3 w2 = t.TransformPoint(v[i2]);
+                    Vector3 centroid = Vector3.zero;
+                    Vector3 avgNormal = Vector3.zero;
+                    float avgEdge = 0f;
 
-                    // Centroid
-                    Vector3 centroid = (w0 + w1 + w2) / 3f;
-
-                    // Triangle normal in world
-                    Vector3 triNormal;
-                    if (hasNormals)
+                    for (int k = 0; k < take; k++)
                     {
-                        // Average vertex normals (world)
-                        triNormal = (t.TransformDirection(n[i0]) + t.TransformDirection(n[i1]) + t.TransformDirection(n[i2])).normalized;
-                    }
-                    else
-                    {
-                        triNormal = Vector3.Cross(w1 - w0, w2 - w0).normalized;
+                        int i = (triIndex + k) * 3;
+                        Vector3 w0 = t.TransformPoint(v[srcTris[i]]);
+                        Vector3 w1 = t.TransformPoint(v[srcTris[i + 1]]);
+                        Vector3 w2 = t.TransformPoint(v[srcTris[i + 2]]);
+
+                        centroid += (w0 + w1 + w2) / 3f;
+                        avgNormal += Vector3.Cross(w1 - w0, w2 - w0).normalized;
+                        avgEdge += (w1 - w0).magnitude + (w2 - w1).magnitude + (w0 - w2).magnitude;
                     }
 
-                    // Compute a "regular-ish" height based on average edge length
-                    float e01 = Vector3.Distance(w0, w1);
-                    float e12 = Vector3.Distance(w1, w2);
-                    float e20 = Vector3.Distance(w2, w0);
-                    float avgEdge = (e01 + e12 + e20) / 3f;
+                    centroid /= take;
+                    avgNormal.Normalize();
+                    avgEdge /= (take * 3f);
+                    float thickness = Mathf.Max(0.0002f, avgEdge * thicknessFactor);
 
-                    float height = Mathf.Max(0.0005f, avgEdge * tetraHeightFactor);
+                    for (int k = 0; k < take; k++)
+                    {
+                        int i = (triIndex + k) * 3;
+                        Vector3 w0 = t.TransformPoint(v[srcTris[i]]);
+                        Vector3 w1 = t.TransformPoint(v[srcTris[i + 1]]);
+                        Vector3 w2 = t.TransformPoint(v[srcTris[i + 2]]);
 
-                    // Apex point (world)
-                    Vector3 apexWorld = centroid + triNormal * height;
+                        Vector3 nrm = Vector3.Cross(w1 - w0, w2 - w0).normalized;
+                        Vector3 off = nrm * (thickness * 0.5f);
 
-                    // Create shard object
-                    GameObject shard = new GameObject($"tet_{mf.name}_{sub}_{i / 3}");
-                    shard.transform.SetParent(container.transform, worldPositionStays: true);
+                        Vector3 f0 = (w0 - centroid) + off;
+                        Vector3 f1 = (w1 - centroid) + off;
+                        Vector3 f2 = (w2 - centroid) + off;
+
+                        Vector3 b0 = (w0 - centroid) - off;
+                        Vector3 b1 = (w1 - centroid) - off;
+                        Vector3 b2 = (w2 - centroid) - off;
+
+                        int start = verts.Count;
+                        verts.AddRange(new[] { f0, f1, f2, b0, b1, b2 });
+
+                        tris.AddRange(new[]
+                        {
+                            start, start+1, start+2,
+                            start+5, start+4, start+3,
+                            start, start+1, start+4, start, start+4, start+3,
+                            start+1, start+2, start+5, start+1, start+5, start+4,
+                            start+2, start, start+3, start+2, start+3, start+5
+                        });
+                    }
+
+                    GameObject shard = new GameObject($"chunk_{mf.name}_{sub}_{shardIndex++}");
+                    if (useContainer) shard.transform.SetParent(container.transform, true);
                     shard.transform.position = centroid;
-                    shard.transform.rotation = Quaternion.identity;
 
-                    // Build tetra mesh in shard-local space (centroid as origin)
-                    Vector3 l0 = w0 - centroid;
-                    Vector3 l1 = w1 - centroid;
-                    Vector3 l2 = w2 - centroid;
-                    Vector3 l3 = apexWorld - centroid;
+                    Mesh m = new Mesh();
+                    m.SetVertices(verts);
+                    m.SetTriangles(tris, 0);
+                    m.RecalculateNormals();
+                    m.MarkDynamic();
 
-                    Mesh tetra = BuildTetraMesh(l0, l1, l2, l3, hasUVs ? uv[i0] : Vector2.zero, hasUVs ? uv[i1] : Vector2.zero, hasUVs ? uv[i2] : Vector2.zero);
-                    tetra.name = shard.name + "_mesh";
+                    shard.AddComponent<MeshFilter>().sharedMesh = m;
 
-                    var shardMF = shard.AddComponent<MeshFilter>();
-                    shardMF.sharedMesh = tetra;
-
-                    var shardMR = shard.AddComponent<MeshRenderer>();
-                    shardMR.sharedMaterial = mat;
+                    var r = shard.AddComponent<MeshRenderer>();
+                    r.sharedMaterial = mat;
+                    if (disableShadowsOnShards)
+                    {
+                        r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                        r.receiveShadows = false;
+                    }
 
                     var rb = shard.AddComponent<Rigidbody>();
                     rb.mass = shardMass;
-                    rb.interpolation = RigidbodyInterpolation.Interpolate;
+                    rb.useGravity = useGravity;
+                    rb.linearDamping = linearDrag;
+                    rb.angularDamping = angularDrag;
 
-                    var col = shard.AddComponent<MeshCollider>();
-                    col.sharedMesh = tetra;
-                    col.convex = true; // now valid because tetra is a closed volume
+                    // ✅ ALWAYS APPLY IMPULSE
+                    Vector3 baseDir;
 
-                    // Impulse away from original mesh's transform position (or root)
-                    Vector3 dir = (centroid - t.position).sqrMagnitude > 0.000001f
-                        ? (centroid - t.position).normalized
-                        : Random.onUnitSphere;
+                    if (useOrigin)
+                        baseDir = (centroid - originWorld).normalized;
+                    else
+                        baseDir = (centroid - rootT.position).normalized;
 
-                    Vector3 impulse = (dir + impulseBias.normalized * 0.35f).normalized * impulseStrength;
-                    rb.AddForce(impulse, ForceMode.Impulse);
-                    rb.AddTorque(Random.onUnitSphere * randomTorque, ForceMode.Impulse);
+                    Vector3 finalDir = (baseDir + dirNorm + biasNorm).normalized;
+                    rb.AddForce(finalDir * impulseStrength, ForceMode.Impulse);
+
+                    if (randomTorque > 0f)
+                        rb.AddTorque(Random.onUnitSphere * randomTorque, ForceMode.Impulse);
 
                     Destroy(shard, shardLifetime);
-                    spawned++;
+                    triIndex += take;
                 }
             }
         }
 
-        Destroy(container, shardLifetime + 0.1f);
-        Debug.Log($"TetraShatter: Spawned {spawned} tetra shards.");
-    }
-
-    /// <summary>
-    /// Creates a closed tetrahedron mesh.
-    /// Base is triangle (a,b,c), apex is d.
-    /// Winding is chosen to face outward given the base normal direction.
-    /// </summary>
-    private static Mesh BuildTetraMesh(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector2 uva, Vector2 uvb, Vector2 uvc)
-    {
-        // Decide winding so that base normal points AWAY from apex.
-        // If base normal points toward apex, flip base winding.
-        Vector3 baseNormal = Vector3.Cross(b - a, c - a);
-        float side = Vector3.Dot(baseNormal, d - a);
-
-        if (side > 0f)
-        {
-            // Flip base
-            (b, c) = (c, b);
-            (uvb, uvc) = (uvc, uvb);
-            baseNormal = -baseNormal;
-        }
-
-        // For clean flat shading (low-poly look), we duplicate vertices per face (4 faces * 3 verts = 12 verts).
-        // UVs: we map base triangle uvs to the base face, and use a simple placeholder UV mapping for side faces.
-        Vector3[] verts = new Vector3[12]
-        {
-            // Base face (a,b,c)
-            a,b,c,
-
-            // Side face 1 (a,d,b)
-            a,d,b,
-
-            // Side face 2 (b,d,c)
-            b,d,c,
-
-            // Side face 3 (c,d,a)
-            c,d,a
-        };
-
-        int[] tris = new int[12]
-        {
-            // Base
-            0,1,2,
-
-            // Sides
-            3,4,5,
-            6,7,8,
-            9,10,11
-        };
-
-        Vector2[] uvs = new Vector2[12]
-        {
-            // Base uses original triangle uvs (if present)
-            uva, uvb, uvc,
-
-            // Sides: simple placeholder mapping (works fine for solid materials; tweak if you care about textures)
-            new Vector2(0,0), new Vector2(0.5f,1), new Vector2(1,0),
-            new Vector2(0,0), new Vector2(0.5f,1), new Vector2(1,0),
-            new Vector2(0,0), new Vector2(0.5f,1), new Vector2(1,0)
-        };
-
-        Mesh m = new Mesh();
-        m.vertices = verts;
-        m.triangles = tris;
-        m.uv = uvs;
-
-        m.RecalculateNormals();
-        m.RecalculateBounds();
-        return m;
+        if (useContainer && container)
+            Destroy(container, shardLifetime + 0.1f);
     }
 }

@@ -67,7 +67,16 @@ public class AlexHammerCopy : MonoBehaviour
         rotationTraveled+=Mathf.Abs(speed)*Time.deltaTime;
         wizardBody.eulerAngles = new Vector3(Mathf.Abs(speed)/limit * bodyLeanAmount, wizardBody.eulerAngles.y, wizardBody.eulerAngles.z);
 
-        // pc.speed = Mathf.Abs(speed)+5;
+        float targetField = Mathf.Lerp(60, 80, Mathf.Abs(speed)/limit);
+        Camera.main.fieldOfView += (targetField-Camera.main.fieldOfView)*.05f;
+
+        float targetParticle = Mathf.Lerp(0, 50, Mathf.Abs(speed)/limit);
+        var ps = Camera.main.gameObject.GetComponent<ParticleSystem>().emission; 
+        var shape = Camera.main.gameObject.GetComponent<ParticleSystem>().shape; 
+        ps.rateOverTimeMultiplier += (targetParticle-ps.rateOverTimeMultiplier)*.05f;
+        shape.radius = Mathf.Lerp(.5f, .75f, Mathf.Abs(speed)/limit);
+
+        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed)/limit);
     }
 
     public void OnTriggerEnter(Collider col) {
@@ -96,7 +105,10 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
-                    col.gameObject.GetComponent<Hittable>().shatter.Shatter();
+                    speed = -speed/2;
+                    spinMultiplier = -spinMultiplier;
+
+                    col.gameObject.GetComponent<Hittable>().shatter.Shatter(-new Vector3(lookDirection.x, 0, lookDirection.z));
                     pc.exp += hit.expAmount + (int)additionalExp;
                     Destroy(col.gameObject);
 

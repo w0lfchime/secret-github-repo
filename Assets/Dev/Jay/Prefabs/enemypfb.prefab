@@ -298,12 +298,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testKey: 107
-  shardLifetime: 1
-  tetraHeightFactor: 0.35
-  impulseStrength: 0.1
+  shardLifetime: 2
+  trianglesPerShard: 8
+  thicknessFactor: 1
+  impulseStrength: 0.3
   impulseBias: {x: 0, y: 1, z: 0}
+  directionalForceWeight: 1
   randomTorque: 5
   shardMass: 0.02
+  useGravity: 1
+  linearDrag: 0
+  angularDrag: 0.05
+  disableShadowsOnShards: 1
   maxTrianglesTotal: 3000
   hideOriginalRenderers: 1
   disableOriginalColliders: 1
+  useContainer: 1
