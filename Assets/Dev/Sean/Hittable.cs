@@ -36,5 +36,10 @@ public class Hittable : MonoBehaviour
             cm.cageHealth -= damage;
             StartCoroutine(attackCage());
         }
-    } 
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        GetComponent<SplineEnemyMotor>().enabled = true;
+    }
 }

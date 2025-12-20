@@ -21,6 +21,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float rotationToHit = 10;
     private float rotationTraveled;
     public float bodyLeanAmount = 30;
+    public float CameraShakeAmount, CameraShakeTime;
 
     void Update()
     {
@@ -103,8 +104,13 @@ public class AlexHammerCopy : MonoBehaviour
 
                 hit.health -= damage * Mathf.Abs(speed/limit);
 
+                col.gameObject.GetComponent<SplineEnemyMotor>().enabled = false;
+                //col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * 1000);
+
                 if(hit.health <= 0)
                 {
+                    StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(CameraShakeTime, CameraShakeAmount));
+
                     speed = -speed/2;
                     spinMultiplier = -spinMultiplier;
 
