@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cageHealth: 500
-  pc: {fileID: 0}
+  pc: {fileID: 833788484}
 --- !u!65 &790316679
 BoxCollider:
   m_ObjectHideFlags: 0
