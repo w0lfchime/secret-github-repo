@@ -27,6 +27,7 @@ public class ItemSelectionUI : MonoBehaviour
     
     public void ShowItemSelection(List<Item> items, Action<Item> callback)
     {
+        Debug.Log("Doin some stuff");
         onItemSelectedCallback = callback;
         
         // Show panel

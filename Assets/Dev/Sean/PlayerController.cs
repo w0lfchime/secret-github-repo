@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     public int exp = 0;
     public int expToNextLevelUp = 10;
     public Rigidbody rb;
+    public ItemManager im;
+    public GameObject itemSelection;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -28,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public void levelUp()
     {
         // do something to get a new item!
+        im.TriggerItemSelection();
+        itemSelection.SetActive(true);
         expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
         Debug.Log("Leveled up");
     }
