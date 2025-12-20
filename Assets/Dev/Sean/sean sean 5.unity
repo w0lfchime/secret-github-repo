@@ -2149,9 +2149,10 @@ MonoBehaviour:
   rb: {fileID: 833788483}
   pc: {fileID: 833788484}
   hammerParticles: {fileID: 7655042411931391213, guid: a9d9cb901501e9a40989dca5b01f020b, type: 3}
+  soundEffectClip: {fileID: 8300000, guid: cec4e3fc92d852f438f69ceb91ccba5d, type: 3}
   damage: 5
   speed: 0
-  spinMultiplier: 0.3
+  spinMultiplier: 0.03
   limit: 10
   slowDownSpeed: 0.99
   groundLayer:
@@ -2159,6 +2160,7 @@ MonoBehaviour:
     m_Bits: 64
   hammerMaterial: {fileID: 2100000, guid: ca3f4c8ba0d35ec468bbf487148f85ee, type: 2}
   additionalExp: 0
+  rotationToHit: 1
 --- !u!114 &882883550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9070003181477454716, guid: dfd8db0d575932340967e8d9bcf79406, type: 3}
