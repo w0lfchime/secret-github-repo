@@ -90,13 +90,20 @@ public class ItemSelectionUI : MonoBehaviour
                 hc.additionalExp += selectedItem.increaseBy;
             } else if (selectedItem.itemType == 8)
             {
-                
+                pc.maxMana += selectedItem.increaseBy;
+                pc.mana += selectedItem.increaseBy;
             } else if (selectedItem.itemType == 9)
             {
-                
+                pc.manaRegenTime -= selectedItem.increaseBy;
             } else if (selectedItem.itemType == 10)
             {
                 
+            } else if(selectedItem.itemType == 11)
+            {
+                hc.limit += selectedItem.increaseBy;
+            } else if(selectedItem.itemType == 12)
+            {
+                hc.spinMultiplier += selectedItem.increaseBy;
             }
             // Invoke callback
             onItemSelectedCallback?.Invoke(selectedItem);

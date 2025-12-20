@@ -16,5 +16,6 @@ public class SliderHandlers : MonoBehaviour
     void Update()
     {
         healthBar.value = pc.health / pc.maxHealth;
+        manaBar.value = pc.mana / pc.maxMana;
     }
 }

@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     public float maxHealth = 10f;
     public float health = 10f;
+    public float maxMana = 10f;
+    public float mana = 10f;
+    public float manaRegenTime = 2f;
     public float regenTime = 2f;
     public bool canMove = true;
     public int exp = 0;
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         StartCoroutine(regen());
+        StartCoroutine(manaRegen());
     }
 
     // Update is called once per frame
@@ -56,10 +60,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void manaHeal(float healAmount)
+    {
+        mana += healAmount;
+
+        if(mana > maxMana)
+        {
+            health = maxHealth;
+        }
+    }
+
     public IEnumerator regen()
     {
         yield return new WaitForSeconds(regenTime);
         heal(1);
         StartCoroutine(regen());
+    }
+
+    public IEnumerator manaRegen()
+    {
+        yield return new WaitForSeconds(manaRegenTime);
+        manaHeal(1);
+        StartCoroutine(manaRegen());
     }
 }
