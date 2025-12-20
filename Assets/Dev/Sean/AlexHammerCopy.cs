@@ -3,8 +3,10 @@ using UnityEngine;
 public class AlexHammerCopy : MonoBehaviour
 {
     public Transform hammer;
+    public Transform hammerHead;
     public Rigidbody rb;
     public PlayerController pc;
+    public GameObject hammerParticles;
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
@@ -68,6 +70,11 @@ public class AlexHammerCopy : MonoBehaviour
             Debug.Log(speed);
             speed = -speed*1.5f;
             spinMultiplier = -spinMultiplier;
+
+            GameObject particleIns = Instantiate(hammerParticles, hammerHead.transform.position, Quaternion.identity);
+            Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
+            particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
+
 
             if(col.gameObject.tag == "Enemy")
             {

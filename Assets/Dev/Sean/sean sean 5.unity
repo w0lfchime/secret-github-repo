@@ -2145,8 +2145,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hammer: {fileID: 893739351}
+  hammerHead: {fileID: 1264927002}
   rb: {fileID: 833788483}
   pc: {fileID: 833788484}
+  hammerParticles: {fileID: 7655042411931391213, guid: a9d9cb901501e9a40989dca5b01f020b, type: 3}
   damage: 5
   speed: 0
   spinMultiplier: 0.3
@@ -2155,7 +2157,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  hammerMaterial: {fileID: 2100000, guid: ff3f01e3f0999c94a8da50e430d3ee9f, type: 2}
+  hammerMaterial: {fileID: 2100000, guid: ca3f4c8ba0d35ec468bbf487148f85ee, type: 2}
   additionalExp: 0
 --- !u!114 &882883550 stripped
 MonoBehaviour:
