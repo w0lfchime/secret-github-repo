@@ -1541,7 +1541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  maxHealth: 100
   cageHealth: 500
   pc: {fileID: 833788484}
 --- !u!65 &790316679
@@ -1700,7 +1699,7 @@ GameObject:
   - component: {fileID: 833788485}
   - component: {fileID: 833788484}
   - component: {fileID: 833788483}
-  - component: {fileID: 833788482}
+  - component: {fileID: 833788489}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1708,29 +1707,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &833788482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833788481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e426e1cf7ca98741bd709d2cf85f19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hammer: {fileID: 1264927002}
-  rb: {fileID: 833788483}
-  pc: {fileID: 833788484}
-  damage: 5
-  speed: 0
-  spinMultiplier: 0.001
-  limit: 10
-  slowDownSpeed: 0.95
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!54 &833788483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1874,6 +1850,30 @@ Transform:
   - {fileID: 893739351}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &833788489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833788481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c78b98192770df45a3848d67a140d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hammer: {fileID: 893739351}
+  rb: {fileID: 833788483}
+  pc: {fileID: 833788484}
+  damage: 5
+  speed: 0
+  spinMultiplier: 0.3
+  limit: 10
+  slowDownSpeed: 0.99
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  hammerMaterial: {fileID: 2100000, guid: ff3f01e3f0999c94a8da50e430d3ee9f, type: 2}
 --- !u!114 &882883550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9070003181477454716, guid: dfd8db0d575932340967e8d9bcf79406, type: 3}

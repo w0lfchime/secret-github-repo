@@ -10,7 +10,7 @@ public class ItemSelectionUI : MonoBehaviour
     [SerializeField] private GameObject selectionPanel;
     [SerializeField] private List<ItemChoiceSlot> choiceSlots = new List<ItemChoiceSlot>();
     private PlayerController pc;
-    private AlexHammerController hc;
+    private AlexHammerCopy hc;
     private CageManager cm;
     
     private Action<Item> onItemSelectedCallback;
@@ -18,7 +18,7 @@ public class ItemSelectionUI : MonoBehaviour
     void Start()
     {
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        hc = GameObject.Find("Player").GetComponent<AlexHammerController>();
+        hc = GameObject.Find("Player").GetComponent<AlexHammerCopy>();
         cm = GameObject.Find("Cage").GetComponent<CageManager>();
         // Hide selection panel at start
         selectionPanel.SetActive(false);
