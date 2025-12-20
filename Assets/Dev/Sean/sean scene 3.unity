@@ -2665,7 +2665,7 @@ PrefabInstance:
     - target: {fileID: 1255081304199177923, guid: af9611350951dc842a9aae0a74f9068e, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 833788488}
     - target: {fileID: 2668751650188721683, guid: af9611350951dc842a9aae0a74f9068e, type: 3}
       propertyPath: m_Name
       value: Frame
