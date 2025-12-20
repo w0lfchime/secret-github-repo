@@ -4,7 +4,7 @@ public class AlexHammerController : MonoBehaviour
 {
     public Transform hammer;
     public Rigidbody rb;
-    public PlayerController pc;
+    public AlexPlayerController pc;
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
@@ -21,7 +21,7 @@ public class AlexHammerController : MonoBehaviour
             clicking = true;
         }else clicking = false;
         if (Input.GetMouseButtonUp(0)){
-            clickUp = true;
+            //clickUp = true;
         }
     }
     void FixedUpdate()
@@ -37,7 +37,7 @@ public class AlexHammerController : MonoBehaviour
             float angleToMouse = Vector3.SignedAngle(-directionToHammer, directionToMouse, Vector3.up);
             if (clicking)
             {
-                speed += angleToMouse * spinMultiplier;
+                speed += spinMultiplier;
                 speed = Mathf.Clamp(speed,  -limit, limit);
             }
 
@@ -51,17 +51,18 @@ public class AlexHammerController : MonoBehaviour
         Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
         hammerMaterial.SetColor("_EmissionColor", finalColor);
 
-        if (!clicking)
-        {
-            speed = speed*slowDownSpeed;
-        }
+        speed = speed*slowDownSpeed;
 
         rb.angularVelocity = Vector3.up * speed;
+
+        pc.speed = Mathf.Abs(speed)+5;
     }
 
     public void OnTriggerEnter(Collider col) {
         Debug.Log("Collision entered");
         Debug.Log(speed);
+        speed = -speed*1.5f;
+        spinMultiplier = -spinMultiplier;
 
         if(col.gameObject.tag == "Enemy")
         {

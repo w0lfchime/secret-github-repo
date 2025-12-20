@@ -39,7 +39,7 @@ public class CameraPivotSpringFollow : MonoBehaviour
 		useLateUpdate = true;
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (!useLateUpdate) Tick(Time.deltaTime);
 	}
