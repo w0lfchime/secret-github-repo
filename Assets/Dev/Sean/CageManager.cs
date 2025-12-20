@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CageManager : MonoBehaviour
 {
+    public float maxHealth = 100;
     public float cageHealth = 100;
     public PlayerController pc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
