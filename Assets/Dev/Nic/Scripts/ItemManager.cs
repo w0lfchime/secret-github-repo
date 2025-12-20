@@ -38,7 +38,7 @@ public class ItemManager : MonoBehaviour
         }
     }
     
-    private void TriggerItemSelection()
+    public void TriggerItemSelection()
     {
         if (availableItems.Count == 0)
         {
