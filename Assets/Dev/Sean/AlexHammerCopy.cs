@@ -12,6 +12,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float slowDownSpeed = .1f;
     public LayerMask groundLayer;
     public Material hammerMaterial;
+    public float additionalExp = 0;
     private bool clicking, clickUp;
 
     void Update()
@@ -77,7 +78,7 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
-                    pc.exp += hit.expAmount;
+                    pc.exp += hit.expAmount + (int)additionalExp;
                     Destroy(col.gameObject);
 
                     if(pc.exp >= pc.expToNextLevelUp)

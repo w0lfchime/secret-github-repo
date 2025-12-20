@@ -87,7 +87,7 @@ public class ItemSelectionUI : MonoBehaviour
                 pc.regenTime -= selectedItem.increaseBy;
             } else if (selectedItem.itemType == 7)
             {
-                
+                hc.additionalExp += selectedItem.increaseBy;
             } else if (selectedItem.itemType == 8)
             {
                 
