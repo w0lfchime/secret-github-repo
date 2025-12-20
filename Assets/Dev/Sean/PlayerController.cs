@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(regen());
-        StartCoroutine(manaRegen());
+        // StartCoroutine(regen());
+        // StartCoroutine(manaRegen());
     }
 
     // Update is called once per frame
@@ -92,6 +92,25 @@ public class PlayerController : MonoBehaviour
         if(mana > maxMana)
         {
             health = maxHealth;
+        }
+    }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Pickup")
+        {
+            Debug.Log("Touched Pickup");
+            Pickup pickup = col.gameObject.GetComponent<Pickup>();
+
+            if(pickup.type == 1)
+            {
+                heal(pickup.increaseBy);
+            } else if(pickup.type == 2)
+            {
+                manaHeal(pickup.increaseBy);
+            }
+
+            Destroy(col.gameObject);
         }
     }
 
