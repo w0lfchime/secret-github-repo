@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CageManager : MonoBehaviour
 {
+    public float maxHealth = 100;
     public float cageHealth = 100;
     public PlayerController pc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,6 +18,27 @@ public class CageManager : MonoBehaviour
         if(cageHealth <= 0)
         {
             pc.gameOver();
+        }
+    }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Hittable hit = col.GetComponent<Hittable>();
+
+            hit.attackingCage = true;
+            hit.startEnemyCageAttack();
+        }
+    }
+
+    public void OnTriggerExit(Collider col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Hittable hit = col.GetComponent<Hittable>();
+
+            hit.attackingCage = false;
         }
     }
 
