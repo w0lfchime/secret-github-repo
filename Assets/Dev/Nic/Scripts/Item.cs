@@ -17,9 +17,11 @@ public class Item : ScriptableObject
     // 5: Player health
     // 6: Player Regen
     // 7: Extra EXP per kill
-    // 8: Recover stamina faster
+    // 8: Increase max mana
     // 9: Recharge mana faster
-    // 10: Increase total stamina total
+    // 10: Hammer size
+    // 11: Sledge speed limit
+    // 12: Sledge spin multiplier
     public int itemType;
     public float increaseBy;
 }

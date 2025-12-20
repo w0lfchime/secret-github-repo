@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     public float maxHealth = 10f;
     public float health = 10f;
+    public float maxMana = 10f;
+    public float mana = 10f;
+    public float manaRegenTime = 2f;
     public float regenTime = 2f;
     public bool canMove = true;
     public int exp = 0;
@@ -14,20 +17,46 @@ public class PlayerController : MonoBehaviour
     public ItemManager im;
     public GameObject itemSelection;
     public GameObject gameOverScreen;
+    public GameObject pauseMenu;
+    
+    private bool isPaused = false;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StartCoroutine(regen());
+        StartCoroutine(manaRegen());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canMove) {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            TogglePause();
+        }
+        
+        if(canMove && !isPaused) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
             rb.linearVelocity = (new Vector3(horizontalInput, 0f, verticalInput)) * speed;
+        }
+    }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+        
+        if(isPaused)
+        {
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            pauseMenu.SetActive(false);
         }
     }
 
@@ -56,10 +85,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void manaHeal(float healAmount)
+    {
+        mana += healAmount;
+
+        if(mana > maxMana)
+        {
+            health = maxHealth;
+        }
+    }
+
     public IEnumerator regen()
     {
         yield return new WaitForSeconds(regenTime);
         heal(1);
         StartCoroutine(regen());
+    }
+
+    public IEnumerator manaRegen()
+    {
+        yield return new WaitForSeconds(manaRegenTime);
+        manaHeal(1);
+        StartCoroutine(manaRegen());
     }
 }
