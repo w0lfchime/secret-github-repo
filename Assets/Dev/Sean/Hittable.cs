@@ -22,22 +22,9 @@ public class Hittable : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision col)
+    public void startEnemyCageAttack()
     {
-        if(col.gameObject.tag == "Cage")
-        {
-            attackingCage = true;
-            StartCoroutine(attackCage());
-        }
-    }
-
-    void OnCollisionExit(Collision col)
-    {
-        if(col.gameObject.tag == "Cage")
-        {
-            attackingCage = false;
-            StopAllCoroutines();
-        }
+        StartCoroutine(attackCage());
     }
 
     public IEnumerator attackCage()
