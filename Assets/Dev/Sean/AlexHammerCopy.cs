@@ -38,7 +38,6 @@ public class AlexHammerCopy : MonoBehaviour
             if (clicking)
             {
                 speed += spinMultiplier;
-                speed = Mathf.Clamp(speed,  -limit, limit);
             }
 
             if (clickUp)
@@ -46,6 +45,8 @@ public class AlexHammerCopy : MonoBehaviour
                 speed = angleToMouse * spinMultiplier * 30;
                 clickUp = false;
             }
+
+            speed = Mathf.Clamp(speed,  -limit, limit);
             
         }
         Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
