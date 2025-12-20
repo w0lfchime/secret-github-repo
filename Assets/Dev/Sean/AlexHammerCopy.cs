@@ -59,29 +59,34 @@ public class AlexHammerCopy : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider col) {
-        Debug.Log("Collision entered");
-        Debug.Log(speed);
-        speed = -speed*1.5f;
-        spinMultiplier = -spinMultiplier;
-
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.tag != "Frame")
         {
-            Debug.Log("Hit an enemy with velovity: " + speed);
-            Hittable hit = col.gameObject.GetComponent<Hittable>();
+            Debug.Log("DIDNT hit the frame");
+            Debug.Log("Collision entered");
+            Debug.Log(speed);
+            speed = -speed*1.5f;
+            spinMultiplier = -spinMultiplier;
 
-            hit.health -= damage * Mathf.Abs(speed/limit);
-
-            if(hit.health <= 0)
+            if(col.gameObject.tag == "Enemy")
             {
-                pc.exp += hit.expAmount;
-                Destroy(col.gameObject);
+                Debug.Log("Hit an enemy with velovity: " + speed);
+                Hittable hit = col.gameObject.GetComponent<Hittable>();
 
-                if(pc.exp >= pc.expToNextLevelUp)
+                hit.health -= damage * Mathf.Abs(speed/limit);
+
+                if(hit.health <= 0)
                 {
-                    pc.levelUp();
+                    pc.exp += hit.expAmount;
+                    Destroy(col.gameObject);
+
+                    if(pc.exp >= pc.expToNextLevelUp)
+                    {
+                        pc.levelUp();
+                    }
                 }
             }
         }
+        
     }
 
 }
