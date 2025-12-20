@@ -4,9 +4,11 @@ public class AlexHammerCopy : MonoBehaviour
 {
     public Transform hammer;
     public Transform hammerHead;
+    public Transform wizardBody;
     public Rigidbody rb;
     public PlayerController pc;
     public GameObject hammerParticles;
+    public AudioClip soundEffectClip;
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
@@ -16,6 +18,9 @@ public class AlexHammerCopy : MonoBehaviour
     public Material hammerMaterial;
     public float additionalExp = 0;
     private bool clicking, clickUp;
+    public float rotationToHit = 10;
+    private float rotationTraveled;
+    public float bodyLeanAmount = 30;
 
     void Update()
     {
@@ -59,12 +64,17 @@ public class AlexHammerCopy : MonoBehaviour
 
         rb.angularVelocity = Vector3.up * speed;
 
+        rotationTraveled+=Mathf.Abs(speed)*Time.deltaTime;
+        wizardBody.eulerAngles = new Vector3(Mathf.Abs(speed)/limit * bodyLeanAmount, wizardBody.eulerAngles.y, wizardBody.eulerAngles.z);
+
         // pc.speed = Mathf.Abs(speed)+5;
     }
 
     public void OnTriggerEnter(Collider col) {
-        if(col.gameObject.tag != "Frame")
+        if(col.gameObject.tag != "Frame" && rotationTraveled > rotationToHit)
         {
+            rotationTraveled = 0;
+
             Debug.Log("DIDNT hit the frame");
             Debug.Log("Collision entered");
             Debug.Log(speed);
@@ -74,6 +84,7 @@ public class AlexHammerCopy : MonoBehaviour
             GameObject particleIns = Instantiate(hammerParticles, hammerHead.transform.position, Quaternion.identity);
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
             particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
+            AudioSource.PlayClipAtPoint(soundEffectClip, hammerHead.transform.position, 1.0f);
 
 
             if(col.gameObject.tag == "Enemy")
@@ -85,6 +96,7 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
+                    col.gameObject.GetComponent<Hittable>().shatter.Shatter();
                     pc.exp += hit.expAmount + (int)additionalExp;
                     Destroy(col.gameObject);
 
