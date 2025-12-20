@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public ItemManager im;
     public GameObject itemSelection;
+    public GameObject gameOverScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,5 +37,11 @@ public class PlayerController : MonoBehaviour
         itemSelection.SetActive(true);
         expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
         Debug.Log("Leveled up");
+    }
+
+    public void gameOver()
+    {
+        gameOverScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 }
