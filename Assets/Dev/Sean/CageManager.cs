@@ -20,5 +20,26 @@ public class CageManager : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Hittable hit = col.GetComponent<Hittable>();
+
+            hit.attackingCage = true;
+            hit.startEnemyCageAttack();
+        }
+    }
+
+    public void OnTriggerExit(Collider col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Hittable hit = col.GetComponent<Hittable>();
+
+            hit.attackingCage = false;
+        }
+    }
+
     
 }
