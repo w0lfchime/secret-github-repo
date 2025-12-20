@@ -1035,6 +1035,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 955985584257611515, guid: e7eeda3fab45f3d4594c6057da2646fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2026249926}
+    - targetCorrespondingSourceObject: {fileID: 955985584257611515, guid: e7eeda3fab45f3d4594c6057da2646fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2026249931}
   m_SourcePrefab: {fileID: 100100000, guid: e7eeda3fab45f3d4594c6057da2646fc, type: 3}
 --- !u!1 &521831344
 GameObject:
@@ -2185,6 +2188,7 @@ MonoBehaviour:
   im: {fileID: 2126504426}
   itemSelection: {fileID: 613829027}
   gameOverScreen: {fileID: 1940702057}
+  pauseMenu: {fileID: 0}
 --- !u!136 &833788485
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2310,6 +2314,8 @@ MonoBehaviour:
   additionalExp: 0
   rotationToHit: 1
   bodyLeanAmount: -70
+  CameraShakeAmount: 1
+  CameraShakeTime: 0.2
 --- !u!114 &882883550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9070003181477454716, guid: dfd8db0d575932340967e8d9bcf79406, type: 3}
@@ -8907,6 +8913,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2026249931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341070422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c118aad150521b48b57dd813b4d6e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2046045996
 GameObject:
   m_ObjectHideFlags: 0
