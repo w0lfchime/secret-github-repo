@@ -11,7 +11,8 @@ public class AlexHammerController : MonoBehaviour
     public float limit = 10;
     public float slowDownSpeed = .1f;
     public LayerMask groundLayer;
-    private bool clicking;
+    public Material hammerMaterial;
+    private bool clicking, clickUp;
 
     void Update()
     {
@@ -19,6 +20,9 @@ public class AlexHammerController : MonoBehaviour
         {
             clicking = true;
         }else clicking = false;
+        if (Input.GetMouseButtonUp(0)){
+            clickUp = true;
+        }
     }
     void FixedUpdate()
     {
@@ -35,8 +39,21 @@ public class AlexHammerController : MonoBehaviour
             {
                 speed += angleToMouse * spinMultiplier;
                 speed = Mathf.Clamp(speed,  -limit, limit);
-            }else speed = speed*slowDownSpeed;
+            }
+
+            if (clickUp)
+            {
+                speed = angleToMouse * spinMultiplier * 30;
+                clickUp = false;
+            }
             
+        }
+        Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
+        hammerMaterial.SetColor("_EmissionColor", finalColor);
+
+        if (!clicking)
+        {
+            speed = speed*slowDownSpeed;
         }
 
         rb.angularVelocity = Vector3.up * speed;
