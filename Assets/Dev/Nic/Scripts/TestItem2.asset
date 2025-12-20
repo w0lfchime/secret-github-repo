@@ -16,3 +16,5 @@ MonoBehaviour:
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   description: This is test item 2
   itemColor: {r: 0.40482342, g: 1, b: 0, a: 1}
+  itemType: 5
+  increaseBy: 5

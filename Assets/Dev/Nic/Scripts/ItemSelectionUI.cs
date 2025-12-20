@@ -9,11 +9,15 @@ public class ItemSelectionUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject selectionPanel;
     [SerializeField] private List<ItemChoiceSlot> choiceSlots = new List<ItemChoiceSlot>();
+    private PlayerController pc;
+    private HammerController hc;
     
     private Action<Item> onItemSelectedCallback;
     
     void Start()
     {
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        hc = GameObject.Find("Hammer").GetComponent<HammerController>();
         // Hide selection panel at start
         selectionPanel.SetActive(false);
         
@@ -60,9 +64,41 @@ public class ItemSelectionUI : MonoBehaviour
         
         if (selectedItem != null)
         {
+            // if(selectedItem.itemType == 1)
+            // {
+                
+            // } else if (selectedItem.itemType == 2)
+            // {
+            //     pc.speed += selectedItem.increaseBy;
+            // } else if (selectedItem.itemType == 3)
+            // {
+                
+            // } else if (selectedItem.itemType == 4)
+            // {
+                
+            // } else if (selectedItem.itemType == 5)
+            // {
+            //     pc.maxHealth += selectedItem.increaseBy;
+            //     pc.health += selectedItem.increaseBy;
+            // } else if (selectedItem.itemType == 6)
+            // {
+            //     pc.regenTime -= selectedItem.increaseBy;
+            // } else if (selectedItem.itemType == 7)
+            // {
+                
+            // } else if (selectedItem.itemType == 8)
+            // {
+                
+            // } else if (selectedItem.itemType == 9)
+            // {
+                
+            // } else if (selectedItem.itemType == 10)
+            // {
+                
+            // }
             // Invoke callback
             onItemSelectedCallback?.Invoke(selectedItem);
-            
+
             // Hide selection panel
             HideSelection();
         }
