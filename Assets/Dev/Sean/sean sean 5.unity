@@ -2297,7 +2297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxHealth: 10
-  health: 1
+  health: 10
   maxMana: 10
   mana: 1
   manaRegenTime: 2
@@ -2305,6 +2305,7 @@ MonoBehaviour:
   canMove: 1
   exp: 0
   expToNextLevelUp: 10
+  beingAttacked: 0
   rb: {fileID: 833788483}
   im: {fileID: 2126504426}
   itemSelection: {fileID: 613829027}

@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
 
             rb.linearVelocity = (new Vector3(horizontalInput, 0f, verticalInput)) * speed;
         }
+
+        if(health <= 0)
+        {
+            gameOver();
+        }
     }
 
     private void TogglePause()
