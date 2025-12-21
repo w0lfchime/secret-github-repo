@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class AlexHammerCopy : MonoBehaviour
     public PlayerController pc;
     public GameObject hammerParticles;
     public AudioClip hitClip, breakClip;
+    public List<AudioClip> lowSpdHits;
+    public List<AudioClip> highSpdHits;
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
@@ -95,7 +98,16 @@ public class AlexHammerCopy : MonoBehaviour
             GameObject particleIns = Instantiate(hammerParticles, hammerHead.transform.position, Quaternion.identity);
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
             particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
-            AudioSource.PlayClipAtPoint(hitClip, hammerHead.transform.position, 1.0f);
+
+            int randAudio = Random.Range(0, 5);
+            if(speed >= 6)
+            {
+                AudioSource.PlayClipAtPoint(highSpdHits[randAudio], hammerHead.transform.position, 1.0f);
+            } else
+            {
+                AudioSource.PlayClipAtPoint(lowSpdHits[randAudio], hammerHead.transform.position, 1.0f);
+            }
+            
 
 
             if(col.gameObject.tag == "Enemy" || col.gameObject.tag == "Crystal")

@@ -1,4 +1,5 @@
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,19 +20,29 @@ public class PlayerController : MonoBehaviour
     public GameObject itemSelection;
     public GameObject gameOverScreen;
     public GameObject pauseMenu;
+    public AudioClip movementAudio;
+    public AudioSource movementAudioSource;
+    public bool isWalking = false;
     
     private bool isPaused = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // StartCoroutine(regen());
-        // StartCoroutine(manaRegen());
+        StartCoroutine(regen());
+        StartCoroutine(manaRegen());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!isWalking)
+        {
+            movementAudioSource.Stop();
+        } else if(!movementAudioSource.isPlaying)
+        {
+            movementAudioSource.Play();
+        }
         if(Input.GetKeyDown(KeyCode.P))
         {
             TogglePause();
@@ -40,6 +51,14 @@ public class PlayerController : MonoBehaviour
         if(canMove && !isPaused) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+
+            if(horizontalInput != 0 || verticalInput != 0)
+            {
+                isWalking = true;
+            } else
+            {
+                isWalking = false;
+            }
 
             rb.linearVelocity = (new Vector3(horizontalInput, 0f, verticalInput)) * speed;
         }
