@@ -305,8 +305,8 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
-  chaseEnterRadius: 10.51
-  chaseExitRadius: 25.25
+  chaseEnterRadius: 23.38
+  chaseExitRadius: 26.6
   chaseTargetSpeedMul: 1.25
   chaseTurnBoost: 1.25
   chaseReselectInterval: 0.25
