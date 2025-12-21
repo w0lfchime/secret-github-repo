@@ -1,6 +1,7 @@
 using System.Collections;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public int expToNextLevelUp = 10;
     public bool beingAttacked = false;
     public bool isDraining = false;
+    public int level = 1;
     public Rigidbody rb;
     public ItemManager im;
     public GameObject itemSelection;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip movementAudio;
     public AudioSource itemSound;
     public AudioSource movementAudioSource;
+    public TextMeshProUGUI gameOverText;
     public bool isWalking = false;
     
     private bool isPaused = false;
@@ -92,6 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         // do something to get a new item!
         itemSound.Play();
+        level++;
         im.TriggerItemSelection();
         itemSelection.SetActive(true);
         expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
@@ -100,6 +104,7 @@ public class PlayerController : MonoBehaviour
 
     public void gameOver()
     {
+        gameOverText.SetText("Level: " + level + "\nScore: " + exp);
         gameOverScreen.SetActive(true);
         Time.timeScale = 0;
     }
