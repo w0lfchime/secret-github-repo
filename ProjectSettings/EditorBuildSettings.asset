@@ -5,9 +5,24 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Dev/Jay/Scenes/new map.unity
+    guid: 0ec74f1d0e29f0d4fb911a95becfea7f
+  - enabled: 1
+    path: Assets/Final Scenes/StartMenu.unity
+    guid: 0345939846768434386a31429ae917e4
+  - enabled: 1
+    path: Assets/Final Scenes/Cutscene.unity
+    guid: eaa39b2e9bc2d774f84f933679387a33
+  - enabled: 1
+    path: Assets/Final Scenes/H2P_Lore.unity
+    guid: 2c26310f14a43d74687089bf2ef0bda8
+  - enabled: 1
+    path: Assets/Final Scenes/WinScene.unity
+    guid: 6b179c76491f54047a1b30bbf1f9b4ce
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

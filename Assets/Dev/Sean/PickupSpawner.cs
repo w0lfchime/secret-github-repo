@@ -36,7 +36,8 @@ public class PickupSpawner : MonoBehaviour
         if (spawnParticleEffect != null)
         {
             UnityEngine.Vector3 particlePosition = newLocation + new UnityEngine.Vector3(0, particleHeightOffset, 0);
-            GameObject.Instantiate(spawnParticleEffect, particlePosition, UnityEngine.Quaternion.identity);
+            GameObject part = GameObject.Instantiate(spawnParticleEffect, particlePosition, UnityEngine.Quaternion.identity);
+            part.transform.SetParent(newPickup.transform);
         }
         
         StartCoroutine(spawnPickup());
