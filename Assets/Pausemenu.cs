@@ -6,7 +6,7 @@ public class Pausemenu : MonoBehaviour
     public SlowTime slowTime;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.P))
         {
             slowTime.slowTime = !pauseMenu.activeSelf;
             pauseMenu.SetActive(!pauseMenu.activeSelf);
