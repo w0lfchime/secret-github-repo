@@ -22,6 +22,10 @@ public class VideoScript : MonoBehaviour
     {
         yield return new WaitForSeconds(20.5f);
         Debug.Log("Video over");
+        LoadScene();
+    }
+    public void LoadScene()
+    {
         SceneManager.LoadScene("H2P_Lore");
     }
 }
