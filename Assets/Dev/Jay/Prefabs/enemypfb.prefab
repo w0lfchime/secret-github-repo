@@ -316,3 +316,5 @@ MonoBehaviour:
   hideOriginalRenderers: 1
   disableOriginalColliders: 1
   useContainer: 1
+  alphaProperty: _Alpha
+  iced: 0

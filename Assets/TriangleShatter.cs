@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class TetraShatter : MonoBehaviour
 {
     [Header("Trigger (optional test)")]
@@ -34,30 +35,68 @@ public class TetraShatter : MonoBehaviour
     public bool disableOriginalColliders = true;
     public bool useContainer = true;
 
+    [Header("Per-object shader property (MPB)")]
+    public string alphaProperty = "_Alpha";
+    [Range(0f, 1f)] public float iced = 0f;
+
+    private Renderer rend;
+    private MaterialPropertyBlock mpb;     // CREATED IN AWAKE (not field init)
+    private int alphaId;
+    private float lastIced = float.NaN;
+
+    // Reuse lists (avoid GC)
+    private List<Vector3> verts;
+    private List<int> tris;
+
+    void Awake()
+    {
+        rend = GetComponent<Renderer>();
+        mpb = new MaterialPropertyBlock(); // ✅ allowed here
+        alphaId = Shader.PropertyToID(alphaProperty);
+
+        verts = new List<Vector3>(trianglesPerShard * 6);
+        tris  = new List<int>(trianglesPerShard * 24);
+
+        // Initialize MPB safely
+        ApplyMPBIfChanged(force: true);
+    }
+
     void Update()
     {
+        ApplyMPBIfChanged(force: false);
+
         if (Input.GetKeyDown(testKey))
             Shatter();
     }
 
-    public void Shatter()
+    private void ApplyMPBIfChanged(bool force)
     {
-        ShatterInternal(gameObject, Vector3.zero, false, Vector3.zero);
+        if (!force && Mathf.Approximately(lastIced, iced))
+            return;
+
+        lastIced = iced;
+
+        // Safely read current block, then set alpha
+        rend.GetPropertyBlock(mpb);
+        mpb.SetFloat(alphaId, iced);
+        rend.SetPropertyBlock(mpb);
     }
 
-    public void Shatter(Vector3 forceDirectionWorld)
-    {
-        ShatterInternal(gameObject, forceDirectionWorld, false, Vector3.zero);
-    }
-
-    public void Shatter(Vector3 forceDirectionWorld, Vector3 forceOriginWorld)
-    {
-        ShatterInternal(gameObject, forceDirectionWorld, true, forceOriginWorld);
-    }
+    public void Shatter() => ShatterInternal(gameObject, Vector3.zero, false, Vector3.zero);
+    public void Shatter(Vector3 forceDirectionWorld) => ShatterInternal(gameObject, forceDirectionWorld, false, Vector3.zero);
+    public void Shatter(Vector3 forceDirectionWorld, Vector3 forceOriginWorld) => ShatterInternal(gameObject, forceDirectionWorld, true, forceOriginWorld);
 
     private void ShatterInternal(GameObject root, Vector3 forceDirWorld, bool useOrigin, Vector3 originWorld)
     {
         if (!root) return;
+
+        // Ensure mpb exists (in case something calls before Awake)
+        if (mpb == null) mpb = new MaterialPropertyBlock();
+        if (rend == null) rend = GetComponent<Renderer>();
+
+        // Capture layer and current MPB ONCE at shatter time
+        int sourceLayer = root.layer;
+        rend.GetPropertyBlock(mpb);
 
         var meshFilters = root.GetComponentsInChildren<MeshFilter>(false);
         if (meshFilters.Length == 0) return;
@@ -76,14 +115,12 @@ public class TetraShatter : MonoBehaviour
         if (useContainer)
         {
             container = new GameObject(root.name + "_CHUNK_SHARDS");
+            container.layer = sourceLayer;
             container.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
         Vector3 biasNorm = impulseBias.sqrMagnitude > 0.00001f ? impulseBias.normalized : Vector3.zero;
         Vector3 dirNorm = forceDirWorld.sqrMagnitude > 0.00001f ? forceDirWorld.normalized * directionalForceWeight : Vector3.zero;
-
-        var verts = new List<Vector3>(trianglesPerShard * 6);
-        var tris = new List<int>(trianglesPerShard * 24);
 
         int triBudgetRemaining = maxTrianglesTotal;
 
@@ -104,9 +141,9 @@ public class TetraShatter : MonoBehaviour
                 int[] srcTris = src.GetTriangles(sub);
                 int triCount = srcTris.Length / 3;
                 if (triCount > triBudgetRemaining) continue;
-
                 triBudgetRemaining -= triCount;
-                Material mat = mr.sharedMaterials[sub];
+
+                Material mat = (mr.sharedMaterials != null && sub < mr.sharedMaterials.Length) ? mr.sharedMaterials[sub] : null;
 
                 int triIndex = 0;
                 int shardIndex = 0;
@@ -129,12 +166,15 @@ public class TetraShatter : MonoBehaviour
                         Vector3 w2 = t.TransformPoint(v[srcTris[i + 2]]);
 
                         centroid += (w0 + w1 + w2) / 3f;
-                        avgNormal += Vector3.Cross(w1 - w0, w2 - w0).normalized;
+
+                        Vector3 nrm = Vector3.Cross(w1 - w0, w2 - w0);
+                        if (nrm.sqrMagnitude > 0.000001f) avgNormal += nrm.normalized;
+
                         avgEdge += (w1 - w0).magnitude + (w2 - w1).magnitude + (w0 - w2).magnitude;
                     }
 
                     centroid /= take;
-                    avgNormal.Normalize();
+                    if (avgNormal.sqrMagnitude > 0.000001f) avgNormal.Normalize();
                     avgEdge /= (take * 3f);
                     float thickness = Mathf.Max(0.0002f, avgEdge * thicknessFactor);
 
@@ -145,7 +185,9 @@ public class TetraShatter : MonoBehaviour
                         Vector3 w1 = t.TransformPoint(v[srcTris[i + 1]]);
                         Vector3 w2 = t.TransformPoint(v[srcTris[i + 2]]);
 
-                        Vector3 nrm = Vector3.Cross(w1 - w0, w2 - w0).normalized;
+                        Vector3 nrm = Vector3.Cross(w1 - w0, w2 - w0);
+                        nrm = (nrm.sqrMagnitude > 0.000001f) ? nrm.normalized : (avgNormal.sqrMagnitude > 0.000001f ? avgNormal : Vector3.up);
+
                         Vector3 off = nrm * (thickness * 0.5f);
 
                         Vector3 f0 = (w0 - centroid) + off;
@@ -157,19 +199,26 @@ public class TetraShatter : MonoBehaviour
                         Vector3 b2 = (w2 - centroid) - off;
 
                         int start = verts.Count;
-                        verts.AddRange(new[] { f0, f1, f2, b0, b1, b2 });
+                        // no allocations: add individually instead of AddRange(new[])
+                        verts.Add(f0); verts.Add(f1); verts.Add(f2);
+                        verts.Add(b0); verts.Add(b1); verts.Add(b2);
 
-                        tris.AddRange(new[]
-                        {
-                            start, start+1, start+2,
-                            start+5, start+4, start+3,
-                            start, start+1, start+4, start, start+4, start+3,
-                            start+1, start+2, start+5, start+1, start+5, start+4,
-                            start+2, start, start+3, start+2, start+3, start+5
-                        });
+                        // Same tri block, no array allocation
+                        tris.Add(start);   tris.Add(start + 1); tris.Add(start + 2);
+                        tris.Add(start + 5); tris.Add(start + 4); tris.Add(start + 3);
+
+                        tris.Add(start);   tris.Add(start + 1); tris.Add(start + 4);
+                        tris.Add(start);   tris.Add(start + 4); tris.Add(start + 3);
+
+                        tris.Add(start + 1); tris.Add(start + 2); tris.Add(start + 5);
+                        tris.Add(start + 1); tris.Add(start + 5); tris.Add(start + 4);
+
+                        tris.Add(start + 2); tris.Add(start);   tris.Add(start + 3);
+                        tris.Add(start + 2); tris.Add(start + 3); tris.Add(start + 5);
                     }
 
                     GameObject shard = new GameObject($"chunk_{mf.name}_{sub}_{shardIndex++}");
+                    shard.layer = sourceLayer; // ✅ match source layer
                     if (useContainer) shard.transform.SetParent(container.transform, true);
                     shard.transform.position = centroid;
 
@@ -181,29 +230,33 @@ public class TetraShatter : MonoBehaviour
 
                     shard.AddComponent<MeshFilter>().sharedMesh = m;
 
-                    var r = shard.AddComponent<MeshRenderer>();
-                    r.sharedMaterial = mat;
+                    var shardRenderer = shard.AddComponent<MeshRenderer>();
+                    shardRenderer.sharedMaterial = mat;
+
+                    // ✅ apply per-object MPB (like _Alpha) to shard
+                    shardRenderer.SetPropertyBlock(mpb);
+
                     if (disableShadowsOnShards)
                     {
-                        r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                        r.receiveShadows = false;
+                        shardRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                        shardRenderer.receiveShadows = false;
                     }
 
                     var rb = shard.AddComponent<Rigidbody>();
                     rb.mass = shardMass;
                     rb.useGravity = useGravity;
+
+#if UNITY_2022_2_OR_NEWER
                     rb.linearDamping = linearDrag;
                     rb.angularDamping = angularDrag;
+#else
+                    rb.drag = linearDrag;
+                    rb.angularDrag = angularDrag;
+#endif
 
-                    // ✅ ALWAYS APPLY IMPULSE
-                    Vector3 baseDir;
-
-                    if (useOrigin)
-                        baseDir = (centroid - originWorld).normalized;
-                    else
-                        baseDir = (centroid - rootT.position).normalized;
-
+                    Vector3 baseDir = useOrigin ? (centroid - originWorld).normalized : (centroid - rootT.position).normalized;
                     Vector3 finalDir = (baseDir + dirNorm + biasNorm).normalized;
+
                     rb.AddForce(finalDir * impulseStrength, ForceMode.Impulse);
 
                     if (randomTorque > 0f)
