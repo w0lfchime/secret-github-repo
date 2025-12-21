@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Magic 8 Ball
   m_EditorClassIdentifier: 
   itemName: Magic 8 Ball
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c4e6e4dc5d4aabf40985750d54c0a502, type: 3}
   description: Increase max mana!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 8

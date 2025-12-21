@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AA Battery
   m_EditorClassIdentifier: 
   itemName: AA Battery
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7419dfcbbd3bee84a99ffcd847d55c42, type: 3}
   description: Decrease mana regen time!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 9
