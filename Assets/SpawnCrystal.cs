@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnCrystal : MonoBehaviour
@@ -7,12 +9,25 @@ public class SpawnCrystal : MonoBehaviour
     public float chance;
     public GameObject manaShard;
     public Vector2 spawnRange;
+    public float RegenTimeSeconds = 100;
     void Start()
     {
         float number = Random.Range(0f, 100f);
         if(chance >= number){
             GetComponent<MeshFilter>().mesh = crystals[Random.Range(0, crystals.Count-1)];
-        }else Destroy(gameObject);
+        }else
+        {
+            GetComponent<Collider>().enabled = false;
+            GetComponent<Renderer>().enabled = false;
+            StartCoroutine(RegenCoolDown());
+        }
+    }
+
+    IEnumerator RegenCoolDown()
+    {
+        yield return new WaitForSeconds(RegenTimeSeconds);
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Renderer>().enabled = true;
     }
 
     public void DestroyCrystal(Vector3 direction)
