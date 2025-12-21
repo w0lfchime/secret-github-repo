@@ -137,11 +137,6 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
-                    if (col.gameObject.GetComponent<SpawnCrystal>())
-                    {
-                        col.gameObject.GetComponent<SpawnCrystal>().DestroyCrystal(-new Vector3(lookDirection.x, 0, lookDirection.z));
-                    }
-
                     AudioSource.PlayClipAtPoint(breakClip, hammerHead.transform.position, 1.0f);
                     rotationTraveled+=rotationToHit;
 
@@ -150,7 +145,11 @@ public class AlexHammerCopy : MonoBehaviour
 
                     col.gameObject.GetComponent<Hittable>().shatter.Shatter(-new Vector3(lookDirection.x, 0, lookDirection.z));
                     pc.exp += hit.expAmount + (int)additionalExp;
-                    Destroy(col.gameObject);
+                    
+                    if (col.gameObject.GetComponent<SpawnCrystal>())
+                    {
+                        col.gameObject.GetComponent<SpawnCrystal>().DestroyCrystal(-new Vector3(lookDirection.x, 0, lookDirection.z));
+                    }else Destroy(col.gameObject);
 
                     if(pc.exp >= pc.expToNextLevelUp)
                     {
