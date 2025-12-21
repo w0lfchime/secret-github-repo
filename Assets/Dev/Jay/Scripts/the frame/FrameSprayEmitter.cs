@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FrameSprayEmitter : MonoBehaviour
 {
+	public float icePower = 1;
 	[Header("References")]
 	[SerializeField] private ParticleSystem sprayParticles;
 
@@ -23,8 +24,6 @@ public class FrameSprayEmitter : MonoBehaviour
 	[Header("Debug / Gizmos")]
 	[SerializeField] private bool drawGizmos = true;
 	[SerializeField] private bool drawOnlyWhenSelected = true;
-	[SerializeField] private bool logHits = false;
-
 	// cached hit info for gizmos
 	private bool _hasHit;
 	private RaycastHit _hit;
@@ -104,9 +103,13 @@ public class FrameSprayEmitter : MonoBehaviour
 			triggerInteraction
 		);
 
-		if (_hasHit && logHits)
+		if (_hasHit)
 		{
 			Debug.Log($"[SprayEmitter] Hit {_hit.collider.name} at {_hit.point} (normal {_hit.normal})", _hit.collider);
+			if(_hit.collider.gameObject.tag == "Enemy")
+			{
+				_hit.collider.GetComponent<Hittable>().iced = Mathf.Clamp(_hit.collider.GetComponent<Hittable>().iced + icePower*Time.deltaTime, 0, 1);
+			}
 		}
 
 		// If you want: apply paint, decals, splat, etc. right here when _hasHit is true.

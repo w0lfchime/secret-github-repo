@@ -99,14 +99,14 @@ public class AlexHammerCopy : MonoBehaviour
             AudioSource.PlayClipAtPoint(hitClip, hammerHead.transform.position, 1.0f);
 
 
-            if(col.gameObject.tag == "Enemy")
+            if(col.gameObject.tag == "Enemy" || col.gameObject.tag == "Crystal")
             {
                 Debug.Log("Hit an enemy with velovity: " + speed);
                 Hittable hit = col.gameObject.GetComponent<Hittable>();
 
                 hit.health -= damage * Mathf.Abs(speed/limit) * (hit.iced+.5f);
 
-                col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * Mathf.Abs(speed) * knockback);
+                if(col.gameObject.GetComponent<Rigidbody>()) col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * Mathf.Abs(speed) * knockback);
 
                 if(hit.health <= 0)
                 {
