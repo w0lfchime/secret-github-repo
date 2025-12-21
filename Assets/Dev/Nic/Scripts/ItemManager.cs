@@ -34,7 +34,7 @@ public class ItemManager : MonoBehaviour
     {
         if (Input.GetKeyDown(triggerKey))
         {
-            TriggerItemSelection();
+            //TriggerItemSelection();
         }
     }
     
