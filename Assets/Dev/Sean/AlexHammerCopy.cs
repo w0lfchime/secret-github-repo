@@ -16,7 +16,6 @@ public class AlexHammerCopy : MonoBehaviour
     public float limit = 10;
     public float slowDownSpeed = .1f;
     public LayerMask groundLayer;
-    public Material hammerMaterial;
     public float additionalExp = 0;
     private bool clicking, clickUp;
     public float rotationToHit = 10;
@@ -60,8 +59,8 @@ public class AlexHammerCopy : MonoBehaviour
             speed = Mathf.Clamp(speed,  -limit, limit);
             
         }
-        Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
-        hammerMaterial.SetColor("_EmissionColor", finalColor);
+        //Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
+        //hammerMaterial.SetColor("_EmissionColor", finalColor);
 
         speed = speed*slowDownSpeed;
 
