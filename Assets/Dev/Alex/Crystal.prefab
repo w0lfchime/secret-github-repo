@@ -272,7 +272,7 @@ MonoBehaviour:
   - {fileID: 8792586484180348971, guid: b52694bb672abce439799437cc1f39ff, type: 3}
   - {fileID: -6857689473578963052, guid: b52694bb672abce439799437cc1f39ff, type: 3}
   chance: 100
-  manaShard: {fileID: 0}
+  manaShard: {fileID: 1952790182162246531, guid: 680f0408854b838489ba5740561c8de6, type: 3}
   spawnRange: {x: 0, y: 0}
   RegenTimeSeconds: 300
   crystalHealth: 10

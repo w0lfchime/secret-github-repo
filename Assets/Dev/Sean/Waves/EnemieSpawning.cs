@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using UnityEditor.ShaderGraph;
 
 public class EnemieSpawning : MonoBehaviour
 {
@@ -11,20 +14,78 @@ public class EnemieSpawning : MonoBehaviour
 	[SerializeField] private Vector3 localRandomOffsetMin = Vector3.zero;
 	[SerializeField] private Vector3 localRandomOffsetMax = Vector3.zero;
     [SerializeField] private SplinePathSet pathSet;
-    public float waveTime = 45f;
+    enum Phase { Peace, Wave }
+    Phase phase = Phase.Peace;
+    public float startWait = 10f;
+    public float waveTime = 60f;
+    public float peaceTime = 30f;
+    public float subWaves;
+    public float tempWaveTime, tempPeaceTime, tempSubWaveTime;
+    public int wave;
+    private bool waving;
+    public Slider slider;
 
     public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(doTheRoar());
-        StartCoroutine(waitToStartSpawning());
+        tempPeaceTime = startWait;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (phase == Phase.Peace)
+    {
+        tempPeaceTime -= Time.deltaTime;
+        slider.value = Mathf.Clamp01(tempPeaceTime / peaceTime);
+        slider.fillRect.gameObject.GetComponent<Image>().color = Color.red;
+
+        if (tempPeaceTime <= 0f)
+        {
+            phase = Phase.Wave;
+            wave += 1;
+            tempWaveTime = waveTime;
+            tempSubWaveTime = 0f;
+            audioSource.Play();
+        }
+    }
+    else // Wave
+    {
+        tempWaveTime -= Time.deltaTime;
+        slider.value = Mathf.Clamp01(tempWaveTime / waveTime);
+        slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
+
+        tempSubWaveTime += Time.deltaTime;
+        float interval = waveTime / subWaves;
+
+        while (tempSubWaveTime >= interval)
+        {
+            tempSubWaveTime -= interval;
+            SpawnEnemy(Mathf.Clamp(wave - 1, 0, prefabs.Count - 1));
+        }
+
+        if (tempWaveTime <= 0f)
+        {
+            phase = Phase.Peace;
+            tempPeaceTime = peaceTime;
+            tempSubWaveTime = 0f;
+        }
+    }
+    }
+
+    public void SpawnEnemy(int index)
+    {
+        for(int enemy = 0; enemy < index; enemy ++){
+            for(int i = 0; i < spawnMulti[enemy]; i++)
+            {
+                for(int j = 0; j < 10; j++)
+                {
+                    // Spawn amount
+                    spawn(prefabs[enemy]);
+                }
+            }
+        }
     }
 
     public void spawn(GameObject prefab)
@@ -52,152 +113,5 @@ public class EnemieSpawning : MonoBehaviour
 		{
 			motor.SetPathSet(pathSet);
 		}
-    }
-
-    public IEnumerator doTheRoar()
-    {
-        audioSource.Play();
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(doTheRoar());
-    }
-
-    // Edit this to change when things start to spawn
-    public IEnumerator waitToStartSpawning()
-    {
-        StartCoroutine(spawnGreenSlimes());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnYellowSlimes());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnRedSlimes());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnSnakes());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnFireSpirit());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnSmallBoi());
-
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnCentaur());
-    }
-
-    // Edit these to change enemy spawn amount and how often they spawn once initally spawned
-    public IEnumerator spawnGreenSlimes()
-    {
-        for(int i = 0; i < spawnMulti[0]; i++)
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                // Spawn amount
-                spawn(prefabs[0]);
-            }
-        }
-        // Spawn frequency
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnGreenSlimes());
-    }
-
-    
-
-    public IEnumerator spawnYellowSlimes()
-    {
-        
-        for(int i = 0; i < spawnMulti[1]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[1]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnYellowSlimes());
-    }
-
-    public IEnumerator spawnRedSlimes()
-    {
-        
-        for(int i = 0; i < spawnMulti[2]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[2]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnRedSlimes());
-    }
-
-    public IEnumerator spawnSnakes()
-    {
-        
-        for(int i = 0; i < spawnMulti[3]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[3]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnSnakes());
-    }
-    
-    public IEnumerator spawnFireSpirit()
-    {
-        
-        for(int i = 0; i < spawnMulti[4]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[4]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnFireSpirit());
-    }
-
-    public IEnumerator spawnFishMan()
-    {
-        
-        for(int i = 0; i < spawnMulti[5]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[5]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnFishMan());
-    }
-
-    public IEnumerator spawnSmallBoi()
-    {
-        
-        for(int i = 0; i < spawnMulti[6]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[6]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnSmallBoi());
-    }
-
-    public IEnumerator spawnCentaur()
-    {
-        
-        for(int i = 0; i < spawnMulti[7]; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                spawn(prefabs[7]);
-            }
-        }
-        yield return new WaitForSeconds(waveTime);
-        StartCoroutine(spawnCentaur());
     }
 }
