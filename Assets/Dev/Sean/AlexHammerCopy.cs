@@ -17,6 +17,7 @@ public class AlexHammerCopy : MonoBehaviour
     public List<AudioClip> highSpdHits;
     public float damage = 5f;
     public float speed;
+    public float speedMulti = 1;
     public float spinMultiplier = 1f;
     private float direction = 1;
     public float limit = 10;
@@ -96,7 +97,7 @@ public class AlexHammerCopy : MonoBehaviour
         ps.rateOverTimeMultiplier += (targetParticle-ps.rateOverTimeMultiplier)*.05f;
         shape.radius = Mathf.Lerp(.5f, .75f, Mathf.Abs(speed)/limit);
 
-        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed)/limit);
+        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed * speedMulti)/limit);
     }
 
     public void OnTriggerEnter(Collider col) {

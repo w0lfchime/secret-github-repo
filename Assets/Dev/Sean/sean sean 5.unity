@@ -1839,6 +1839,7 @@ MonoBehaviour:
   localRandomOffsetMin: {x: 50, y: 0, z: 0}
   localRandomOffsetMax: {x: -50, y: 0, z: -50}
   pathSet: {fileID: 712445410}
+  waveTime: 45
   audioSource: {fileID: 341828291}
 --- !u!82 &341828291
 AudioSource:
@@ -4040,6 +4041,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0e7f928604704294389c06625f1cba34, type: 3}
   damage: 5
   speed: 0
+  speedMulti: 1
   spinMultiplier: 0.03
   limit: 10
   slowDownSpeed: 0.99
