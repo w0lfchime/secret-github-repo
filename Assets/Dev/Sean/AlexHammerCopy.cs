@@ -55,28 +55,9 @@ public class AlexHammerCopy : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
+        if (clicking)
         {
-            Vector3 directionToMouse = (hit.point - hammer.position).normalized;
-            Vector3 directionToHammer = -(hammer.transform.position - transform.position).normalized;
-
-            float angleToMouse = Vector3.SignedAngle(-directionToHammer, directionToMouse, Vector3.up);
-            if (clicking)
-            {
-                speed += spinMultiplier * direction;
-            }
-
-            if (clickUp)
-            {
-                speed = angleToMouse * spinMultiplier * direction * 30;
-                clickUp = false;
-            }
-
-            speed = Mathf.Clamp(speed,  -limit, limit);
-            
+            speed += spinMultiplier * direction;
         }
         //Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
         //hammerMaterial.SetColor("_EmissionColor", finalColor);
