@@ -11,9 +11,12 @@ public class EnemieSpawning : MonoBehaviour
 	[SerializeField] private Vector3 localRandomOffsetMin = Vector3.zero;
 	[SerializeField] private Vector3 localRandomOffsetMax = Vector3.zero;
     [SerializeField] private SplinePathSet pathSet;
+
+    public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        StartCoroutine(doTheRoar());
         StartCoroutine(waitToStartSpawning());
     }
 
@@ -48,6 +51,13 @@ public class EnemieSpawning : MonoBehaviour
 		{
 			motor.SetPathSet(pathSet);
 		}
+    }
+
+    public IEnumerator doTheRoar()
+    {
+        audioSource.Play();
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(doTheRoar());
     }
 
     // Edit this to change when things start to spawn
