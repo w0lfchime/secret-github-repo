@@ -24,6 +24,7 @@ public class EnemieSpawning : MonoBehaviour
     public int wave;
     private bool waving;
     public Slider slider;
+    private List<GameObject> enemies = new List<GameObject>();
 
     public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,11 +36,12 @@ public class EnemieSpawning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemies.RemoveAll(item => item == null);
         float interval = waveTime / subWaves;
 
         if (phase == Phase.Peace)
     {
-        tempPeaceTime -= Time.deltaTime;
+        if(enemies.Count==0) tempPeaceTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempPeaceTime / peaceTime);
         slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
 
@@ -108,6 +110,7 @@ public class EnemieSpawning : MonoBehaviour
 		pos += worldOffset;
 
 		GameObject go = Instantiate(prefab, pos, rot);
+        enemies.Add(go);
 
 		var motor = go.GetComponent<SplineEnemyMotor>();
 		if (motor)
