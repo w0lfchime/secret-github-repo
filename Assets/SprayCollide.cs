@@ -40,7 +40,7 @@ public class SprayCollide : MonoBehaviour
         {
             var cm = other.GetComponent<SecondCageManager>();
 
-            cm.cm.StartCageHeal();
+            cm.cm.StartCageHeal(num * power);
         }
         
             

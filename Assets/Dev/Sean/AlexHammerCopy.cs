@@ -137,6 +137,11 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
+                    if (col.gameObject.GetComponent<SpawnCrystal>())
+                    {
+                        col.gameObject.GetComponent<SpawnCrystal>().DestroyCrystal(-new Vector3(lookDirection.x, 0, lookDirection.z));
+                    }
+
                     AudioSource.PlayClipAtPoint(breakClip, hammerHead.transform.position, 1.0f);
                     rotationTraveled+=rotationToHit;
 

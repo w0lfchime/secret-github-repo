@@ -125,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   increaseBy: 5
+  particle: {fileID: 2140479475659021138, guid: 7e27222388e8cc14f81aa59cc5d77966, type: 3}
 --- !u!1001 &1934731991961156335
 PrefabInstance:
   m_ObjectHideFlags: 0

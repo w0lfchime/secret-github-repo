@@ -6,7 +6,7 @@ public class CageManager : MonoBehaviour
 {
     public float maxHealth = 100;
     public float cageHealth = 100;
-    public bool isHealing = false;
+    public float depletionMultiplier = 1;
     public PlayerController pc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +17,7 @@ public class CageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        cageHealth-=Time.deltaTime * depletionMultiplier;
         if(cageHealth <= 0)
         {
             pc.gameOver();
@@ -44,25 +45,12 @@ public class CageManager : MonoBehaviour
         }
     }
 
-    public void StartCageHeal()
+    public void StartCageHeal(float amount)
     {
-        if(!isHealing)
-        {
-            StartCoroutine(healCage());
-        }
-    }
-
-    public IEnumerator healCage()
-    {
-        cageHealth += 5;
-
+        cageHealth += amount * 30;
         if(cageHealth > maxHealth)
         {
             cageHealth = maxHealth;
         }
-
-        isHealing = true;
-        yield return new WaitForSeconds(0.1f);
-        isHealing = false;
     }
 }

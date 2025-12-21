@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
             {
                 manaHeal(pickup.increaseBy);
             }
-
+            Instantiate(pickup.particle, pickup.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
         }
     }
