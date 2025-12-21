@@ -34,6 +34,23 @@ public class Hittable : MonoBehaviour
         StartCoroutine(attackCage());
     }
 
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.tag == "Cage")
+        {
+            attackingCage = true;
+            startEnemyCageAttack();
+        }
+    }
+
+    public void OnTriggerExit(Collider col)
+    {
+        if(col.tag == "Cage")
+        {
+            attackingCage = false;
+        }
+    }
+
     public IEnumerator attackCage()
     {
         yield return new WaitForSeconds(attackSpeed);
