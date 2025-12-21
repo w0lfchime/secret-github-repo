@@ -72,7 +72,7 @@ public class ItemSelectionUI : MonoBehaviour
                 
             } else if (selectedItem.itemType == 2)
             {
-                pc.speed += selectedItem.increaseBy;
+                hc.speedMulti += selectedItem.increaseBy;
             } else if (selectedItem.itemType == 3)
             {
                 hc.damage += selectedItem.increaseBy;
@@ -86,6 +86,10 @@ public class ItemSelectionUI : MonoBehaviour
             } else if (selectedItem.itemType == 6)
             {
                 pc.regenTime -= selectedItem.increaseBy;
+                if(pc.regenTime < 0.1)
+                {
+                    pc.regenTime = 0.1f;
+                }
             } else if (selectedItem.itemType == 7)
             {
                 hc.additionalExp += selectedItem.increaseBy;

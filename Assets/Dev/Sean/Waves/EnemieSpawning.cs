@@ -11,6 +11,7 @@ public class EnemieSpawning : MonoBehaviour
 	[SerializeField] private Vector3 localRandomOffsetMin = Vector3.zero;
 	[SerializeField] private Vector3 localRandomOffsetMax = Vector3.zero;
     [SerializeField] private SplinePathSet pathSet;
+    public float waveTime = 45f;
 
     public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,7 +57,7 @@ public class EnemieSpawning : MonoBehaviour
     public IEnumerator doTheRoar()
     {
         audioSource.Play();
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(doTheRoar());
     }
 
@@ -65,22 +66,22 @@ public class EnemieSpawning : MonoBehaviour
     {
         StartCoroutine(spawnGreenSlimes());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnYellowSlimes());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnRedSlimes());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnSnakes());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnFireSpirit());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnSmallBoi());
 
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnCentaur());
     }
 
@@ -96,7 +97,7 @@ public class EnemieSpawning : MonoBehaviour
             }
         }
         // Spawn frequency
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnGreenSlimes());
     }
 
@@ -112,7 +113,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[1]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnYellowSlimes());
     }
 
@@ -126,7 +127,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[2]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnRedSlimes());
     }
 
@@ -140,7 +141,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[3]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnSnakes());
     }
     
@@ -154,7 +155,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[4]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnFireSpirit());
     }
 
@@ -168,7 +169,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[5]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnFishMan());
     }
 
@@ -182,7 +183,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[6]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnSmallBoi());
     }
 
@@ -196,7 +197,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[7]);
             }
         }
-        yield return new WaitForSeconds(45f);
+        yield return new WaitForSeconds(waveTime);
         StartCoroutine(spawnCentaur());
     }
 }
