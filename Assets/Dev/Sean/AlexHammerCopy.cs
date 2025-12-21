@@ -16,6 +16,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
+    private float direction = 1;
     public float limit = 10;
     public float slowDownSpeed = .1f;
     public LayerMask groundLayer;
@@ -50,12 +51,12 @@ public class AlexHammerCopy : MonoBehaviour
             float angleToMouse = Vector3.SignedAngle(-directionToHammer, directionToMouse, Vector3.up);
             if (clicking)
             {
-                speed += spinMultiplier;
+                speed += spinMultiplier * direction;
             }
 
             if (clickUp)
             {
-                speed = angleToMouse * spinMultiplier * 30;
+                speed = angleToMouse * spinMultiplier * direction * 30;
                 clickUp = false;
             }
 
@@ -93,7 +94,7 @@ public class AlexHammerCopy : MonoBehaviour
             Debug.Log("Collision entered");
             Debug.Log(speed);
             speed = -speed*1.5f;
-            spinMultiplier = -spinMultiplier;
+            direction = -direction;
 
             GameObject particleIns = Instantiate(hammerParticles, hammerHead.transform.position, Quaternion.identity);
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
@@ -122,9 +123,10 @@ public class AlexHammerCopy : MonoBehaviour
                 if(hit.health <= 0)
                 {
                     AudioSource.PlayClipAtPoint(breakClip, hammerHead.transform.position, 1.0f);
-
+                    rotationTraveled+=rotationToHit;
+                    
                     speed = -speed/2;
-                    spinMultiplier = -spinMultiplier;
+                    direction = -direction;
 
                     col.gameObject.GetComponent<Hittable>().shatter.Shatter(-new Vector3(lookDirection.x, 0, lookDirection.z));
                     pc.exp += hit.expAmount + (int)additionalExp;
