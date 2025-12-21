@@ -1698,24 +1698,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &613829029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613829027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 758de6a88f6e04840b7f7a756531b851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionPanel: {fileID: 613829027}
-  choiceSlots:
-  - {fileID: 1716908620}
-  - {fileID: 1776996677}
-  - {fileID: 1274225900}
-  slow: {fileID: 0}
 --- !u!114 &613829030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2101,6 +2083,7 @@ GameObject:
   - component: {fileID: 833788484}
   - component: {fileID: 833788483}
   - component: {fileID: 833788489}
+  - component: {fileID: 833788490}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9866,13 +9849,7 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
-  myAnimationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  transitionSpeed: 1
+  slow: {fileID: 1584848736}
 --- !u!33 &215592838909553307
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10937,3 +10914,5 @@ SceneRoots:
   - {fileID: 849183753}
   - {fileID: 1229806718}
   - {fileID: 313342676}
+  - {fileID: 30542383}
+  - {fileID: 1578954727}
