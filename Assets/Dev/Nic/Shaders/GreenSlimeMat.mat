@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: GreenSlimeMat
   m_Shader: {fileID: -6465566751694194690, guid: 3b7d1a5897f07da408b6179ca0dad1e5, type: 3}
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 2100000, guid: d9311d6686ebaec48b3109e92484629a, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -23,26 +23,10 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _FresnelPower: 2.28
-    - _QueueControl: 0
-    - _QueueOffset: 0
+    m_Floats: []
     m_Colors:
-    - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
     - _SlimeColor: {r: 0.085465185, g: 0.3962264, b: 0.065040916, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
