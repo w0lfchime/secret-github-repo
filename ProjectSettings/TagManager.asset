@@ -8,6 +8,7 @@ TagManager:
   - Cage
   - Frame
   - Pickup
+  - Crystal
   layers:
   - Default
   - TransparentFX
