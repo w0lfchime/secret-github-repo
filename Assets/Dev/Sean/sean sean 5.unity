@@ -452,7 +452,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613829027}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 758de6a88f6e04840b7f7a756531b851, type: 3}
   m_Name: 
@@ -1640,6 +1640,31 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
+  myAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  transitionSpeed: 1
 --- !u!114 &613829030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,6 +2323,7 @@ GameObject:
   - component: {fileID: 833788484}
   - component: {fileID: 833788483}
   - component: {fileID: 833788489}
+  - component: {fileID: 833788490}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2360,6 +2386,9 @@ MonoBehaviour:
   itemSelection: {fileID: 613829027}
   gameOverScreen: {fileID: 1940702057}
   pauseMenu: {fileID: 0}
+  movementAudio: {fileID: 8300000, guid: 487bc87c042a3434ca323cf823d2aa05, type: 3}
+  movementAudioSource: {fileID: 833788490}
+  isWalking: 0
 --- !u!136 &833788485
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2473,6 +2502,18 @@ MonoBehaviour:
   hammerParticles: {fileID: 7655042411931391213, guid: a9d9cb901501e9a40989dca5b01f020b, type: 3}
   hitClip: {fileID: 8300000, guid: cec4e3fc92d852f438f69ceb91ccba5d, type: 3}
   breakClip: {fileID: 8300000, guid: abf9ce7fdcc7f2341984e99ea8958638, type: 3}
+  lowSpdHits:
+  - {fileID: 8300000, guid: 9ac08c47f3e3cc249bdc66972e994d67, type: 3}
+  - {fileID: 8300000, guid: 12a53c1f0a0bc384fa17c10955cd8f6a, type: 3}
+  - {fileID: 8300000, guid: fb768e4299ed73d489cdd8260098ff3e, type: 3}
+  - {fileID: 8300000, guid: e12af31b9c934f644bed02894111d010, type: 3}
+  - {fileID: 8300000, guid: fefbbfaf1adb9cd40a79fd13c5b15656, type: 3}
+  highSpdHits:
+  - {fileID: 8300000, guid: d3e3c6965ab74774a8037acf0e910b71, type: 3}
+  - {fileID: 8300000, guid: cf3388ff56c2dd54084f56c741df9c89, type: 3}
+  - {fileID: 8300000, guid: 97616aeba5d017d4a9bb82e0ecd60edb, type: 3}
+  - {fileID: 8300000, guid: d80c3e68d8c3ad340a69412c2d772aad, type: 3}
+  - {fileID: 8300000, guid: 0e7f928604704294389c06625f1cba34, type: 3}
   damage: 5
   speed: 0
   spinMultiplier: 0.03
@@ -2487,6 +2528,103 @@ MonoBehaviour:
   CameraShakeAmount: 1
   CameraShakeTime: 0.2
   knockback: 500
+--- !u!82 &833788490
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833788481}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 487bc87c042a3434ca323cf823d2aa05, type: 3}
+  m_Resource: {fileID: 8300000, guid: 487bc87c042a3434ca323cf823d2aa05, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.623
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &849183753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4344,7 +4482,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9942,6 +10080,13 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
+  myAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  transitionSpeed: 1
 --- !u!33 &215592838909553307
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11009,3 +11154,4 @@ SceneRoots:
   - {fileID: 849183753}
   - {fileID: 1229806718}
   - {fileID: 313342676}
+  - {fileID: 1578954727}
