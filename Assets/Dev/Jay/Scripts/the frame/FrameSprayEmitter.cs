@@ -48,7 +48,6 @@ public class FrameSprayEmitter : MonoBehaviour
 			bool spraying = Input.GetButton("Fire2"); // Right-click or Left Ctrl
 			if (spraying)
 			{
-				Debug.Log("Right click held - spraying");
 				EmitContinuous();
 				DoSphereCast();
 			}
