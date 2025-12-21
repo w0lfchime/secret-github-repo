@@ -2007,6 +2007,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 839834787318114962, guid: dfd8db0d575932340967e8d9bcf79406, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f59c349fed5913747be70d4253e8b94b, type: 2}
     - target: {fileID: 1200012738004454215, guid: dfd8db0d575932340967e8d9bcf79406, type: 3}
       propertyPath: m_Name
       value: WORLD
@@ -2432,7 +2436,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  hammerMaterial: {fileID: 2100000, guid: ca3f4c8ba0d35ec468bbf487148f85ee, type: 2}
   additionalExp: 0
   rotationToHit: 1
   bodyLeanAmount: -70

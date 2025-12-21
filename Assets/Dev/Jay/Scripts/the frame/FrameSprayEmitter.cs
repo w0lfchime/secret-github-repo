@@ -7,7 +7,6 @@ public class FrameSprayEmitter : MonoBehaviour
 	[SerializeField] private ParticleSystem sprayParticles;
 
 	[Header("Input")]
-	[SerializeField] private int mouseButton = 0;          // 0 = left click
 	[SerializeField] private bool holdToSpray = true;      // true: while held, false: single burst per click
 
 	[Header("Spray Burst")]
@@ -46,9 +45,10 @@ public class FrameSprayEmitter : MonoBehaviour
 
 		if (holdToSpray)
 		{
-			bool spraying = Input.GetMouseButton(mouseButton);
+			bool spraying = Input.GetButton("Fire2"); // Right-click or Left Ctrl
 			if (spraying)
 			{
+				Debug.Log("Right click held - spraying");
 				EmitContinuous();
 				DoSphereCast();
 			}
@@ -59,8 +59,9 @@ public class FrameSprayEmitter : MonoBehaviour
 		}
 		else
 		{
-			if (Input.GetMouseButtonDown(mouseButton))
+			if (Input.GetButtonDown("Fire2")) // Right-click or Left Ctrl
 			{
+				Debug.Log("Right click pressed - spraying");
 				EmitClick();
 				DoSphereCast();
 			}
