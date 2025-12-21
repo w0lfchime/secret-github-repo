@@ -4341,6 +4341,7 @@ MonoBehaviour:
   movementAudioSource: {fileID: 833788490}
   stageMusic: {fileID: 1578954726}
   endSound: {fileID: 8300000, guid: 2b78613d4e3e9d740b039d661263b532, type: 3}
+  scrollSound: {fileID: 8300000, guid: f32d28f1cdf50d1468d810d8f0d1c380, type: 3}
   gameOverText: {fileID: 1603281809}
   isWalking: 0
   hasLost: 0

@@ -47,7 +47,7 @@ public class CageManager : MonoBehaviour
 
     public void StartCageHeal(float amount)
     {
-        cageHealth += amount * 30;
+        cageHealth += amount * 50;
         if(cageHealth > maxHealth)
         {
             cageHealth = maxHealth;

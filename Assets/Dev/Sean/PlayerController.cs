@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource movementAudioSource;
     public AudioSource stageMusic;
     public AudioClip endSound;
+    public AudioClip scrollSound;
     public TextMeshProUGUI gameOverText;
     public bool isWalking = false;
     public bool hasLost = false;
@@ -178,9 +179,11 @@ public class PlayerController : MonoBehaviour
 
             if(pickup.type == 1)
             {
+                AudioSource.PlayClipAtPoint(scrollSound, col.transform.position, 1.0f);
                 heal(pickup.increaseBy);
             } else if(pickup.type == 2)
             {
+                AudioSource.PlayClipAtPoint(scrollSound, col.transform.position, 1.0f);
                 manaHeal(pickup.increaseBy);
             }
             Instantiate(pickup.particle, pickup.transform.position, Quaternion.identity);
