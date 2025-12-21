@@ -28,7 +28,7 @@ public class PickupSpawner : MonoBehaviour
         int toSpawn = Random.Range(0, 2);
 
         GameObject newPickup = GameObject.Instantiate(prefabList[toSpawn]);
-        UnityEngine.Vector3 newLocation = new UnityEngine.Vector3(Random.Range(-16, 1), -7, Random.Range(-13, 6));
+        UnityEngine.Vector3 newLocation = new UnityEngine.Vector3(Random.Range(-30, 30), -7, Random.Range(-30, 30));
         newPickup.transform.position = newLocation;
         newPickup.transform.localScale = UnityEngine.Vector3.one * pickupScale;
         

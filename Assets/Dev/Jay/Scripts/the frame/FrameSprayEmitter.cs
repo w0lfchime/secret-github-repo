@@ -26,6 +26,7 @@ public class FrameSprayEmitter : MonoBehaviour
 	// cached hit info for gizmos
 	private bool _hasHit;
 	private RaycastHit _hit;
+	public PlayerController pc;
 
 	private void Reset()
 	{
@@ -48,25 +49,38 @@ public class FrameSprayEmitter : MonoBehaviour
 			bool spraying = Input.GetButton("Fire2"); // Right-click or Left Ctrl
 			if (spraying)
 			{
-				EmitContinuous();
-				DoSphereCast();
+				if(pc.mana > 0)
+				{
+					if(!pc.isDraining)
+					{
+						pc.isDraining = true;
+						pc.drainMana();
+					}
+
+					EmitContinuous();
+					DoSphereCast();
+				}
+				
 			}
 			else
 			{
 				_hasHit = false;
+				pc.isDraining = false;
 			}
 		}
 		else
 		{
-			if (Input.GetButtonDown("Fire2")) // Right-click or Left Ctrl
+			if (Input.GetButtonDown("Fire2") && pc.mana > 0) // Right-click or Left Ctrl
 			{
 				Debug.Log("Right click pressed - spraying");
+				pc.drainSingle();
 				EmitClick();
 				DoSphereCast();
 			}
 			else
 			{
 				_hasHit = false;
+				pc.isDraining = false;
 			}
 		}
 	}

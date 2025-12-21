@@ -1,4 +1,5 @@
 using System.Collections;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -15,12 +16,14 @@ public class PlayerController : MonoBehaviour
     public int exp = 0;
     public int expToNextLevelUp = 10;
     public bool beingAttacked = false;
+    public bool isDraining = false;
     public Rigidbody rb;
     public ItemManager im;
     public GameObject itemSelection;
     public GameObject gameOverScreen;
     public GameObject pauseMenu;
     public AudioClip movementAudio;
+    public AudioSource itemSound;
     public AudioSource movementAudioSource;
     public bool isWalking = false;
     
@@ -88,6 +91,7 @@ public class PlayerController : MonoBehaviour
     public void levelUp()
     {
         // do something to get a new item!
+        itemSound.Play();
         im.TriggerItemSelection();
         itemSelection.SetActive(true);
         expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
@@ -118,6 +122,29 @@ public class PlayerController : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    public void drainMana()
+    {
+        mana -= 1;
+        StartCoroutine(drainManaReal());
+    }
+
+    public void drainSingle()
+    {
+        mana -= 1;
+    }
+
+    public IEnumerator drainManaReal()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if(isDraining)
+        {
+            mana -= 1;
+            StartCoroutine(drainManaReal());
+        }
+        
+
     }
 
     public void OnTriggerEnter(Collider col)
