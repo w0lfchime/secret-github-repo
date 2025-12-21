@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hammer Oil
   m_EditorClassIdentifier: 
   itemName: Hammer Oil
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d5250e8489a8d98419348e9ba5e5f3fa, type: 3}
   description: Increase max hammer speed!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 11
