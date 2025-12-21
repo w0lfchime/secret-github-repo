@@ -19,6 +19,7 @@ public class AlexHammerCopy : MonoBehaviour
     private float direction = 1;
     public float limit = 10;
     public float slowDownSpeed = .1f;
+    public float breakSpeedSlowDown = .5f;
     public LayerMask groundLayer;
     public float additionalExp = 0;
     private bool clicking, clickUp;
@@ -124,8 +125,8 @@ public class AlexHammerCopy : MonoBehaviour
                 {
                     AudioSource.PlayClipAtPoint(breakClip, hammerHead.transform.position, 1.0f);
                     rotationTraveled+=rotationToHit;
-                    
-                    speed = -speed/2;
+
+                    speed = -speed*breakSpeedSlowDown;
                     direction = -direction;
 
                     col.gameObject.GetComponent<Hittable>().shatter.Shatter(-new Vector3(lookDirection.x, 0, lookDirection.z));
