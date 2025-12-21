@@ -35,18 +35,20 @@ public class EnemieSpawning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float interval = waveTime / subWaves;
+
         if (phase == Phase.Peace)
     {
         tempPeaceTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempPeaceTime / peaceTime);
-        slider.fillRect.gameObject.GetComponent<Image>().color = Color.red;
+        slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
 
         if (tempPeaceTime <= 0f)
         {
             phase = Phase.Wave;
             wave += 1;
             tempWaveTime = waveTime;
-            tempSubWaveTime = 0f;
+            tempSubWaveTime = interval;
             audioSource.Play();
         }
     }
@@ -54,15 +56,14 @@ public class EnemieSpawning : MonoBehaviour
     {
         tempWaveTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempWaveTime / waveTime);
-        slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
+        slider.fillRect.gameObject.GetComponent<Image>().color = Color.red;
 
         tempSubWaveTime += Time.deltaTime;
-        float interval = waveTime / subWaves;
 
         while (tempSubWaveTime >= interval)
         {
             tempSubWaveTime -= interval;
-            SpawnEnemy(Mathf.Clamp(wave - 1, 0, prefabs.Count - 1));
+            SpawnEnemy(Mathf.Clamp(wave, 0, prefabs.Count));
         }
 
         if (tempWaveTime <= 0f)
