@@ -17,19 +17,32 @@ public class SprayCollide : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        Debug.Log(other.gameObject.tag);
         // Ultra-safe in case something weird disables/enables order
         if (collisionEvents == null)
             collisionEvents = new List<ParticleCollisionEvent>(32);
 
-        if (!other.CompareTag("Enemy"))
+        if (!other.CompareTag("Enemy") && !other.CompareTag("Cage"))
             return;
 
         int num = ps.GetCollisionEvents(other, collisionEvents);
         if (num <= 0)
             return;
 
-        var hit = other.GetComponentInParent<Hittable>();
-        if (hit != null)
-            hit.iced = Mathf.Clamp(hit.iced + num * power, 0, 1);
+        if (other.CompareTag("Enemy"))
+        {
+            var hit = other.GetComponentInParent<Hittable>();
+            if (hit != null)
+            {
+                hit.iced = Mathf.Clamp(hit.iced + num * power, 0, 1);
+            }
+        } else if (other.CompareTag("Cage"))
+        {
+            var cm = other.GetComponent<SecondCageManager>();
+
+            cm.cm.StartCageHeal();
+        }
+        
+            
     }
 }
