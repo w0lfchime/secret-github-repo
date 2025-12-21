@@ -1640,31 +1640,7 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
-  myAnimationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  transitionSpeed: 1
+  slow: {fileID: 0}
 --- !u!114 &613829030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10080,13 +10056,7 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
-  myAnimationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  transitionSpeed: 1
+  slow: {fileID: 0}
 --- !u!33 &215592838909553307
 MeshFilter:
   m_ObjectHideFlags: 0
