@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         StartCoroutine(regen());
-        StartCoroutine(manaRegen());
+        // StartCoroutine(manaRegen());
     }
 
     // Update is called once per frame
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator drainManaReal()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         if(isDraining)
         {
             mana -= 1;
