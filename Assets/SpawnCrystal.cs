@@ -10,6 +10,7 @@ public class SpawnCrystal : MonoBehaviour
     public GameObject manaShard;
     public Vector2 spawnRange;
     public float RegenTimeSeconds = 100;
+    public float crystalHealth = 10;
     void Start()
     {
         float number = Random.Range(0f, 100f);
@@ -17,14 +18,15 @@ public class SpawnCrystal : MonoBehaviour
             GetComponent<MeshFilter>().mesh = crystals[Random.Range(0, crystals.Count-1)];
         }else
         {
-            GetComponent<Collider>().enabled = false;
-            GetComponent<Renderer>().enabled = false;
-            StartCoroutine(RegenCoolDown());
+            Destroy(gameObject);
         }
     }
 
     IEnumerator RegenCoolDown()
     {
+        GetComponent<Hittable>().health = crystalHealth;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().enabled = false;
         yield return new WaitForSeconds(RegenTimeSeconds);
         GetComponent<Collider>().enabled = true;
         GetComponent<Renderer>().enabled = true;
@@ -32,6 +34,7 @@ public class SpawnCrystal : MonoBehaviour
 
     public void DestroyCrystal(Vector3 direction)
     {
+        StartCoroutine(RegenCoolDown());
         float amount = Random.Range(spawnRange.x, spawnRange.y);
         for(int i = 0; i < amount; i++)
         {

@@ -4,6 +4,7 @@ public class ManaShard : MonoBehaviour
 {
     public float healAmount = 5;
     public float forceMult = 10;
+    public GameObject particle;
     void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "Player")
@@ -17,6 +18,7 @@ public class ManaShard : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<PlayerController>().manaHeal(healAmount);
+            Instantiate(particle, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

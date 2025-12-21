@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
         if(mana > maxMana)
         {
-            health = maxHealth;
+            mana = maxMana;
         }
     }
 
