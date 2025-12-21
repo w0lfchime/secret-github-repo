@@ -2093,7 +2093,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 500
-  cageHealth: 500
+  cageHealth: 250
+  isHealing: 0
   pc: {fileID: 833788484}
 --- !u!65 &790316679
 BoxCollider:

@@ -110,6 +110,9 @@ public class FrameSprayEmitter : MonoBehaviour
 			if(_hit.collider.gameObject.tag == "Enemy")
 			{
 				_hit.collider.GetComponent<Hittable>().iced = Mathf.Clamp(_hit.collider.GetComponent<Hittable>().iced + icePower*Time.deltaTime, 0, 1);
+			} else if (_hit.collider.gameObject.tag == "Cage")
+			{
+				_hit.collider.GetComponent<CageManager>().StartCageHeal();
 			}
 		}
 
