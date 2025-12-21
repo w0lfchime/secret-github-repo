@@ -50,28 +50,43 @@ public class EnemieSpawning : MonoBehaviour
 		}
     }
 
+    // Edit this to change when things start to spawn
     public IEnumerator waitToStartSpawning()
     {
         StartCoroutine(spawnGreenSlimes());
-        yield return new WaitForSeconds(30f);
-        Debug.Log("Started yellow slimes");
+
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnYellowSlimes());
-        yield return new WaitForSeconds(60f);
-        Debug.Log("Started red slimes");
+
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnRedSlimes());
+
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnSnakes());
+
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnFireSpirit());
+
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnSmallBoi());
+
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnCentaur());
     }
 
+    // Edit these to change enemy spawn amount and how often they spawn once initally spawned
     public IEnumerator spawnGreenSlimes()
     {
-       
         for(int i = 0; i < spawnMulti[0]; i++)
         {
-            for(int j = 0; j < 15; j++)
+            for(int j = 0; j < 10; j++)
             {
+                // Spawn amount
                 spawn(prefabs[0]);
             }
         }
-        yield return new WaitForSeconds(30f);
+        // Spawn frequency
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnGreenSlimes());
     }
 
@@ -82,12 +97,12 @@ public class EnemieSpawning : MonoBehaviour
         
         for(int i = 0; i < spawnMulti[1]; i++)
         {
-            for(int j = 0; j < 10; j++)
+            for(int j = 0; j < 5; j++)
             {
                 spawn(prefabs[1]);
             }
         }
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnYellowSlimes());
     }
 
@@ -101,7 +116,7 @@ public class EnemieSpawning : MonoBehaviour
                 spawn(prefabs[2]);
             }
         }
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnRedSlimes());
     }
 
@@ -110,12 +125,68 @@ public class EnemieSpawning : MonoBehaviour
         
         for(int i = 0; i < spawnMulti[3]; i++)
         {
-            for(int j = 0; j < 10; j++)
+            for(int j = 0; j < 5; j++)
             {
                 spawn(prefabs[3]);
             }
         }
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(45f);
         StartCoroutine(spawnSnakes());
+    }
+    
+    public IEnumerator spawnFireSpirit()
+    {
+        
+        for(int i = 0; i < spawnMulti[4]; i++)
+        {
+            for(int j = 0; j < 5; j++)
+            {
+                spawn(prefabs[4]);
+            }
+        }
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnFireSpirit());
+    }
+
+    public IEnumerator spawnFishMan()
+    {
+        
+        for(int i = 0; i < spawnMulti[5]; i++)
+        {
+            for(int j = 0; j < 5; j++)
+            {
+                spawn(prefabs[5]);
+            }
+        }
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnFishMan());
+    }
+
+    public IEnumerator spawnSmallBoi()
+    {
+        
+        for(int i = 0; i < spawnMulti[6]; i++)
+        {
+            for(int j = 0; j < 5; j++)
+            {
+                spawn(prefabs[6]);
+            }
+        }
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnSmallBoi());
+    }
+
+    public IEnumerator spawnCentaur()
+    {
+        
+        for(int i = 0; i < spawnMulti[7]; i++)
+        {
+            for(int j = 0; j < 5; j++)
+            {
+                spawn(prefabs[7]);
+            }
+        }
+        yield return new WaitForSeconds(45f);
+        StartCoroutine(spawnCentaur());
     }
 }

@@ -1635,6 +1635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneToLoad: Cutscene
+  nextPage: {fileID: 0}
 --- !u!4 &313342676
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,12 +1825,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21fde1bba9718d45a205660d3fe9898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMulti: 01000000010000000100000001000000
+  spawnMulti: 01000000010000000100000001000000010000000100000001000000
   prefabs:
   - {fileID: 4709636470982895720, guid: c1e726b50ea5e614683c02ae04705830, type: 3}
   - {fileID: 4709636470982895720, guid: eeab0398868e40748882b08b5c1e41cb, type: 3}
   - {fileID: 4709636470982895720, guid: 7e702da535fb79d419128bd0998b7bbf, type: 3}
   - {fileID: 4709636470982895720, guid: 08728c136c43af447a4d68331725a889, type: 3}
+  - {fileID: 4709636470982895720, guid: ff9ce05a9cf8f304088d58b1385c6a26, type: 3}
+  - {fileID: 4709636470982895720, guid: 28e75def783e95841adbaccf1b59ffa7, type: 3}
+  - {fileID: 4709636470982895720, guid: 5680ab206b16a02429907aa084bbcb3c, type: 3}
   localOffset: {x: 0, y: -1.5, z: 0}
   localRandomOffsetMin: {x: 50, y: 0, z: 0}
   localRandomOffsetMax: {x: -50, y: 0, z: -50}
