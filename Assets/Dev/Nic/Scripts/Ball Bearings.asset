@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ball Bearings
   m_EditorClassIdentifier: 
   itemName: Ball Bearings
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 51c78c783f32b064eb4833d09470b64c, type: 3}
   description: Swing the hammer faster!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 12

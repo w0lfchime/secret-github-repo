@@ -80,6 +80,183 @@ public class SplineEnemyMotor : MonoBehaviour
 	[SerializeField] private float switchHysteresis = 0.25f;    // must be this much closer to switch
 	[SerializeField] private int globalSearchSamples = 32;      // coarse samples across whole spline
 
+	[Header("End Handoff")]
+	[SerializeField] private float endHandoffT = 0.98f;          // when t >= this on an open spline, try to switch
+	[SerializeField] private float handoffProbeDistance = 2.5f;   // meters forward along tangent to search from
+	[SerializeField] private float forceSwitchIfProbeCloserBy = 0.05f; // small tolerance
+
+	// ========================= ADD THESE FIELDS =========================
+
+	[Header("Chase Mode")]
+	[SerializeField] private bool enableChase = true;
+	[SerializeField] private LayerMask playerMask;
+	[SerializeField] private float chaseEnterRadius = 4.0f;
+	[SerializeField] private float chaseExitRadius = 5.5f;     // hysteresis (should be > enter)
+	[SerializeField] private float chaseTargetSpeedMul = 1.25f;
+	[SerializeField] private float chaseTurnBoost = 1.25f;     // makes turning feel snappier while chasing
+	[SerializeField] private float chaseReselectInterval = 0.25f; // while chasing, re-check nearest player
+
+	private bool _isChasing = false;
+	private Transform _chaseTarget = null;
+	private float _chaseReselectTimer = 0f;
+
+	// buffers
+	private Collider[] _players = new Collider[8];
+
+
+	// ========================= ADD THESE FUNCTIONS =========================
+
+	private void UpdateChaseState()
+	{
+		if (!enableChase || playerMask.value == 0)
+		{
+			_isChasing = false;
+			_chaseTarget = null;
+			return;
+		}
+
+		Vector3 pos = transform.position;
+
+		// If we have a target, keep it unless it exits the larger radius
+		if (_isChasing && _chaseTarget != null)
+		{
+			float d = Vector3.Distance(pos, _chaseTarget.position);
+			if (d > chaseExitRadius)
+			{
+				_isChasing = false;
+				_chaseTarget = null;
+			}
+			return;
+		}
+
+		// Not chasing: periodically look for a player to chase
+		_chaseReselectTimer -= Time.fixedDeltaTime;
+		if (_chaseReselectTimer > 0f) return;
+		_chaseReselectTimer = Mathf.Max(0.05f, chaseReselectInterval);
+
+		int count = Physics.OverlapSphereNonAlloc(pos, chaseEnterRadius, _players, playerMask);
+		if (count <= 0) return;
+
+		Transform best = null;
+		float bestD2 = float.PositiveInfinity;
+
+		for (int i = 0; i < count; i++)
+		{
+			var c = _players[i];
+			if (!c) continue;
+
+			float d2 = (c.transform.position - pos).sqrMagnitude;
+			if (d2 < bestD2)
+			{
+				bestD2 = d2;
+				best = c.transform;
+			}
+		}
+
+		if (best != null)
+		{
+			_isChasing = true;
+			_chaseTarget = best;
+		}
+	}
+
+	private Vector3 ComputeDesiredDir_Chase(Vector3 pos, out Vector3 right)
+	{
+		// chase direction
+		Vector3 toTarget = _chaseTarget.position - pos;
+		if (keepUpright) toTarget.y = 0f;
+
+		Vector3 desiredDir = toTarget.sqrMagnitude > 0.0001f ? toTarget.normalized : transform.forward;
+
+		// right vector for wander/separation while chasing
+		right = Vector3.Cross(Vector3.up, desiredDir);
+		right = right.sqrMagnitude > 0.0001f ? right.normalized : transform.right;
+
+		return desiredDir;
+	}
+
+	private Vector3 ComputeDesiredDir_Spline(Vector3 pos, out Vector3 right)
+	{
+		// NOTE: this function assumes _activePath/_t etc. are valid and updates the same way your current FixedUpdate does.
+
+		// Refine t on the active path (cheap local search)
+		_t = FindClosestT_LocalWindow(_activePath, pos, _t);
+
+		// Compute nearest + lookahead ON ACTIVE PATH
+		Vector3 nearest = EvalPos(_activePath, _t);
+		float aheadT = AdvanceT(_activePath, _t, lookAheadT);
+		Vector3 ahead = EvalPos(_activePath, aheadT);
+
+		// Tangent ON ACTIVE PATH (for lane offset + fallback forward)
+		Vector3 tangent = EvalTangent(_activePath, _t);
+		if (keepUpright) tangent.y = 0f;
+		tangent = tangent.sqrMagnitude > 0.0001f ? tangent.normalized : transform.forward;
+
+		right = Vector3.Cross(Vector3.up, tangent);
+		right = right.sqrMagnitude > 0.0001f ? right.normalized : transform.right;
+
+		Vector3 offsetVec = right * _laneOffset + Vector3.up * _heightOffset;
+
+		Vector3 nearestOffset = nearest + offsetVec;
+		Vector3 aheadOffset = ahead + offsetVec;
+
+		// ===== END HANDOFF (open spline) =====
+		bool closed = _activePath.container.Splines[_activePath.splineIndex].Closed;
+		if (!closed && _t >= endHandoffT)
+		{
+			Vector3 probePos = nearestOffset + tangent * handoffProbeDistance;
+			SelectBestPath(force: true, searchPos: probePos, excludeCurrent: true);
+
+			if (_hasActivePath && _activePath.container != null)
+			{
+				_t = FindClosestT_LocalWindow(_activePath, pos, _t);
+
+				nearest = EvalPos(_activePath, _t);
+				aheadT = AdvanceT(_activePath, _t, lookAheadT);
+				ahead = EvalPos(_activePath, aheadT);
+
+				tangent = EvalTangent(_activePath, _t);
+				if (keepUpright) tangent.y = 0f;
+				tangent = tangent.sqrMagnitude > 0.0001f ? tangent.normalized : transform.forward;
+
+				right = Vector3.Cross(Vector3.up, tangent);
+				right = right.sqrMagnitude > 0.0001f ? right.normalized : transform.right;
+
+				offsetVec = right * _laneOffset + Vector3.up * _heightOffset;
+
+				nearestOffset = nearest + offsetVec;
+				aheadOffset = ahead + offsetVec;
+			}
+		}
+		// ===== END HANDOFF (open spline) =====
+
+		// Forward direction: lookahead OR tangent fallback
+		Vector3 toAhead = (aheadOffset - pos);
+		Vector3 forwardDir = toAhead.sqrMagnitude > 0.0001f ? toAhead.normalized : tangent;
+
+		// Rejoin steering toward OFFSET target
+		Vector3 toSpline = (nearestOffset - pos);
+		float dist = toSpline.magnitude;
+
+		float rejoin01 = 0f;
+		if (dist > alignDistance)
+			rejoin01 = Mathf.InverseLerp(alignDistance, hardRejoinDistance, dist);
+
+		Vector3 rejoinDir = dist > 0.0001f ? (toSpline / dist) : Vector3.zero;
+
+		Vector3 desiredDir = forwardDir;
+		if (rejoin01 > 0f)
+			desiredDir = (forwardDir + rejoinDir * (rejoinStrength * rejoin01)).normalized;
+
+		if (keepUpright)
+		{
+			desiredDir.y = 0f;
+			if (desiredDir.sqrMagnitude > 0.0001f) desiredDir.Normalize();
+		}
+
+		return desiredDir;
+	}
+
 
 	// our estimated progress along the spline [0..1]
 	private float _t;
@@ -122,9 +299,12 @@ public class SplineEnemyMotor : MonoBehaviour
 
 	private void SelectBestPath(bool force)
 	{
-		if (pathSet == null || pathSet.Count == 0) return;
+		SelectBestPath(force, transform.position, excludeCurrent: false);
+	}
 
-		Vector3 pos = transform.position;
+	private void SelectBestPath(bool force, Vector3 searchPos, bool excludeCurrent)
+	{
+		if (pathSet == null || pathSet.Count == 0) return;
 
 		// Current distance to active path (if any)
 		float currentDist = float.PositiveInfinity;
@@ -132,12 +312,11 @@ public class SplineEnemyMotor : MonoBehaviour
 
 		if (_hasActivePath && _activePath.container != null)
 		{
-			currentBestT = FindClosestT_LocalWindow(_activePath, pos, _t); // cheap refine
+			currentBestT = FindClosestT_LocalWindow(_activePath, searchPos, _t);
 			Vector3 p = EvalPos(_activePath, currentBestT);
-			currentDist = (p - pos).magnitude;
+			currentDist = (p - searchPos).magnitude;
 		}
 
-		// Find best path globally (coarse scan each path)
 		float bestDist = float.PositiveInfinity;
 		float bestT = 0f;
 		int bestPathIndex = -1;
@@ -148,11 +327,17 @@ public class SplineEnemyMotor : MonoBehaviour
 			if (path.container == null) continue;
 			if (path.container.Splines.Count == 0) continue;
 
+			// Optionally exclude the current active path
+			if (excludeCurrent && _hasActivePath &&
+				path.container == _activePath.container &&
+				path.splineIndex == _activePath.splineIndex)
+				continue;
+
 			path.splineIndex = Mathf.Clamp(path.splineIndex, 0, path.container.Splines.Count - 1);
 
-			float t = FindClosestT_Global(path, pos, globalSearchSamples);
+			float t = FindClosestT_Global(path, searchPos, globalSearchSamples);
 			Vector3 p = EvalPos(path, t);
-			float d = (p - pos).magnitude;
+			float d = (p - searchPos).magnitude;
 
 			if (d < bestDist)
 			{
@@ -164,7 +349,6 @@ public class SplineEnemyMotor : MonoBehaviour
 
 		if (bestPathIndex < 0) return;
 
-		// Decide switch
 		bool shouldSwitch =
 			force ||
 			!_hasActivePath ||
@@ -174,16 +358,15 @@ public class SplineEnemyMotor : MonoBehaviour
 		{
 			_activePath = pathSet.paths[bestPathIndex];
 			_activePath.splineIndex = Mathf.Clamp(_activePath.splineIndex, 0, _activePath.container.Splines.Count - 1);
-
 			_hasActivePath = true;
 			_t = bestT;
 		}
 		else
 		{
-			// stay on current, but keep refined t
 			_t = currentBestT;
 		}
 	}
+
 
 	private float FindClosestT_Global(SplinePathSet.PathRef path, Vector3 worldPos, int samples)
 	{
@@ -265,9 +448,13 @@ public class SplineEnemyMotor : MonoBehaviour
 	{
 		if (pathSet == null || pathSet.Count == 0) return;
 
-		// Periodically reselect closest path (and allow switching)
+		// Update chase target / mode first
+		UpdateChaseState();
+
+		// While NOT chasing, keep your normal path reselection cadence.
+		// While chasing, we still keep active path valid in the background, but we don't keep switching constantly.
 		_reselectTimer -= Time.fixedDeltaTime;
-		if (!_hasActivePath || _reselectTimer <= 0f)
+		if (!_hasActivePath || (!_isChasing && _reselectTimer <= 0f))
 		{
 			_reselectTimer = Mathf.Max(0.05f, reselectInterval);
 			SelectBestPath(force: !_hasActivePath);
@@ -277,64 +464,23 @@ public class SplineEnemyMotor : MonoBehaviour
 
 		Vector3 pos = transform.position;
 
-		// Refine t on the active path (cheap local search)
-		_t = FindClosestT_LocalWindow(_activePath, pos, _t);
+		// Choose desired direction based on mode
+		Vector3 right;
+		Vector3 desiredDir = _isChasing && _chaseTarget != null
+			? ComputeDesiredDir_Chase(pos, out right)
+			: ComputeDesiredDir_Spline(pos, out right);
 
-		// Compute nearest + lookahead ON ACTIVE PATH
-		Vector3 nearest = EvalPos(_activePath, _t);
-		float aheadT = AdvanceT(_activePath, _t, lookAheadT);
-		Vector3 ahead = EvalPos(_activePath, aheadT);
-
-		// Tangent ON ACTIVE PATH (for your lane offset logic)
-		Vector3 tangent = EvalTangent(_activePath, _t);
-
-		if (keepUpright) tangent.y = 0f;
-		tangent = tangent.sqrMagnitude > 0.0001f ? tangent.normalized : transform.forward;
-
-		Vector3 right = Vector3.Cross(Vector3.up, tangent);
-		right = right.sqrMagnitude > 0.0001f ? right.normalized : transform.right;
-
-		Vector3 offsetVec = right * _laneOffset + Vector3.up * _heightOffset;
-
-		Vector3 nearestOffset = nearest + offsetVec;
-		Vector3 aheadOffset = ahead + offsetVec;
-
-		Vector3 toAhead = (aheadOffset - pos);
-		Vector3 forwardDir = toAhead.sqrMagnitude > 0.0001f ? toAhead.normalized : transform.forward;
-
-		// 3) rejoin steering (stronger when farther) - uses OFFSET target now
-		Vector3 toSpline = (nearestOffset - pos);
-		float dist = toSpline.magnitude;
-
-		float rejoin01 = 0f;
-		if (dist > alignDistance)
-			rejoin01 = Mathf.InverseLerp(alignDistance, hardRejoinDistance, dist);
-
-		Vector3 rejoinDir = dist > 0.0001f ? (toSpline / dist) : Vector3.zero;
-
-		// Blend: mostly forward along spline, plus some pull back to it when drifting
-		Vector3 desiredDir = forwardDir;
-		if (rejoin01 > 0f)
-			desiredDir = (forwardDir + rejoinDir * (rejoinStrength * rejoin01)).normalized;
-
-		// Optional: keep movement on XZ plane (tower defense style)
-		if (keepUpright)
-		{
-			desiredDir.y = 0f;
-			if (desiredDir.sqrMagnitude > 0.0001f) desiredDir.Normalize();
-		}
-
-		// 4) velocity control via acceleration force (tries to reach targetSpeed)
+		// Velocity control via acceleration force (tries to reach targetSpeed)
 		Vector3 vel = _rb.linearVelocity;
 
-		// NEW: Wander (sideways noise so they don't all move identical)
+		// Wander (sideways noise so they don't all move identical)
 		float tW = Time.time * wanderFrequency + _wanderPhase;
 		float n = Mathf.PerlinNoise(tW, 0.123f) * 2f - 1f; // [-1,1]
 		Vector3 wanderAccel = right * (n * wanderStrength);
 		if (keepUpright) wanderAccel.y = 0f;
 		_rb.AddForce(wanderAccel, ForceMode.Acceleration);
 
-		// NEW: Separation (repel nearby enemies a bit so they clash / don't stack)
+		// Separation (repel nearby enemies so they don't stack)
 		if (separationStrength > 0f && separationRadius > 0f)
 		{
 			int count = Physics.OverlapSphereNonAlloc(pos, separationRadius, _neighbors, neighborMask);
@@ -366,7 +512,7 @@ public class SplineEnemyMotor : MonoBehaviour
 			}
 		}
 
-		// Remove sideways drift relative to desiredDir (helps stay on path without “rail snapping”)
+		// Remove sideways drift relative to desiredDir
 		if (vel.sqrMagnitude > 0.0001f)
 		{
 			Vector3 lateral = vel - Vector3.Project(vel, desiredDir);
@@ -375,7 +521,10 @@ public class SplineEnemyMotor : MonoBehaviour
 			_rb.AddForce(lateralAccel, ForceMode.Acceleration);
 		}
 
-		Vector3 desiredVel = desiredDir * (targetSpeed * _speedMul); // NEW: per-enemy speed
+		// Speed: boost while chasing
+		float speedMul = _speedMul * (_isChasing ? chaseTargetSpeedMul : 1f);
+
+		Vector3 desiredVel = desiredDir * (targetSpeed * speedMul);
 		Vector3 neededVelChange = desiredVel - vel;
 		Vector3 neededAccel = neededVelChange / Time.fixedDeltaTime;
 
@@ -384,7 +533,7 @@ public class SplineEnemyMotor : MonoBehaviour
 
 		_rb.AddForce(neededAccel, ForceMode.Acceleration);
 
-		// 5) face velocity (or desired direction) for visuals
+		// Face velocity for visuals (boost turning while chasing)
 		if (rotateToVelocity)
 		{
 			Vector3 faceDir = _rb.linearVelocity.sqrMagnitude > 0.05f ? _rb.linearVelocity : desiredDir;
@@ -392,8 +541,9 @@ public class SplineEnemyMotor : MonoBehaviour
 
 			if (faceDir.sqrMagnitude > 0.0001f)
 			{
+				float ts = turnSpeed * (_isChasing ? chaseTurnBoost : 1f);
 				Quaternion targetRot = Quaternion.LookRotation(faceDir.normalized, Vector3.up);
-				transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.fixedDeltaTime);
+				transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, ts * Time.fixedDeltaTime);
 			}
 		}
 	}

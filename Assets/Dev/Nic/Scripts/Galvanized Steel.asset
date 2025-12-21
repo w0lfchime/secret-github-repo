@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Galvanized Steel
   m_EditorClassIdentifier: 
   itemName: Galvanized Steel
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: f545b391b8bb431488cf5e9beb997825, type: 3}
   description: Your hammer does more damage!
-  itemColor: {r: 0, g: 0.06282711, b: 1, a: 1}
+  itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 3
   increaseBy: 2

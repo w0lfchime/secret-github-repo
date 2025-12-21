@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chain lock
   m_EditorClassIdentifier: 
   itemName: Chain Lock
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 5fa36cbfd2d998c46ab51527d59fb922, type: 3}
   description: Increase cage health!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 4

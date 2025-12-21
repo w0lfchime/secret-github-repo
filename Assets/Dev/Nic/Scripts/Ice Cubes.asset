@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ice Cubes
   m_EditorClassIdentifier: 
   itemName: Ice Cubes
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 766d86a5ed471ee47a98c937a555db2d, type: 3}
   description: Enemies freeze faster!
-  itemColor: {r: 1, g: 0, b: 0, a: 1}
+  itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 1
   increaseBy: 0.1
