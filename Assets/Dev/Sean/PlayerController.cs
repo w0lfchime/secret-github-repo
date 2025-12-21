@@ -27,8 +27,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip movementAudio;
     public AudioSource itemSound;
     public AudioSource movementAudioSource;
+    public AudioSource stageMusic;
+    public AudioClip endSound;
     public TextMeshProUGUI gameOverText;
     public bool isWalking = false;
+    public bool hasLost = false;
     
     private bool isPaused = false;
     
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
         level++;
         im.TriggerItemSelection();
         itemSelection.SetActive(true);
-        expToNextLevelUp += (int)(1.5 * expToNextLevelUp);
+        expToNextLevelUp += (int)(1.2 * expToNextLevelUp);
         Debug.Log("Leveled up");
     }
 
@@ -106,7 +109,21 @@ public class PlayerController : MonoBehaviour
     {
         gameOverText.SetText("Level: " + level + "\nScore: " + exp);
         gameOverScreen.SetActive(true);
+
+        if(!hasLost)
+        {
+            hasLost = true;
+            setEndSound();
+        }
+        
         Time.timeScale = 0;
+    }
+
+    public void setEndSound()
+    {
+        stageMusic.clip = endSound;
+        stageMusic.loop = false;
+        stageMusic.Play();
     }
 
     public void heal(float healAmount)
