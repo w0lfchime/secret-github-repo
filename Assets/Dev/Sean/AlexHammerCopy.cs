@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class AlexHammerCopy : MonoBehaviour
     public Rigidbody rb;
     public PlayerController pc;
     public GameObject hammerParticles;
+    public AudioSource woosh;
     public AudioClip hitClip, breakClip;
     public List<AudioClip> lowSpdHits;
     public List<AudioClip> highSpdHits;
@@ -37,6 +39,17 @@ public class AlexHammerCopy : MonoBehaviour
         }else clicking = false;
         if (Input.GetMouseButtonUp(0)){
             //clickUp = true;
+        }
+
+        woosh.pitch = Math.Abs(speed) / limit;
+        
+        if(clicking && !woosh.isPlaying)
+        {
+            woosh.pitch = Math.Abs(speed) / limit;
+            woosh.Play();
+        } else if (!clicking && woosh.isPlaying)
+        {
+            woosh.Stop();
         }
     }
     void FixedUpdate()
@@ -101,7 +114,7 @@ public class AlexHammerCopy : MonoBehaviour
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
             particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
 
-            int randAudio = Random.Range(0, 5);
+            int randAudio = UnityEngine.Random.Range(0, 5);
             if(speed >= 6)
             {
                 AudioSource.PlayClipAtPoint(highSpdHits[randAudio], hammerHead.transform.position, 1.0f);
