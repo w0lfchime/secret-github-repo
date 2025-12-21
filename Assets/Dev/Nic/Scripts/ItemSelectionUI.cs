@@ -14,6 +14,8 @@ public class ItemSelectionUI : MonoBehaviour
     private CageManager cm;
     
     private Action<Item> onItemSelectedCallback;
+
+    public SlowTime slow;
     
     void Start()
     {
@@ -30,7 +32,7 @@ public class ItemSelectionUI : MonoBehaviour
             choiceSlots[i].SetClickCallback(() => OnChoiceClicked(index));
         }
     }
-    
+
     public void ShowItemSelection(List<Item> items, Action<Item> callback)
     {
         Debug.Log("Doin some stuff");
@@ -52,9 +54,8 @@ public class ItemSelectionUI : MonoBehaviour
                 choiceSlots[i].gameObject.SetActive(false);
             }
         }
-        
-        // Pause game 
-        Time.timeScale = 0f;
+
+        slow.slowTime = true;
     }
     
     private void OnChoiceClicked(int index)
@@ -118,6 +119,6 @@ public class ItemSelectionUI : MonoBehaviour
         selectionPanel.SetActive(false);
         
         // Unpause game
-        Time.timeScale = 1f;
+        slow.slowTime = false;
     }
 }
