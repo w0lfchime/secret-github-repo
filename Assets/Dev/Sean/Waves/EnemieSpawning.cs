@@ -25,6 +25,7 @@ public class EnemieSpawning : MonoBehaviour
     private bool waving;
     public Slider slider;
     private List<GameObject> enemies = new List<GameObject>();
+    public TMP_Text text;
 
     public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -44,6 +45,7 @@ public class EnemieSpawning : MonoBehaviour
         if(enemies.Count==0) tempPeaceTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempPeaceTime / peaceTime);
         slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
+        text.text = "PEACE";
 
         if (tempPeaceTime <= 0f)
         {
@@ -59,6 +61,7 @@ public class EnemieSpawning : MonoBehaviour
         tempWaveTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempWaveTime / waveTime);
         slider.fillRect.gameObject.GetComponent<Image>().color = Color.red;
+        text.text = "DANGER";
 
         tempSubWaveTime += Time.deltaTime;
 
