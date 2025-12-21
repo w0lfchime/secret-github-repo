@@ -99,7 +99,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d9311d6686ebaec48b3109e92484629a, type: 2}
-  - {fileID: 2100000, guid: d9311d6686ebaec48b3109e92484629a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -183,7 +182,6 @@ GameObject:
   - component: {fileID: 4902908232652138930}
   - component: {fileID: 1785942577256305891}
   - component: {fileID: 6595616653647325340}
-  - component: {fileID: 2040547567472466134}
   m_Layer: 7
   m_Name: enemy 3
   m_TagString: Enemy
@@ -274,7 +272,7 @@ MonoBehaviour:
   lookAheadT: 0.07
   searchWindowT: 0.05
   samplesPerStep: 16
-  targetSpeed: 8
+  targetSpeed: 4
   maxAcceleration: 25
   lateralDamping: 6
   alignDistance: 3.28
@@ -317,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4709636470982895720}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77e9bf7e64e751140a300f908655e132, type: 3}
   m_Name: 
@@ -331,24 +329,3 @@ MonoBehaviour:
   attackSpeed: 1
   expAmount: 5
   shatter: {fileID: 5943826633521758965}
---- !u!114 &2040547567472466134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4709636470982895720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e9bf7e64e751140a300f908655e132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cm: {fileID: 0}
-  rend: {fileID: 0}
-  attackingCage: 0
-  health: 10
-  iced: 0
-  damage: 5
-  attackSpeed: 1
-  expAmount: 5
-  shatter: {fileID: 0}
