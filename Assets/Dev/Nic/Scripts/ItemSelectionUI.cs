@@ -12,6 +12,7 @@ public class ItemSelectionUI : MonoBehaviour
     private PlayerController pc;
     private AlexHammerCopy hc;
     private CageManager cm;
+    public GameObject particleStuff;
     
     private Action<Item> onItemSelectedCallback;
 
@@ -69,7 +70,8 @@ public class ItemSelectionUI : MonoBehaviour
         {
             if(selectedItem.itemType == 1)
             {
-                
+                var shape = particleStuff.GetComponent<ParticleSystem>().shape;
+                shape.angle += selectedItem.increaseBy;
             } else if (selectedItem.itemType == 2)
             {
                 hc.speedMulti += selectedItem.increaseBy;
