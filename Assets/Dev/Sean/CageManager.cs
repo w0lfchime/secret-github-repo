@@ -21,22 +21,22 @@ public class CageManager : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider col)
+    public void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.tag == "Enemy")
         {
-            Hittable hit = col.GetComponent<Hittable>();
+            Hittable hit = col.gameObject.GetComponent<Hittable>();
 
             hit.attackingCage = true;
             hit.startEnemyCageAttack();
         }
     }
 
-    public void OnTriggerExit(Collider col)
+    public void OnCollisionExit(Collision col)
     {
         if(col.gameObject.tag == "Enemy")
         {
-            Hittable hit = col.GetComponent<Hittable>();
+            Hittable hit = col.gameObject.GetComponent<Hittable>();
 
             hit.attackingCage = false;
         }
