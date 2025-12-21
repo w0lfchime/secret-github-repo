@@ -1768,6 +1768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 341828288}
   - component: {fileID: 341828289}
+  - component: {fileID: 341828290}
   m_Layer: 0
   m_Name: Enemy Spawner
   m_TagString: Untagged
@@ -1798,7 +1799,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341828287}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 970fa53f2d0e97c4d990da6064df1708, type: 3}
   m_Name: 
@@ -1811,6 +1812,28 @@ MonoBehaviour:
   localOffset: {x: 0, y: -1.5, z: 0}
   localRandomOffsetMin: {x: 50, y: 0, z: 0}
   localRandomOffsetMax: {x: -50, y: 0, z: -50}
+--- !u!114 &341828290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341828287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c21fde1bba9718d45a205660d3fe9898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMulti: 01000000010000000100000001000000
+  prefabs:
+  - {fileID: 4709636470982895720, guid: c1e726b50ea5e614683c02ae04705830, type: 3}
+  - {fileID: 4709636470982895720, guid: eeab0398868e40748882b08b5c1e41cb, type: 3}
+  - {fileID: 4709636470982895720, guid: 7e702da535fb79d419128bd0998b7bbf, type: 3}
+  - {fileID: 4709636470982895720, guid: 08728c136c43af447a4d68331725a889, type: 3}
+  localOffset: {x: 0, y: -1.5, z: 0}
+  localRandomOffsetMin: {x: 50, y: 0, z: 0}
+  localRandomOffsetMax: {x: -50, y: 0, z: -50}
+  pathSet: {fileID: 712445410}
 --- !u!1 &366625861
 GameObject:
   m_ObjectHideFlags: 0
