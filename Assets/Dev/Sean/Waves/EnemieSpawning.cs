@@ -93,7 +93,7 @@ public class EnemieSpawning : MonoBehaviour
         for(int enemy = 0; enemy < index; enemy ++){
             for(int i = 0; i < spawnMulti[enemy]; i++)
             {
-                for(int j = 0; j < 10; j++)
+                for(int j = 0; j < 5; j++)
                 {
                     // Spawn amount
                     spawn(prefabs[enemy]);

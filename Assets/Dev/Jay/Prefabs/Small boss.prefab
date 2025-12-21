@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 99656467281103303, guid: b260c75f7f0df3a4484cf72927ef1d6c, type: 3}
+  - {fileID: 2100000, guid: 339218b5f373dfa43bc709aa244de926, type: 2}
   - {fileID: -4246479402191905792, guid: b260c75f7f0df3a4484cf72927ef1d6c, type: 3}
   - {fileID: -5605289326131794027, guid: b260c75f7f0df3a4484cf72927ef1d6c, type: 3}
   - {fileID: 637949407474519127, guid: b260c75f7f0df3a4484cf72927ef1d6c, type: 3}
@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 0}
+  rb: {fileID: 0}
   rend: {fileID: 1166122762981614924}
   attackingCage: 0
   health: 20
@@ -332,4 +333,5 @@ MonoBehaviour:
   damage: 9
   attackSpeed: 1
   expAmount: 12
+  speedMulti: 1
   shatter: {fileID: 2652914276122916977}
