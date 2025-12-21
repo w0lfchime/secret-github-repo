@@ -7611,6 +7611,7 @@ MonoBehaviour:
   gameOverText: {fileID: 1603281809}
   isWalking: 0
   hasLost: 0
+  slowTime: {fileID: 1584848736}
 --- !u!136 &833788485
 CapsuleCollider:
   m_ObjectHideFlags: 0

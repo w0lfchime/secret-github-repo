@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public bool isWalking = false;
     public bool hasLost = false;
+    public SlowTime slowTime;
     
     private bool isPaused = false;
     
@@ -117,7 +118,7 @@ public class PlayerController : MonoBehaviour
             setEndSound();
         }
         
-        Time.timeScale = 0;
+        slowTime.slowTime = true;
     }
 
     public void setEndSound()

@@ -42,7 +42,15 @@ public class EnemieSpawning : MonoBehaviour
 
         if (phase == Phase.Peace)
     {
-        if(enemies.Count==0) tempPeaceTime -= Time.deltaTime;
+        foreach(GameObject enemy in enemies)
+            {
+                enemy.transform.position+=Vector3.up*Time.deltaTime*30;
+                if(enemy.transform.position.y > 30)
+                {
+                    Destroy(enemy);
+                }
+            }
+        tempPeaceTime -= Time.deltaTime;
         slider.value = Mathf.Clamp01(tempPeaceTime / peaceTime);
         slider.fillRect.gameObject.GetComponent<Image>().color = Color.green;
         text.text = "PEACE";
@@ -85,7 +93,7 @@ public class EnemieSpawning : MonoBehaviour
         for(int enemy = 0; enemy < index; enemy ++){
             for(int i = 0; i < spawnMulti[enemy]; i++)
             {
-                for(int j = 0; j < 10; j++)
+                for(int j = 0; j < 3; j++)
                 {
                     // Spawn amount
                     spawn(prefabs[enemy]);
