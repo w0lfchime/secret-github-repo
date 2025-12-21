@@ -10,6 +10,7 @@ public class SceneTransitionManager : MonoBehaviour
     public GameObject mainPanel;
     public GameObject creditsPanel;
     public GameObject optionsPanel;
+    public GameObject titleScreen;
 
     public void LoadGameScene()
     {
@@ -33,6 +34,8 @@ public class SceneTransitionManager : MonoBehaviour
     {
         mainPanel.SetActive(false);
         creditsPanel.SetActive(true);
+        optionsPanel.SetActive(false);
+        titleScreen.SetActive(false);
     }
 
     public void BackButton()
@@ -40,5 +43,14 @@ public class SceneTransitionManager : MonoBehaviour
         mainPanel.SetActive(true);
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        titleScreen.SetActive(true);
+    }
+
+    public void ShowOptions()
+    {
+        mainPanel.SetActive(false);
+        creditsPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+        titleScreen.SetActive(false);
     }
 }
