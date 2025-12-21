@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Enemies freeze faster!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 1
-  increaseBy: 0.1
+  increaseBy: 1

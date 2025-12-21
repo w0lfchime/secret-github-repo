@@ -1718,6 +1718,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280691956}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &292503883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2063171972630683027, guid: af9611350951dc842a9aae0a74f9068e, type: 3}
+  m_PrefabInstance: {fileID: 1282046181}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &313342674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,6 +1754,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneToLoad: Cutscene
   nextPage: {fileID: 0}
+  mainPanel: {fileID: 0}
+  creditsPanel: {fileID: 0}
+  optionsPanel: {fileID: 0}
 --- !u!4 &313342676
 Transform:
   m_ObjectHideFlags: 0
@@ -15985,6 +15993,7 @@ MonoBehaviour:
   - {fileID: 1716908620}
   - {fileID: 1776996677}
   - {fileID: 1274225900}
+  particleStuff: {fileID: 292503883}
   slow: {fileID: 1584848736}
 --- !u!1 &2134074521
 GameObject:
