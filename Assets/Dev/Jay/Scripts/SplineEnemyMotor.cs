@@ -103,6 +103,8 @@ public class SplineEnemyMotor : MonoBehaviour
 	// buffers
 	private Collider[] _players = new Collider[8];
 
+	private Hittable hit;
+
 
 	// ========================= ADD THESE FUNCTIONS =========================
 
@@ -263,6 +265,7 @@ public class SplineEnemyMotor : MonoBehaviour
 
 	private void Awake()
 	{
+		hit = GetComponent<Hittable>();
 		_rb = GetComponent<Rigidbody>();
 		_rb.interpolation = RigidbodyInterpolation.Interpolate;
 		_rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
@@ -524,7 +527,7 @@ public class SplineEnemyMotor : MonoBehaviour
 		// Speed: boost while chasing
 		float speedMul = _speedMul * (_isChasing ? chaseTargetSpeedMul : 1f);
 
-		Vector3 desiredVel = desiredDir * (targetSpeed * speedMul);
+		Vector3 desiredVel = desiredDir * (targetSpeed * speedMul * hit.speedMulti);
 		Vector3 neededVelChange = desiredVel - vel;
 		Vector3 neededAccel = neededVelChange / Time.fixedDeltaTime;
 
