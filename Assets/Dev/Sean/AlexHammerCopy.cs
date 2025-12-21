@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AlexHammerCopy : MonoBehaviour
@@ -8,7 +9,7 @@ public class AlexHammerCopy : MonoBehaviour
     public Rigidbody rb;
     public PlayerController pc;
     public GameObject hammerParticles;
-    public AudioClip soundEffectClip;
+    public AudioClip hitClip, breakClip;
     public float damage = 5f;
     public float speed;
     public float spinMultiplier = 1f;
@@ -95,7 +96,7 @@ public class AlexHammerCopy : MonoBehaviour
             GameObject particleIns = Instantiate(hammerParticles, hammerHead.transform.position, Quaternion.identity);
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
             particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
-            AudioSource.PlayClipAtPoint(soundEffectClip, hammerHead.transform.position, 1.0f);
+            AudioSource.PlayClipAtPoint(hitClip, hammerHead.transform.position, 1.0f);
 
 
             if(col.gameObject.tag == "Enemy")
@@ -109,6 +110,8 @@ public class AlexHammerCopy : MonoBehaviour
 
                 if(hit.health <= 0)
                 {
+                    AudioSource.PlayClipAtPoint(breakClip, hammerHead.transform.position, 1.0f);
+
                     speed = -speed/2;
                     spinMultiplier = -spinMultiplier;
 

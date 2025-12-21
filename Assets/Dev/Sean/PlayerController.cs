@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     public int exp = 0;
     public int expToNextLevelUp = 10;
+    public bool beingAttacked = false;
     public Rigidbody rb;
     public ItemManager im;
     public GameObject itemSelection;
@@ -112,6 +113,42 @@ public class PlayerController : MonoBehaviour
 
             Destroy(col.gameObject);
         }
+    }
+
+    public void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Got hit by enemy");
+            if(!beingAttacked)
+            {
+                Hittable hit = col.gameObject.GetComponent<Hittable>();
+
+                StartCoroutine(IFrames(hit.damage));
+            }
+        }
+    }
+
+    public void OnCollisionStay(Collision col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Got hit by enemy");
+            if(!beingAttacked)
+            {
+                Hittable hit = col.gameObject.GetComponent<Hittable>();
+
+                StartCoroutine(IFrames(hit.damage));
+            }
+        }
+    }
+
+    public IEnumerator IFrames(float damage)
+    {
+        beingAttacked = true;
+        health -= damage;
+        yield return new WaitForSeconds(.5f);
+        beingAttacked = false;
     }
 
     public IEnumerator regen()
