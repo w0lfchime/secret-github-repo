@@ -27,6 +27,7 @@ public class FrameSprayEmitter : MonoBehaviour
 	private bool _hasHit;
 	private RaycastHit _hit;
 	public PlayerController pc;
+	public AudioSource audioSource;
 
 	private void Reset()
 	{
@@ -57,6 +58,12 @@ public class FrameSprayEmitter : MonoBehaviour
 						pc.drainMana();
 					}
 
+					if(!audioSource.isPlaying)
+					{
+						audioSource.time = 0.5f;
+						audioSource.Play();
+					}
+
 					EmitContinuous();
 					DoSphereCast();
 				}
@@ -66,6 +73,7 @@ public class FrameSprayEmitter : MonoBehaviour
 			{
 				_hasHit = false;
 				pc.isDraining = false;
+				audioSource.Stop();
 			}
 		}
 		else
@@ -81,6 +89,7 @@ public class FrameSprayEmitter : MonoBehaviour
 			{
 				_hasHit = false;
 				pc.isDraining = false;
+				audioSource.Stop();
 			}
 		}
 	}
