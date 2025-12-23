@@ -51,6 +51,7 @@ public class CageManager : MonoBehaviour
 
     void UpdateParticles()
     {
+        enemiesTouching.RemoveAll(item => item == null);
         while(enemiesTouching.Count>heatParticles.Count)
         {
             GameObject particleIns = Instantiate(heatParticle, transform.position, Quaternion.identity);

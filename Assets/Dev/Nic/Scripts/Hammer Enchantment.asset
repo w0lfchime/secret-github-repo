@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hammer Enchantment
   m_EditorClassIdentifier: 
   itemName: Hammer Enchantment
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 3421ec71fa05075419a98e0c8ed37431, type: 3}
   description: Makes the hammer slightly bigger!
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 13

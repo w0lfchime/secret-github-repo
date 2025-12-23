@@ -9692,6 +9692,7 @@ GameObject:
   - component: {fileID: 347368428373390574}
   - component: {fileID: 1910579674397542466}
   - component: {fileID: 1255081304199177923}
+  - component: {fileID: 5585496097022894793}
   m_Layer: 0
   m_Name: Frame
   m_TagString: Frame
@@ -9765,6 +9766,23 @@ MonoBehaviour:
   wanderForce: 2
   wanderFrequency: 0.4
   lockYToStartHeight: 1
+--- !u!114 &5585496097022894793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2668751650188721683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31947430eed1a2c458ddfeb2614cb1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  target: {fileID: 0}
+  distance: 1
 --- !u!1 &7129989250040927606
 GameObject:
   m_ObjectHideFlags: 0
