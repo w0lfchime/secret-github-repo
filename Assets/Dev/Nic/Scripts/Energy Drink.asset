@@ -18,3 +18,10 @@ MonoBehaviour:
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 6
   increaseBy: 0.1
+  hc: {fileID: 0}
+  pc: {fileID: 0}
+  cm: {fileID: 0}
+  values:
+  - -0.1
+  toChange:
+  - playerRegen
