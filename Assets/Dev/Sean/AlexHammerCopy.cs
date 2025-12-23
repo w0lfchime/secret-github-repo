@@ -117,7 +117,6 @@ public class AlexHammerCopy : MonoBehaviour
         {
             rotationTraveled = 0;
 
-            Debug.Log("Collision entered: " + col.gameObject.name);
             speed = -speed*1.5f;
             direction = -direction;
 
