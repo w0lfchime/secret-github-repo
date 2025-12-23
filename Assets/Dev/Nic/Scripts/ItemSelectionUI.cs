@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System;
+using System.Net;
 
 public class ItemSelectionUI : MonoBehaviour
 {
@@ -111,6 +112,9 @@ public class ItemSelectionUI : MonoBehaviour
             } else if(selectedItem.itemType == 12)
             {
                 hc.spinMultiplier += selectedItem.increaseBy;
+            } else if(selectedItem.itemType == 13)
+            {
+                hc.changeHammerScale(selectedItem.increaseBy);
             }
             // Invoke callback
             onItemSelectedCallback?.Invoke(selectedItem);

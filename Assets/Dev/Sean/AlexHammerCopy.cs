@@ -32,6 +32,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float bodyLeanAmount = 30;
     public float CameraShakeAmount, CameraShakeTime;
     public float knockback = 1000;
+    public Vector3 hammerScale = new Vector3(1, 1, 1);
     public GameObject DamageText;
 
     void Update()
@@ -143,6 +144,11 @@ public class AlexHammerCopy : MonoBehaviour
             }
         }
         
+    }
+
+    public void changeHammerScale(float changeBy)
+    {
+        hammer.localScale += new Vector3(changeBy, changeBy, changeBy);
     }
 
 }

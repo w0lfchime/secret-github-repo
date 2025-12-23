@@ -8072,6 +8072,7 @@ MonoBehaviour:
   CameraShakeAmount: 1
   CameraShakeTime: 0.2
   knockback: 500
+  hammerScale: {x: 1, y: 1, z: 1}
   DamageText: {fileID: 8675329595145213890, guid: 331f1d8c71591274abe88b0742a18ac4, type: 3}
 --- !u!82 &833788490
 AudioSource:
@@ -10278,7 +10279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1012071564
 Transform:
   m_ObjectHideFlags: 0
@@ -30676,12 +30677,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7b85cb5775fb764cae109572cb49d1a, type: 2}
   - {fileID: 11400000, guid: eb4dfa58879e8f948ade792df92bc030, type: 2}
   - {fileID: 11400000, guid: 793777b7b9d6d1942a6baa83487a6755, type: 2}
+  - {fileID: 11400000, guid: 3dcd4f65b5188ba45a5207fcf53a54e1, type: 2}
   itemSelectionUI: {fileID: 2126504427}
   hotbarContainer: {fileID: 2049054624}
   hotbarSlotPrefab: {fileID: 829297921}
   triggerKey: 32
   itemChoiceCount: 3
-  maxHotbarSlots: 11
+  maxHotbarSlots: 12
 --- !u!114 &2126504427
 MonoBehaviour:
   m_ObjectHideFlags: 0

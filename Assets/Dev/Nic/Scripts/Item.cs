@@ -22,6 +22,7 @@ public class Item : ScriptableObject
     // 10: Hammer size
     // 11: Sledge speed limit
     // 12: Sledge spin multiplier
+    // 13: hammer size
     public int itemType;
     public float increaseBy;
 }
