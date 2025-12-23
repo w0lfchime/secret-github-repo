@@ -7,19 +7,25 @@ public class ManaShard : MonoBehaviour
     public GameObject particle;
     void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Player")
-        {
-            GetComponent<Rigidbody>().AddForce((other.gameObject.transform.position - transform.position) * forceMult);
+        if(other.gameObject.tag == "Player" ){
+            var controller = other.gameObject.GetComponent<PlayerController>();
+            if(controller.mana < controller.maxMana)
+            {
+                GetComponent<Rigidbody>().linearVelocity += (other.bounds.center - transform.position) * forceMult * Time.deltaTime;
+            }
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.GetComponent<PlayerController>().manaHeal(healAmount);
-            Instantiate(particle, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+        if(collision.gameObject.tag == "Player" ){
+            var controller = collision.gameObject.GetComponent<PlayerController>();
+            if(controller.mana < controller.maxMana)
+            {
+                controller.manaHeal(healAmount);
+                Instantiate(particle, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
         }
     }
 }

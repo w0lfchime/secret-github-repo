@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,12 @@ public class CageManager : MonoBehaviour
     public float cageHealth = 100;
     public float depletionMultiplier = 1;
     public PlayerController pc;
+    public List<Renderer> renderers = new List<Renderer>();
+    public Transform icePart;
+    public float enemyDamageScale = 1;
+    public GameObject heatParticle;
+    public List<GameObject> heatParticles = new List<GameObject>();
+    public List<GameObject> enemiesTouching = new List<GameObject>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,32 +29,65 @@ public class CageManager : MonoBehaviour
         {
             pc.gameOver();
         }
+
+        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        foreach(Renderer rend in renderers){
+            rend.GetPropertyBlock(mpb);
+            mpb.SetFloat("_Alpha", Mathf.Pow(cageHealth/maxHealth, 3));
+            rend.SetPropertyBlock(mpb);
+        }
+
+        icePart.transform.localScale = new Vector3(
+            .08f,
+            Mathf.Lerp(0, .16f, cageHealth/maxHealth),
+            .08f
+        );
     }
 
-    public void OnCollisionEnter(Collision col)
+    void FixedUpdate()
     {
-        if(col.gameObject.tag == "Enemy")
-        {
-            Hittable hit = col.gameObject.GetComponent<Hittable>();
+        UpdateParticles();
+    }
 
-            hit.attackingCage = true;
-            hit.startEnemyCageAttack();
+    void UpdateParticles()
+    {
+        while(enemiesTouching.Count>heatParticles.Count)
+        {
+            GameObject particleIns = Instantiate(heatParticle, transform.position, Quaternion.identity);
+            heatParticles.Add(particleIns);
+        }
+        while(enemiesTouching.Count<heatParticles.Count)
+        {
+            Destroy(heatParticles[0]);
+            heatParticles.RemoveAt(0);
         }
     }
 
-    public void OnCollisionExit(Collision col)
+    public void OnCollisionStay(Collision col)
     {
         if(col.gameObject.tag == "Enemy")
         {
-            Hittable hit = col.gameObject.GetComponent<Hittable>();
+            if(!enemiesTouching.Contains(col.gameObject)) enemiesTouching.Add(col.gameObject);
+            UpdateParticles();
+            for(int i = 0; i < enemiesTouching.Count; i++)
+            {
+                heatParticles[i].transform.position = enemiesTouching[i].transform.position;
+            }
+            cageHealth-=Time.deltaTime * enemyDamageScale;
+        }
+    }
 
-            hit.attackingCage = false;
+    void OnCollisionExit(Collision col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            if(enemiesTouching.Contains(col.gameObject)) enemiesTouching.Remove(col.gameObject);
         }
     }
 
     public void StartCageHeal(float amount)
     {
-        cageHealth += amount * 50;
+        cageHealth += amount * 25;
         if(cageHealth > maxHealth)
         {
             cageHealth = maxHealth;

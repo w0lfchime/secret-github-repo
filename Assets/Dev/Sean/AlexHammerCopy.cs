@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float bodyLeanAmount = 30;
     public float CameraShakeAmount, CameraShakeTime;
     public float knockback = 1000;
+    public GameObject DamageText;
 
     void Update()
     {
@@ -44,21 +46,16 @@ public class AlexHammerCopy : MonoBehaviour
 
         woosh.pitch = Math.Abs(speed) / limit;
         
-        if(clicking && !woosh.isPlaying)
+        if(!woosh.isPlaying)
         {
             woosh.pitch = Math.Abs(speed) / limit;
             woosh.Play();
-        } else if (!clicking && woosh.isPlaying)
-        {
-            woosh.Stop();
         }
     }
     void FixedUpdate()
     {
-        if (clicking)
-        {
-            speed += spinMultiplier * direction;
-        }
+
+        speed += spinMultiplier * direction;
         speed = Mathf.Clamp(speed, -limit, limit);
         //Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
         //hammerMaterial.SetColor("_EmissionColor", finalColor);
@@ -87,9 +84,7 @@ public class AlexHammerCopy : MonoBehaviour
         {
             rotationTraveled = 0;
 
-            Debug.Log("DIDNT hit the frame");
-            Debug.Log("Collision entered");
-            Debug.Log(speed);
+            Debug.Log("Collision entered: " + col.gameObject.name);
             speed = -speed*1.5f;
             direction = -direction;
 
@@ -110,10 +105,15 @@ public class AlexHammerCopy : MonoBehaviour
 
             if(col.gameObject.tag == "Enemy" || col.gameObject.tag == "Crystal")
             {
-                Debug.Log("Hit an enemy with velovity: " + speed);
                 Hittable hit = col.gameObject.GetComponent<Hittable>();
+                float totalDamage = damage * Mathf.Abs(speed/limit) * (hit.iced+.5f);
 
-                hit.health -= damage * Mathf.Abs(speed/limit) * (hit.iced+.5f);
+                GameObject damageTextIns = Instantiate(DamageText, -lookDirection/2+hammerHead.transform.position, Quaternion.identity);
+                Destroy(damageTextIns, .5f);
+                damageTextIns.transform.GetChild(0).GetComponent<TMP_Text>().text = (Mathf.Round(totalDamage*10)/10).ToString();
+                damageTextIns.transform.GetChild(0).GetComponent<TMP_Text>().color = Color.Lerp(Color.red, Color.blue, hit.iced);
+
+                hit.health -= totalDamage;
 
                 if(col.gameObject.GetComponent<Rigidbody>()) col.gameObject.GetComponent<Rigidbody>().AddForce(-new Vector3(lookDirection.x, 1, lookDirection.z) * Mathf.Abs(speed) * knockback);
 

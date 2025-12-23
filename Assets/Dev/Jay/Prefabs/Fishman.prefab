@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 3705762710697567354}
   - component: {fileID: 342933383599057887}
   - component: {fileID: 2532904605102874389}
-  - component: {fileID: 6721072837044639020}
   - component: {fileID: 6322252843063134988}
   m_Layer: 7
   m_Name: Fishman
@@ -126,24 +125,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6721072837044639020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4046012719452929728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0e642a6d3866a74a8150efc95ef8dc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bobAmplitude: 0.25
-  bobFrequency: 0.8
-  leanAngle: 8
-  leanFrequency: 0.6
-  phaseOffset: 0
-  useUnscaledTime: 0
 --- !u!114 &6322252843063134988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,8 +167,8 @@ GameObject:
   - component: {fileID: 712508115249943626}
   - component: {fileID: 2117279861876422482}
   - component: {fileID: 4902908232652138930}
-  - component: {fileID: 1785942577256305891}
   - component: {fileID: 6595616653647325340}
+  - component: {fileID: 8563159742664393074}
   m_Layer: 7
   m_Name: Fishman
   m_TagString: Enemy
@@ -243,7 +224,7 @@ Rigidbody:
   m_GameObject: {fileID: 4709636470982895720}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -261,59 +242,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &1785942577256305891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4709636470982895720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08420de97eb859342a1b992f9ce4a783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spline: {fileID: 0}
-  splineIndex: 0
-  lookAheadT: 0.07
-  searchWindowT: 0.05
-  samplesPerStep: 16
-  targetSpeed: 4
-  maxAcceleration: 25
-  lateralDamping: 6
-  alignDistance: 3.28
-  hardRejoinDistance: 7
-  rejoinStrength: 0.2
-  rotateToVelocity: 1
-  turnSpeed: 12
-  keepUpright: 1
-  randomizeOnAwake: 1
-  speedMulRange: {x: 0.9, y: 1.1}
-  laneOffsetRange: {x: -4, y: 4}
-  heightOffsetRange: {x: 0, y: 0}
-  wanderStrength: 1
-  wanderFrequency: 0.7
-  neighborMask:
-    serializedVersion: 2
-    m_Bits: 0
-  separationRadius: 2.57
-  separationStrength: 7
-  pathSet: {fileID: 0}
-  reselectInterval: 0.5
-  switchHysteresis: 0.25
-  globalSearchSamples: 32
-  endHandoffT: 0.98
-  handoffProbeDistance: 2.5
-  forceSwitchIfProbeCloserBy: 0.05
-  enableChase: 1
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  chaseEnterRadius: 23.38
-  chaseExitRadius: 26.6
-  chaseTargetSpeedMul: 1.25
-  chaseTurnBoost: 1.25
-  chaseReselectInterval: 0.25
 --- !u!114 &6595616653647325340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 0}
+  rb: {fileID: 0}
   rend: {fileID: 2532904605102874389}
   attackingCage: 0
   health: 15
@@ -334,4 +263,83 @@ MonoBehaviour:
   damage: 5
   attackSpeed: 1
   expAmount: 8
+  speedMulti: 1
   shatter: {fileID: 6322252843063134988}
+--- !u!114 &8563159742664393074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709636470982895720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c40f5a7718b9f47883454ecd715dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSpeed: 3.99
+  acceleration: 20
+  chaseRadius: 15
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  rb: {fileID: 4902908232652138930}
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.10002136
+      inSlope: 0.86451197
+      outSlope: 0.86451197
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49751717
+      value: 0.5301309
+      inSlope: 0.006606102
+      outSlope: 0.006606102
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.1023674
+      inSlope: -0.85129976
+      outSlope: -0.85129976
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveTime: 0.5
+  visual: {fileID: 2515448721739705003}

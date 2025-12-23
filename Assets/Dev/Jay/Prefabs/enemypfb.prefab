@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2301569425519935359}
   - component: {fileID: 1549256679890178020}
   - component: {fileID: 8139121086487205140}
+  - component: {fileID: 5302041193134858034}
   m_Layer: 7
   m_Name: enemypfb
   m_TagString: Enemy
@@ -68,7 +69,7 @@ Rigidbody:
   m_GameObject: {fileID: 2992405451726730535}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -93,7 +94,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2992405451726730535}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08420de97eb859342a1b992f9ce4a783, type: 3}
   m_Name: 
@@ -127,6 +128,18 @@ MonoBehaviour:
   reselectInterval: 0.5
   switchHysteresis: 0.25
   globalSearchSamples: 32
+  endHandoffT: 0.98
+  handoffProbeDistance: 2.5
+  forceSwitchIfProbeCloserBy: 0.05
+  enableChase: 1
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  chaseEnterRadius: 4
+  chaseExitRadius: 5.5
+  chaseTargetSpeedMul: 1.25
+  chaseTurnBoost: 1.25
+  chaseReselectInterval: 0.25
 --- !u!114 &8139121086487205140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 0}
+  rb: {fileID: 0}
   rend: {fileID: 6033489779091655459}
   attackingCage: 0
   health: 10
@@ -147,7 +161,95 @@ MonoBehaviour:
   damage: 5
   attackSpeed: 1
   expAmount: 5
+  speedMulti: 1
   shatter: {fileID: 8039841228052403156}
+--- !u!114 &5302041193134858034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2992405451726730535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c40f5a7718b9f47883454ecd715dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSpeed: 15
+  acceleration: 30
+  chaseRadius: 100
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  rb: {fileID: 2301569425519935359}
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.012538855
+      outSlope: 0.012538855
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50047517
+      value: 0.0062753856
+      inSlope: 0.035379652
+      outSlope: 0.035379652
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.36893383
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.9893397
+      outSlope: 1.9893397
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.99765015
+      inSlope: -1.980867
+      outSlope: -1.980867
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50047517
+      value: 0.0062753856
+      inSlope: 0.035379652
+      outSlope: 0.035379652
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.36893383
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.9893397
+      outSlope: 1.9893397
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveTime: 1
+  visual: {fileID: 6118499252936581805}
 --- !u!1 &3109274395943052703
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +293,6 @@ GameObject:
   - component: {fileID: 1750540875901018184}
   - component: {fileID: 6368788920140586252}
   - component: {fileID: 6033489779091655459}
-  - component: {fileID: 6368175658327322833}
   - component: {fileID: 8039841228052403156}
   m_Layer: 7
   m_Name: Cube
@@ -269,24 +370,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6368175658327322833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6384983796349503934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0e642a6d3866a74a8150efc95ef8dc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bobAmplitude: 0.25
-  bobFrequency: 0.8
-  leanAngle: 8
-  leanFrequency: 0.6
-  phaseOffset: 0
-  useUnscaledTime: 0
 --- !u!114 &8039841228052403156
 MonoBehaviour:
   m_ObjectHideFlags: 0

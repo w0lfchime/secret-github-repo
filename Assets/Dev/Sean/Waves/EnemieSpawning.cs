@@ -9,10 +9,7 @@ public class EnemieSpawning : MonoBehaviour
 {
     public List<int> spawnMulti;
     public List<GameObject> prefabs;
-    [SerializeField] private Vector3 localOffset = Vector3.zero;
-
-	[SerializeField] private Vector3 localRandomOffsetMin = Vector3.zero;
-	[SerializeField] private Vector3 localRandomOffsetMax = Vector3.zero;
+	[SerializeField] private Vector2 spawnRadiusMinMax;
     [SerializeField] private SplinePathSet pathSet;
     enum Phase { Peace, Wave }
     Phase phase = Phase.Peace;
@@ -61,7 +58,6 @@ public class EnemieSpawning : MonoBehaviour
             wave += 1;
             tempWaveTime = waveTime;
             tempSubWaveTime = interval;
-            audioSource.Play();
         }
     }
     else // Wave
@@ -73,10 +69,11 @@ public class EnemieSpawning : MonoBehaviour
 
         tempSubWaveTime += Time.deltaTime;
 
-        while (tempSubWaveTime >= interval)
+        if (tempSubWaveTime >= interval)
         {
-            tempSubWaveTime -= interval;
+            tempSubWaveTime = 0;
             SpawnEnemy(Mathf.Clamp(wave, 0, prefabs.Count));
+            audioSource.Play();
         }
 
         if (tempWaveTime <= 0f)
@@ -104,29 +101,11 @@ public class EnemieSpawning : MonoBehaviour
 
     public void spawn(GameObject prefab)
     {
-        Transform sp = transform;
+		Vector3 randDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+        Vector3 pos = randDirection * Random.Range(spawnRadiusMinMax.x, spawnRadiusMinMax.y);
+		pos += transform.position;
 
-		// Base
-		Vector3 pos = sp.position;
-		Quaternion rot = sp.rotation;
-
-		// Configurable + random local-space offset
-		Vector3 rand = new Vector3(
-			UnityEngine.Random.Range(localRandomOffsetMin.x, localRandomOffsetMax.x),
-			UnityEngine.Random.Range(localRandomOffsetMin.y, localRandomOffsetMax.y),
-			UnityEngine.Random.Range(localRandomOffsetMin.z, localRandomOffsetMax.z)
-		);
-
-		Vector3 worldOffset = sp.TransformVector(localOffset + rand);
-		pos += worldOffset;
-
-		GameObject go = Instantiate(prefab, pos, rot);
+		GameObject go = Instantiate(prefab, pos, Quaternion.identity);
         enemies.Add(go);
-
-		var motor = go.GetComponent<SplineEnemyMotor>();
-		if (motor)
-		{
-			motor.SetPathSet(pathSet);
-		}
     }
 }

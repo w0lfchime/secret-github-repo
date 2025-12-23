@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmount: 5
-  forceMult: 30
+  forceMult: 5
   particle: {fileID: 2140479475659021138, guid: e9ebc27a9fea1f6419b80252984fd44d, type: 3}
 --- !u!135 &5856862645297941629
 SphereCollider:
