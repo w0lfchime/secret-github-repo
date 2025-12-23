@@ -32,6 +32,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float bodyLeanAmount = 30;
     public float CameraShakeAmount, CameraShakeTime;
     public float knockback = 1000;
+    public float lifeSteal = 0;
     public Vector3 hammerScale = new Vector3(1, 1, 1);
     public GameObject DamageText;
 
@@ -140,6 +141,11 @@ public class AlexHammerCopy : MonoBehaviour
                     }
 
                     StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(CameraShakeTime, CameraShakeAmount));
+                }
+
+                if(col.tag == "Enemy")
+                {
+                    pc.heal(lifeSteal);
                 }
             }
         }

@@ -115,6 +115,9 @@ public class ItemSelectionUI : MonoBehaviour
             } else if(selectedItem.itemType == 13)
             {
                 hc.changeHammerScale(selectedItem.increaseBy);
+            } else if(selectedItem.itemType == 14)
+            {
+                hc.lifeSteal += selectedItem.increaseBy;
             }
             // Invoke callback
             onItemSelectedCallback?.Invoke(selectedItem);
