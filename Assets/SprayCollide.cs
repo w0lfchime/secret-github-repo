@@ -38,9 +38,9 @@ public class SprayCollide : MonoBehaviour
             }
         } else if (other.CompareTag("Cage"))
         {
-            var cm = other.GetComponent<SecondCageManager>();
+            var cm = other.GetComponent<CageManager>();
 
-            cm.cm.StartCageHeal(num * power);
+            cm.StartCageHeal(num * power);
         }
         
             
