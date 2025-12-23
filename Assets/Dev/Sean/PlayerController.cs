@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
     public float maxMana = 10f;
     public float mana = 10f;
     public float manaRegenTime = 2f;
+    public float maxStamina = 10f;
+    public float stamina = 10f;
+    public float staminaRegenTime = 2f; 
     public float regenTime = 2f;
     public bool canMove = true;
     public int exp = 0;
     public int expToNextLevelUp = 10;
     public bool beingAttacked = false;
     public bool isDraining = false;
+    public bool isDrainingStamina = false;
     public int level = 1;
     public Rigidbody rb;
     public ItemManager im;
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         StartCoroutine(regen());
+        StartCoroutine(staminaRegen());
         // StartCoroutine(manaRegen());
     }
 
@@ -62,7 +67,7 @@ public class PlayerController : MonoBehaviour
         if(canMove && !isPaused) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
-
+            
             if(horizontalInput != 0 || verticalInput != 0)
             {
                 isWalking = true;
@@ -148,6 +153,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void staminaHeal(float healAmount)
+    {
+        stamina += healAmount;
+
+        if(stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
+    }
+
     public void drainMana()
     {
         mana -= 1;
@@ -167,8 +182,22 @@ public class PlayerController : MonoBehaviour
             mana -= 1;
             StartCoroutine(drainManaReal());
         }
-        
+    }
 
+    public void drainStamina()
+    {
+        stamina -= 1;
+        StartCoroutine(drainStaminaReal());
+    }
+
+    public IEnumerator drainStaminaReal()
+    {
+        yield return new WaitForSeconds(1f);
+        if(isDrainingStamina)
+        {
+            stamina -= 1;
+            StartCoroutine(drainStaminaReal());
+        }
     }
 
     public void OnTriggerEnter(Collider col)
@@ -240,5 +269,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(manaRegenTime);
         manaHeal(1);
         StartCoroutine(manaRegen());
+    }
+
+    public IEnumerator staminaRegen()
+    {
+        yield return new WaitForSeconds(staminaRegenTime);
+        staminaHeal(1);
+        StartCoroutine(staminaRegen());
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -33,6 +34,9 @@ public class AlexHammerCopy : MonoBehaviour
     public float CameraShakeAmount, CameraShakeTime;
     public float knockback = 1000;
     public float lifeSteal = 0;
+    public float dashMulti = 1;
+    public bool didDash = false;
+    public bool canDash = true;
     public Vector3 hammerScale = new Vector3(1, 1, 1);
     public GameObject DamageText;
 
@@ -46,6 +50,28 @@ public class AlexHammerCopy : MonoBehaviour
             //clickUp = true;
         }
 
+        // Dash type 1: hold shift and go fast as long as you have stamina
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && pc.stamina > 0)
+        {
+            dashMulti = 5;
+            pc.isDrainingStamina = true;
+            pc.drainStamina();
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            dashMulti = 1;
+            pc.isDrainingStamina = false;
+        }
+
+        // Dash type 2: press shift for a hades style dash
+
+        if(Input.GetKeyDown(KeyCode.RightShift) && canDash)
+        {
+            StartCoroutine(doTheDash());
+        }
+
         woosh.pitch = Math.Abs(speed) / limit;
         
         if(!woosh.isPlaying)
@@ -57,7 +83,7 @@ public class AlexHammerCopy : MonoBehaviour
     void FixedUpdate()
     {
 
-        speed += spinMultiplier * direction;
+        speed += spinMultiplier * direction * dashMulti;
         speed = Mathf.Clamp(speed, -limit, limit);
         //Color finalColor = hammerMaterial.color * Mathf.Clamp(Mathf.Abs(speed/limit)-.5f, 0, 1)*2;
         //hammerMaterial.SetColor("_EmissionColor", finalColor);
@@ -78,7 +104,12 @@ public class AlexHammerCopy : MonoBehaviour
         ps.rateOverTimeMultiplier += (targetParticle-ps.rateOverTimeMultiplier)*.05f;
         shape.radius = Mathf.Lerp(.5f, .75f, Mathf.Abs(speed)/limit);
 
-        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed * speedMulti)/limit);
+        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed * speedMulti * dashMulti)/limit);
+
+        if(didDash)
+        {
+            pc.speed *= 5;
+        }
     }
 
     public void OnTriggerEnter(Collider col) {
@@ -155,6 +186,18 @@ public class AlexHammerCopy : MonoBehaviour
     public void changeHammerScale(float changeBy)
     {
         hammer.localScale += new Vector3(changeBy, changeBy, changeBy);
+    }
+
+    public IEnumerator doTheDash()
+    {
+        didDash = true;
+        canDash = false;
+
+        yield return new WaitForSeconds(0.2f);
+        didDash = false;
+
+        yield return new WaitForSeconds(1f);
+        canDash = true;
     }
 
 }

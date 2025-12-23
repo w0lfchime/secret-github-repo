@@ -7905,12 +7905,16 @@ MonoBehaviour:
   maxMana: 30
   mana: 30
   manaRegenTime: 2
+  maxStamina: 5
+  stamina: 5
+  staminaRegenTime: 2
   regenTime: 2
   canMove: 1
   exp: 0
   expToNextLevelUp: 10
   beingAttacked: 0
   isDraining: 0
+  isDrainingStamina: 0
   level: 1
   rb: {fileID: 833788483}
   im: {fileID: 2126504426}
@@ -8073,6 +8077,9 @@ MonoBehaviour:
   CameraShakeTime: 0.2
   knockback: 500
   lifeSteal: 0
+  dashMulti: 1
+  didDash: 0
+  canDash: 1
   hammerScale: {x: 1, y: 1, z: 1}
   DamageText: {fileID: 8675329595145213890, guid: 331f1d8c71591274abe88b0742a18ac4, type: 3}
 --- !u!82 &833788490
