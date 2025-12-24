@@ -12677,6 +12677,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5585496097022894793, guid: af9611350951dc842a9aae0a74f9068e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7129989250040927606, guid: af9611350951dc842a9aae0a74f9068e, type: 3}
       propertyPath: m_TagString
       value: Frame

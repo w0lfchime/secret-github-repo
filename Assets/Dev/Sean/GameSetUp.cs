@@ -25,7 +25,7 @@ public class GameSetUp : MonoBehaviour
         itemSelectionUI.hc = newPlayer.GetComponent<AlexHammerCopy>();
         mirrorSpaceFollowerXZ.target = newPlayer.transform;
         cameraPivotSpringFollow.target = newPlayer.transform;
-        mirrowFollow.target = newPlayer.transform;
+        // mirrowFollow.target = newPlayer.transform;
         
     }
 
