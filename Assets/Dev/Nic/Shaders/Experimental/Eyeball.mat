@@ -38,10 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _IrisRadius: 0.5
+    - _IrisRadius: -0.1
     - _IrisSoftness: 0.5
-    - _PupilRadius: 0.5
-    - _PupilSoftness: 0.5
+    - _PupilRadius: 0.39
+    - _PupilSoftness: 0.71
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
