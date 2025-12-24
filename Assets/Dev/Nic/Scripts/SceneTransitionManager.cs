@@ -11,6 +11,13 @@ public class SceneTransitionManager : MonoBehaviour
     public GameObject creditsPanel;
     public GameObject optionsPanel;
     public GameObject titleScreen;
+    public GameObject charSelect;
+    private GameData gameData;
+
+    void Start()
+    {
+        gameData = GameObject.Find("GameData").GetComponent<GameData>();
+    }
 
     public void LoadGameScene()
     {
@@ -29,6 +36,12 @@ public class SceneTransitionManager : MonoBehaviour
             nextPage.SetActive(true);
         }
     }
+
+    public void showCharSelect()
+    {
+        mainPanel.SetActive(false);
+        charSelect.SetActive(true);
+    }
     
     public void ShowCredits()
     {
@@ -43,6 +56,7 @@ public class SceneTransitionManager : MonoBehaviour
         mainPanel.SetActive(true);
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        charSelect.SetActive(false);
         titleScreen.SetActive(true);
     }
 

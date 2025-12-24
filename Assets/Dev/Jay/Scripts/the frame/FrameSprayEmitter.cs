@@ -37,6 +37,7 @@ public class FrameSprayEmitter : MonoBehaviour
 
 	private void Awake()
 	{
+		pc = GameObject.Find("Player").GetComponent<PlayerController>();
 		if (sprayParticles)
 			sprayParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 	}

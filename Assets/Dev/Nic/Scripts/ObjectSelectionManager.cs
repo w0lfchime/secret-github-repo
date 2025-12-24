@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObjectSelectionManager : MonoBehaviour
 {
@@ -14,9 +15,13 @@ public class ObjectSelectionManager : MonoBehaviour
     
     private SelectableObject currentlyHovered;
     private SelectableObject currentlySelected;
+    private GameData gameData;
+
+    public GameObject startButton;
 
     void Start()
     {
+        gameData = GameObject.Find("GameData").GetComponent<GameData>();
         // Use main camera if not assigned
         if (raycastCamera == null)
         {
@@ -85,6 +90,10 @@ public class ObjectSelectionManager : MonoBehaviour
                 // Select the new object
                 currentlySelected = currentlyHovered;
                 currentlySelected.Select();
+
+                gameData.charNum = currentlySelected.playerNUm;
+
+                startButton.SetActive(true);
             }
         }
     }
@@ -93,6 +102,11 @@ public class ObjectSelectionManager : MonoBehaviour
     public SelectableObject GetSelectedObject()
     {
         return currentlySelected;
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Cutscene");
     }
 
     

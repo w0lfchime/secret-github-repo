@@ -22,6 +22,7 @@ public class SelectableObject : MonoBehaviour
     
     private bool isSelected = false;
     private bool isHovered = false;
+    public int playerNUm;
 
     void Start()
     {

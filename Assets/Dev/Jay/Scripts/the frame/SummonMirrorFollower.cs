@@ -50,6 +50,7 @@ public class MirrorSpaceFollowerXZ : MonoBehaviour
 
 	void Awake()
 	{
+		target = GameObject.Find("Player").transform;
 		rb = GetComponent<Rigidbody>();
 		startY = transform.position.y;
 		noiseSeed = Random.value * 1000f;

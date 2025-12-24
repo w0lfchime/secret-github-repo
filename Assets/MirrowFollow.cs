@@ -8,6 +8,7 @@ public class MirrowFollow : MonoBehaviour
 
     void Start()
     {
+        // target = GameObject.Find("Player").transform;
         if (target == null)
         {
             target = transform.parent;

@@ -30,6 +30,11 @@ public class CameraPivotSpringFollow : MonoBehaviour
 
 	Vector3 _vel; // internal spring velocity
 
+	
+	void Start()
+	{
+		target = GameObject.Find("Player").transform;
+	}
 	void Reset()
 	{
 		// reasonable defaults

@@ -9,7 +9,7 @@ public class SliderHandlers : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
+        itemSelection = GameObject.Find("SelectionPanel");
+        gameOverScreen = GameObject.Find("GameOverManager");
+        pauseMenu = GameObject.Find("PauseMenu");
+        slowTime = GameObject.Find("Canvas").GetComponent<SlowTime>();
+        stageMusic = GameObject.Find("AudioManager").GetComponent<AudioSource>();
+        gameOverText = GameObject.Find("GameOverText").GetComponent<TextMeshProUGUI>();
+
         StartCoroutine(regen());
         StartCoroutine(staminaRegen());
         // StartCoroutine(manaRegen());
