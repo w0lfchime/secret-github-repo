@@ -2914,7 +2914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e00c6276fee8f4b8930e7efee40de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastCamera: {fileID: 0}
+  raycastCamera: {fileID: 1809300003}
   selectableLayer:
     serializedVersion: 2
     m_Bits: 2048
