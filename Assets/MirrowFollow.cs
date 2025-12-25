@@ -5,13 +5,15 @@ public class MirrowFollow : MonoBehaviour
     public LayerMask groundLayer;
     public Transform target;
     public float distance = 1;
+    public float yOffset;
 
     void Start()
     {
         // target = GameObject.Find("Player").transform;
         if (target == null)
         {
-            target = transform.parent;
+            target = GameObject.FindGameObjectWithTag("PlayerModel").transform;
+            transform.SetParent(target);
         }
     }
     void Update()
@@ -23,7 +25,8 @@ public class MirrowFollow : MonoBehaviour
         {
             Vector3 directionToMouse = (hit.point - target.transform.position).normalized;
             directionToMouse = new Vector3(directionToMouse.x, 0, directionToMouse.z);
-            transform.position = transform.parent.position + directionToMouse * distance;
+            transform.position = transform.parent.position + directionToMouse * distance+Vector3.up*yOffset;
+            transform.LookAt(directionToMouse+transform.position);
         }
     }
 }
