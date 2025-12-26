@@ -115,4 +115,9 @@ public class Item : ScriptableObject
     {
         hc.lifeSteal += changeBy;
     }
+
+    public void knockBack(float changeBy)
+    {
+        hc.knockback += changeBy;
+    }
 }
