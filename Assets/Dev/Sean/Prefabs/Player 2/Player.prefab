@@ -155,8 +155,8 @@ Transform:
   m_GameObject: {fileID: 509459687259123111}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0.98, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.36, y: 0, z: 0}
+  m_LocalScale: {x: 0.6400199, y: 0.6400199, z: 0.6400199}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3567287220590400816}
@@ -5579,7 +5579,7 @@ MonoBehaviour:
   maxStamina: 5
   stamina: 5
   staminaRegenTime: 2
-  regenTime: 2
+  regenTime: 4
   canMove: 1
   exp: 0
   expToNextLevelUp: 10
@@ -5662,10 +5662,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 97616aeba5d017d4a9bb82e0ecd60edb, type: 3}
   - {fileID: 8300000, guid: d80c3e68d8c3ad340a69412c2d772aad, type: 3}
   - {fileID: 8300000, guid: 0e7f928604704294389c06625f1cba34, type: 3}
-  damage: 5
+  damage: 7
   speed: 0
-  speedMulti: 1
-  spinMultiplier: 0.03
+  speedMulti: 3
+  spinMultiplier: 0.04
   limit: 10
   slowDownSpeed: 0.99
   breakSpeedSlowDown: 0.5

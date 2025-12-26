@@ -23,7 +23,7 @@ MonoBehaviour:
   cm: {fileID: 0}
   values:
   - 3
-  - -2
+  - -0.5
   toChange:
   - playerHealth
   - playerSpeed

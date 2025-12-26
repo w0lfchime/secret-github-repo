@@ -24,7 +24,7 @@ public class PickupSpawner : MonoBehaviour
 
     public IEnumerator spawnPickup()
     {
-        yield return new WaitForSeconds(Random.Range(1, 11));
+        yield return new WaitForSeconds(Random.Range(7, 15));
         int toSpawn = Random.Range(0, prefabList.Count-1);
 
         GameObject newPickup = GameObject.Instantiate(prefabList[toSpawn]);
