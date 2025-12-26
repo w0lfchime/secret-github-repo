@@ -42,7 +42,7 @@ public class EnemieSpawning : MonoBehaviour
     {
         foreach(GameObject enemy in enemies)
             {
-                enemy.transform.position+=Vector3.up*Time.deltaTime*30;
+                enemy.transform.position+=Vector3.up*Time.deltaTime*40;
                 if(enemy.transform.position.y > 30)
                 {
                     Destroy(enemy);
