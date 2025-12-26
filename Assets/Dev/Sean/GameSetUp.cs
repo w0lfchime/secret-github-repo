@@ -21,6 +21,7 @@ public class GameSetUp : MonoBehaviour
 
         sliderHandlers.pc = newPlayer.GetComponent<PlayerController>();
         frameSprayEmitter.pc = newPlayer.GetComponent<PlayerController>();
+        frameSprayEmitter.enabled = true;
         itemSelectionUI.pc = newPlayer.GetComponent<PlayerController>();
         itemSelectionUI.hc = newPlayer.GetComponent<AlexHammerCopy>();
         mirrorSpaceFollowerXZ.target = newPlayer.transform;
