@@ -14,6 +14,6 @@ public class CamRotate : MonoBehaviour
         mousePos = mousePos/1000 * moveWithMouseMult;
         time+=Time.deltaTime;
         Vector3 targetAngles = new Vector3(-mousePos.y, mousePos.x, Mathf.Sin(time) * amount);
-        transform.eulerAngles = targetAngles;
+        transform.localEulerAngles = targetAngles;
     }
 }
