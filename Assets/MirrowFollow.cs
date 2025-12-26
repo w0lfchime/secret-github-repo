@@ -7,17 +7,14 @@ public class MirrowFollow : MonoBehaviour
     public float distance = 1;
     public float yOffset;
 
-    void Start()
+    void Update()
     {
-        // target = GameObject.Find("Player").transform;
         if (target == null)
         {
             target = GameObject.FindGameObjectWithTag("PlayerModel").transform;
             transform.SetParent(target);
         }
-    }
-    void Update()
-    {
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
