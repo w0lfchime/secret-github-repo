@@ -5598,6 +5598,7 @@ MonoBehaviour:
   endSound: {fileID: 8300000, guid: 2b78613d4e3e9d740b039d661263b532, type: 3}
   scrollSound: {fileID: 8300000, guid: f32d28f1cdf50d1468d810d8f0d1c380, type: 3}
   gameOverText: {fileID: 0}
+  hc: {fileID: 3972446791454449955}
   isWalking: 0
   hasLost: 0
   slowTime: {fileID: 0}
@@ -5679,6 +5680,7 @@ MonoBehaviour:
   knockback: 500
   lifeSteal: 0
   dashMulti: 1
+  extraSpeedMultiForPickups: 1
   didDash: 0
   canDash: 1
   hammerScale: {x: 1, y: 1, z: 1}
