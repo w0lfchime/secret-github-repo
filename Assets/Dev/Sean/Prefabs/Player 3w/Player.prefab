@@ -5578,7 +5578,7 @@ MonoBehaviour:
   maxStamina: 5
   stamina: 5
   staminaRegenTime: 2
-  regenTime: 2
+  regenTime: 4
   canMove: 1
   exp: 0
   expToNextLevelUp: 10
