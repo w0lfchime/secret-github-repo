@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class GameSetUp : MonoBehaviour
 {
     public List<GameObject> players;
-    public List<Texture> playerIcons;
+    public List<GameObject> cameras;
+    public Texture playerTexture;
     public SliderHandlers sliderHandlers;
     public CameraPivotSpringFollow cameraPivotSpringFollow;
     public MirrorSpaceFollowerXZ mirrorSpaceFollowerXZ;
@@ -33,7 +34,9 @@ public class GameSetUp : MonoBehaviour
         cameraPivotSpringFollow.target = newPlayer.transform;
         // mirrowFollow.target = newPlayer.transform;
 
-        playerIcon.texture = playerIcons[gameData.charNum];
+        cameras[gameData.charNum].SetActive(true);
+
+        playerIcon.texture = playerTexture;
         
     }
 
