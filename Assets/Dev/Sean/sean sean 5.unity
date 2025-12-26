@@ -12605,6 +12605,8 @@ MonoBehaviour:
   - {fileID: 4685341880029374423, guid: f42c34a2959f0bd4684e526ffd1da2fc, type: 3}
   - {fileID: 4685341880029374423, guid: f42c34a2959f0bd4684e526ffd1da2fc, type: 3}
   - {fileID: 4685341880029374423, guid: e11733477a05c014990a72be0eb4eab9, type: 3}
+  - {fileID: 4685341880029374423, guid: e11733477a05c014990a72be0eb4eab9, type: 3}
+  - {fileID: 4685341880029374423, guid: 10a91b4407de1a1499343ade32932fab, type: 3}
   spawnParticleEffect: {fileID: 241680018325970102, guid: 3fe397105f93aac4a9675fe7a83f212a, type: 3}
   pickupScale: 16.9
   particleHeightOffset: 0.5
@@ -26255,12 +26257,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e460cfbc0b9f462439c9c921ac47d594, type: 2}
   - {fileID: 11400000, guid: 63661416159a30c499fc96fa2e364fe0, type: 2}
   - {fileID: 11400000, guid: 9a41ec3992456724f964da20218e6161, type: 2}
+  - {fileID: 11400000, guid: 2bc983a2c8d408c49be97709979734ad, type: 2}
   itemSelectionUI: {fileID: 2126504427}
   hotbarContainer: {fileID: 2049054624}
   hotbarSlotPrefab: {fileID: 829297921}
   triggerKey: 32
   itemChoiceCount: 3
-  maxHotbarSlots: 16
+  maxHotbarSlots: 17
 --- !u!114 &2126504427
 MonoBehaviour:
   m_ObjectHideFlags: 0

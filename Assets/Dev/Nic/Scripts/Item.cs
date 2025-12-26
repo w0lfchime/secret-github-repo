@@ -127,4 +127,9 @@ public class Item : ScriptableObject
     {
         hc.knockback += changeBy;
     }
+
+    public void phantomHammer(float changeBy)
+    {
+        hc.PhantomHammers += (int)changeBy;
+    }
 }
