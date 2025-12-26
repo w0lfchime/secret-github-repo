@@ -5863,39 +5863,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &671804047 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9208135887483320983, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
-  m_PrefabInstance: {fileID: 783468003}
-  m_PrefabAsset: {fileID: 0}
 --- !u!137 &671804049 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8495038144258780016, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
   m_PrefabInstance: {fileID: 783468003}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &671804050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671804047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e9bf7e64e751140a300f908655e132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cm: {fileID: 0}
-  rb: {fileID: 0}
-  rend: {fileID: 0}
-  attackingCage: 0
-  health: 10
-  iced: 0
-  damage: 5
-  attackSpeed: 1
-  expAmount: 0
-  speedMulti: 1
-  shatter: {fileID: 0}
 --- !u!1 &682036830
 GameObject:
   m_ObjectHideFlags: 0
@@ -6829,9 +6801,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1971375114}
-    - targetCorrespondingSourceObject: {fileID: 9208135887483320983, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 671804050}
   m_SourcePrefab: {fileID: 100100000, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
 --- !u!1 &790316677
 GameObject:
