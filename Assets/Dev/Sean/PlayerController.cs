@@ -45,12 +45,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
-        itemSelection = GameObject.Find("SelectionPanel");
-        gameOverScreen = GameObject.Find("GameOverManager");
-        pauseMenu = GameObject.Find("PauseMenu");
+        itemSelection = GameObject.Find("Canvas").transform.GetChild(8).gameObject;
+        gameOverScreen = GameObject.Find("Canvas").transform.GetChild(7).gameObject;
+        pauseMenu = GameObject.Find("Canvas").transform.GetChild(9).gameObject;
         slowTime = GameObject.Find("Canvas").GetComponent<SlowTime>();
         stageMusic = GameObject.Find("AudioManager").GetComponent<AudioSource>();
-        gameOverText = GameObject.Find("GameOverText").GetComponent<TextMeshProUGUI>();
+        gameOverText = GameObject.Find("Canvas").transform.GetChild(7).transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
         StartCoroutine(regen());
         StartCoroutine(staminaRegen());
