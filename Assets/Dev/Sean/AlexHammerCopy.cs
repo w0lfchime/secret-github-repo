@@ -53,22 +53,22 @@ public class AlexHammerCopy : MonoBehaviour
 
         // Dash type 1: hold shift and go fast as long as you have stamina
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && pc.stamina > 0)
-        {
-            dashMulti = 5;
-            pc.isDrainingStamina = true;
-            pc.drainStamina();
-        }
+        // if(Input.GetKeyDown(KeyCode.LeftShift) && pc.stamina > 0)
+        // {
+        //     dashMulti = 5;
+        //     pc.isDrainingStamina = true;
+        //     pc.drainStamina();
+        // }
 
-        if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            dashMulti = 1;
-            pc.isDrainingStamina = false;
-        }
+        // if(Input.GetKeyUp(KeyCode.LeftShift))
+        // {
+        //     dashMulti = 1;
+        //     pc.isDrainingStamina = false;
+        // }
 
         // Dash type 2: press shift for a hades style dash
 
-        if(Input.GetKeyDown(KeyCode.RightShift) && canDash)
+        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(doTheDash());
         }
