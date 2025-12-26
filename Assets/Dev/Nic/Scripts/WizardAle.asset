@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5def8db927e904e986b990d580d0a0, type: 3}
-  m_Name: Milk
+  m_Name: WizardAle
   m_EditorClassIdentifier: 
-  itemName: Milk
-  icon: {fileID: 21300000, guid: 125fc26d127c41f4c8afe44be0158c32, type: 3}
-  description: Gain some health but lose some speed!
+  itemName: Wizard Ale
+  icon: {fileID: 21300000, guid: efa6c0f73b416cc448a0ca845b5ca108, type: 3}
+  description: Increased hammer speed and player speed, but lose health
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 0
   increaseBy: 0
@@ -22,8 +22,10 @@ MonoBehaviour:
   pc: {fileID: 0}
   cm: {fileID: 0}
   values:
-  - 3
+  - 1
+  - 1
   - -2
   toChange:
-  - playerHealth
+  - spinMulti
   - playerSpeed
+  - playerHealth

@@ -25744,12 +25744,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3dcd4f65b5188ba45a5207fcf53a54e1, type: 2}
   - {fileID: 11400000, guid: b059d6af184a2a344987680e755617a7, type: 2}
   - {fileID: 11400000, guid: e460cfbc0b9f462439c9c921ac47d594, type: 2}
+  - {fileID: 11400000, guid: 63661416159a30c499fc96fa2e364fe0, type: 2}
+  - {fileID: 11400000, guid: 9a41ec3992456724f964da20218e6161, type: 2}
   itemSelectionUI: {fileID: 2126504427}
   hotbarContainer: {fileID: 2049054624}
   hotbarSlotPrefab: {fileID: 829297921}
   triggerKey: 32
   itemChoiceCount: 3
-  maxHotbarSlots: 14
+  maxHotbarSlots: 16
 --- !u!114 &2126504427
 MonoBehaviour:
   m_ObjectHideFlags: 0
