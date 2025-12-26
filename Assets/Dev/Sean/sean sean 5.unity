@@ -3457,7 +3457,7 @@ MonoBehaviour:
   pathSet: {fileID: 712445410}
   startWait: 10
   waveTime: 45
-  peaceTime: 30
+  peaceTime: 15
   subWaves: 3
   tempWaveTime: 0
   tempPeaceTime: 0
