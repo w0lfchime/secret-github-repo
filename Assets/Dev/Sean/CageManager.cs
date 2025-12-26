@@ -15,6 +15,8 @@ public class CageManager : MonoBehaviour
     public GameObject heatParticle;
     public List<GameObject> heatParticles = new List<GameObject>();
     public List<GameObject> enemiesTouching = new List<GameObject>();
+    public Animator monsterAnimator;
+    public Renderer monsterRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +44,13 @@ public class CageManager : MonoBehaviour
             Mathf.Lerp(0, .16f, cageHealth/maxHealth),
             .08f
         );
+
+        monsterAnimator.speed = Mathf.Lerp(.1f, 1f, 1-cageHealth/maxHealth);
+
+        MaterialPropertyBlock mpb2 = new MaterialPropertyBlock();
+        monsterRenderer.GetPropertyBlock(mpb2);
+        mpb2.SetFloat("_Alpha", Mathf.Lerp(0, .2f, cageHealth/maxHealth));
+        monsterRenderer.SetPropertyBlock(mpb2);
     }
 
     void FixedUpdate()

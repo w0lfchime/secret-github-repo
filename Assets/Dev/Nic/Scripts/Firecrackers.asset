@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5def8db927e904e986b990d580d0a0, type: 3}
-  m_Name: Milk
+  m_Name: Firecrackers
   m_EditorClassIdentifier: 
-  itemName: Milk
-  icon: {fileID: 21300000, guid: 125fc26d127c41f4c8afe44be0158c32, type: 3}
-  description: Gain some health but lose some speed!
+  itemName: Firecrackers
+  icon: {fileID: 21300000, guid: 29f3b8a12e0144c42974ea1eda719ff7, type: 3}
+  description: Increases enemy knockback
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   itemType: 0
   increaseBy: 0
@@ -22,8 +22,6 @@ MonoBehaviour:
   pc: {fileID: 0}
   cm: {fileID: 0}
   values:
-  - 3
-  - -2
+  - 50
   toChange:
-  - playerHealth
-  - playerSpeed
+  - knockBack
