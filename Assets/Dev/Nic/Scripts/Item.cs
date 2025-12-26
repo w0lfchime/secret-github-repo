@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
@@ -56,7 +57,13 @@ public class Item : ScriptableObject
 
     public void playerSpeed(float changeBy)
     {
+        float preMulti = hc.speedMulti;
         hc.speedMulti += changeBy;
+
+        if(hc.speedMulti <= 0)
+        {
+            hc.speedMulti = preMulti;
+        }
     }
 
     public void damage(float changeBy)
