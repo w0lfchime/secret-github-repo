@@ -5864,6 +5864,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!137 &671804049 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8495038144258780016, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
+  m_PrefabInstance: {fileID: 783468003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682036830
 GameObject:
   m_ObjectHideFlags: 0
@@ -6784,6 +6789,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: monster
       objectReference: {fileID: 0}
+    - target: {fileID: 9208135887483320983, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: 4ac3c6f021a36c54bad1de1481df88b4, type: 3}
@@ -6841,6 +6850,8 @@ MonoBehaviour:
   heatParticle: {fileID: 2140479475659021138, guid: 9ed923b00ade6f44c8b90ad67c9e368c, type: 3}
   heatParticles: []
   enemiesTouching: []
+  monsterAnimator: {fileID: 1971375114}
+  monsterRenderer: {fileID: 671804049}
 --- !u!65 &790316679
 BoxCollider:
   m_ObjectHideFlags: 0
