@@ -41,7 +41,7 @@ AudioSource:
   m_GameObject: {fileID: 257980835041547020}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3530770451901525396, guid: 878a4dd9207d39945adeffe44c4e1b47, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4378f3ef9a7af6f42a8bd7bd2fe5e6f3, type: 3}
   m_Resource: {fileID: 8300000, guid: 4378f3ef9a7af6f42a8bd7bd2fe5e6f3, type: 3}
   m_PlayOnAwake: 0
@@ -172,7 +172,7 @@ AudioSource:
   m_GameObject: {fileID: 509459687259123111}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3530770451901525396, guid: 878a4dd9207d39945adeffe44c4e1b47, type: 2}
   m_audioClip: {fileID: 8300000, guid: a9b86d4eca38f4040a41555e1b3f7ce9, type: 3}
   m_Resource: {fileID: 8300000, guid: a9b86d4eca38f4040a41555e1b3f7ce9, type: 3}
   m_PlayOnAwake: 0
@@ -5599,6 +5599,7 @@ MonoBehaviour:
   endSound: {fileID: 8300000, guid: 2b78613d4e3e9d740b039d661263b532, type: 3}
   scrollSound: {fileID: 8300000, guid: f32d28f1cdf50d1468d810d8f0d1c380, type: 3}
   gameOverText: {fileID: 0}
+  hc: {fileID: 0}
   isWalking: 0
   hasLost: 0
   slowTime: {fileID: 0}
@@ -5680,6 +5681,7 @@ MonoBehaviour:
   knockback: 500
   lifeSteal: 0
   dashMulti: 1
+  extraSpeedMultiForPickups: 1
   didDash: 0
   canDash: 1
   hammerScale: {x: 1, y: 1, z: 1}
@@ -5693,7 +5695,7 @@ AudioSource:
   m_GameObject: {fileID: 5666236704730309116}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3530770451901525396, guid: 878a4dd9207d39945adeffe44c4e1b47, type: 2}
   m_audioClip: {fileID: 8300000, guid: 487bc87c042a3434ca323cf823d2aa05, type: 3}
   m_Resource: {fileID: 8300000, guid: 487bc87c042a3434ca323cf823d2aa05, type: 3}
   m_PlayOnAwake: 0
