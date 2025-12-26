@@ -252,11 +252,11 @@ MonoBehaviour:
   rb: {fileID: 0}
   rend: {fileID: 5068910197510791973}
   attackingCage: 0
-  health: 15
+  health: 19
   iced: 0
-  damage: 5
+  damage: 9
   attackSpeed: 1
-  expAmount: 9
+  expAmount: 10
   speedMulti: 1
   shatter: {fileID: 5943826633521758965}
 --- !u!114 &3041741343278164852

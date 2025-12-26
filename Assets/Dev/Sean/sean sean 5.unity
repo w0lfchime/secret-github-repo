@@ -15745,6 +15745,7 @@ MonoBehaviour:
   mirrowFollow: {fileID: 1282046183}
   frameSprayEmitter: {fileID: 1282046182}
   itemSelectionUI: {fileID: 2126504427}
+  cageManager: {fileID: 790316678}
   playerIcon: {fileID: 2142381546}
 --- !u!64 &1540729500
 MeshCollider:

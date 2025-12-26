@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
+//using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +14,7 @@ public class GameSetUp : MonoBehaviour
     public MirrowFollow mirrowFollow;
     public FrameSprayEmitter frameSprayEmitter; 
     public ItemSelectionUI itemSelectionUI;
+    public CageManager cageManager;
     public RawImage playerIcon;
     private GameData gameData;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +33,7 @@ public class GameSetUp : MonoBehaviour
         itemSelectionUI.hc = newPlayer.GetComponent<AlexHammerCopy>();
         mirrorSpaceFollowerXZ.target = newPlayer.transform;
         cameraPivotSpringFollow.target = newPlayer.transform;
+        cageManager.pc = newPlayer.GetComponent<PlayerController>();
         // mirrowFollow.target = newPlayer.transform;
 
         cameras[gameData.charNum].SetActive(true);
