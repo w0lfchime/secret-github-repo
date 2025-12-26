@@ -94,7 +94,7 @@ public class ObjectSelectionManager : MonoBehaviour
                 gameData.charNum = currentlySelected.playerNUm;
 
                 startButton.SetActive(true);
-            }
+            }else startButton.SetActive(false);
         }
     }
 

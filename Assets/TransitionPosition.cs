@@ -8,7 +8,7 @@ public class TransitionPosition : MonoBehaviour
     public float speed = 1;
     public void Transition()
     {
-        transition = true;
+        transition = !transition;
     }
     void Update()
     {
