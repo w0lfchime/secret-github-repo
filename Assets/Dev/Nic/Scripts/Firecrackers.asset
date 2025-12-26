@@ -22,6 +22,6 @@ MonoBehaviour:
   pc: {fileID: 0}
   cm: {fileID: 0}
   values:
-  - 2
+  - 50
   toChange:
   - knockBack
