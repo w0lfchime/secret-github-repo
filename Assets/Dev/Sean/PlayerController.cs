@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using TMPro;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip endSound;
     public AudioClip scrollSound;
     public TextMeshProUGUI gameOverText;
+    public AlexHammerCopy hc;
     public bool isWalking = false;
     public bool hasLost = false;
     public SlowTime slowTime;
@@ -214,15 +216,17 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Touched Pickup");
             Pickup pickup = col.gameObject.GetComponent<Pickup>();
+            AudioSource.PlayClipAtPoint(scrollSound, col.transform.position, 1.0f);
 
             if(pickup.type == 1)
             {
-                AudioSource.PlayClipAtPoint(scrollSound, col.transform.position, 1.0f);
                 heal(pickup.increaseBy);
             } else if(pickup.type == 2)
             {
-                AudioSource.PlayClipAtPoint(scrollSound, col.transform.position, 1.0f);
                 manaHeal(pickup.increaseBy);
+            } else if(pickup.type == 3)
+            {
+                StartCoroutine(speedBonus());
             }
             Instantiate(pickup.particle, pickup.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
@@ -284,5 +288,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(staminaRegenTime);
         staminaHeal(1);
         StartCoroutine(staminaRegen());
+    }
+
+    public IEnumerator speedBonus()
+    {
+        hc.extraSpeedMultiForPickups = 7;
+        yield return new WaitForSeconds(5f);
+        hc.extraSpeedMultiForPickups = 1;
     }
 }

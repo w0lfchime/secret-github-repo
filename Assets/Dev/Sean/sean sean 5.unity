@@ -12278,6 +12278,9 @@ MonoBehaviour:
   - {fileID: 8042472986232136279, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
   - {fileID: 8042472986232136279, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
   - {fileID: 8042472986232136279, guid: 153d4845a0e426b49a173db242ff9f13, type: 3}
+  - {fileID: 4685341880029374423, guid: f42c34a2959f0bd4684e526ffd1da2fc, type: 3}
+  - {fileID: 4685341880029374423, guid: f42c34a2959f0bd4684e526ffd1da2fc, type: 3}
+  - {fileID: 4685341880029374423, guid: f42c34a2959f0bd4684e526ffd1da2fc, type: 3}
   - {fileID: 4685341880029374423, guid: e11733477a05c014990a72be0eb4eab9, type: 3}
   spawnParticleEffect: {fileID: 241680018325970102, guid: 3fe397105f93aac4a9675fe7a83f212a, type: 3}
   pickupScale: 16.9

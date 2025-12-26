@@ -35,6 +35,7 @@ public class AlexHammerCopy : MonoBehaviour
     public float knockback = 1000;
     public float lifeSteal = 0;
     public float dashMulti = 1;
+    public float extraSpeedMultiForPickups = 1;
     public bool didDash = false;
     public bool canDash = true;
     public Vector3 hammerScale = new Vector3(1, 1, 1);
@@ -104,7 +105,7 @@ public class AlexHammerCopy : MonoBehaviour
         ps.rateOverTimeMultiplier += (targetParticle-ps.rateOverTimeMultiplier)*.05f;
         shape.radius = Mathf.Lerp(.5f, .75f, Mathf.Abs(speed)/limit);
 
-        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed * speedMulti * dashMulti)/limit);
+        pc.speed = Mathf.Lerp(3, 10, Mathf.Abs(speed * speedMulti * dashMulti * extraSpeedMultiForPickups)/limit);
 
         if(didDash)
         {
