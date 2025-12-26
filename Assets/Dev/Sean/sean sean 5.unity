@@ -2913,27 +2913,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2920.9167
+      value: 2482.0198
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2920.9167
+      value: 2482.0198
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2920.9167
+      value: 2482.0198
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -242.94
+      value: -205.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.35
+      value: -4.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -131.37
+      value: -115.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e05a87df84734af4885a5903ec07b019, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11027,8 +11027,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 1509949439
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.34901962}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11243,7 +11243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.45490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -25743,12 +25743,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 793777b7b9d6d1942a6baa83487a6755, type: 2}
   - {fileID: 11400000, guid: 3dcd4f65b5188ba45a5207fcf53a54e1, type: 2}
   - {fileID: 11400000, guid: b059d6af184a2a344987680e755617a7, type: 2}
+  - {fileID: 11400000, guid: e460cfbc0b9f462439c9c921ac47d594, type: 2}
   itemSelectionUI: {fileID: 2126504427}
   hotbarContainer: {fileID: 2049054624}
   hotbarSlotPrefab: {fileID: 829297921}
   triggerKey: 32
   itemChoiceCount: 3
-  maxHotbarSlots: 13
+  maxHotbarSlots: 14
 --- !u!114 &2126504427
 MonoBehaviour:
   m_ObjectHideFlags: 0
