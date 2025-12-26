@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class ObjectSelectionManager : MonoBehaviour
@@ -94,7 +95,10 @@ public class ObjectSelectionManager : MonoBehaviour
                 gameData.charNum = currentlySelected.playerNUm;
 
                 startButton.SetActive(true);
-            }else startButton.SetActive(false);
+            }else if(!EventSystem.current.IsPointerOverGameObject()) {
+                startButton.SetActive(false);
+                currentlySelected.Deselect();
+            }
         }
     }
 
