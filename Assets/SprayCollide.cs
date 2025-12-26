@@ -17,7 +17,6 @@ public class SprayCollide : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log(other.gameObject.tag);
         // Ultra-safe in case something weird disables/enables order
         if (collisionEvents == null)
             collisionEvents = new List<ParticleCollisionEvent>(32);

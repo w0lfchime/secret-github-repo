@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AlexHammerCopy : MonoBehaviour
 {
@@ -125,13 +126,18 @@ public class AlexHammerCopy : MonoBehaviour
             Vector3 lookDirection = hammerHead.transform.forward * (speed > 0 ? -1 : 1);
             particleIns.transform.forward = new Vector3(lookDirection.x, 0, lookDirection.z);
 
+
+            AudioMixerGroup _audioMixerGroup = GetComponent<AudioSource>().outputAudioMixerGroup;
+            bool value = _audioMixerGroup.audioMixer.GetFloat("MasterVolume", out float volume);
+            volume = Mathf.Pow(10f, volume / 20); //converted from Log10
+
             int randAudio = UnityEngine.Random.Range(0, 5);
             if(speed >= 6)
             {
-                AudioSource.PlayClipAtPoint(highSpdHits[randAudio], hammerHead.transform.position, 1.0f);
+                AudioSource.PlayClipAtPoint(highSpdHits[randAudio], hammerHead.transform.position, volume);
             } else
             {
-                AudioSource.PlayClipAtPoint(lowSpdHits[randAudio], hammerHead.transform.position, 1.0f);
+                AudioSource.PlayClipAtPoint(lowSpdHits[randAudio], hammerHead.transform.position, volume);
             }
             
 
