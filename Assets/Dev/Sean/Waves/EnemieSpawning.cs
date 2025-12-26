@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 //using UnityEditor.ShaderGraph;
 
 public class EnemieSpawning : MonoBehaviour
@@ -90,7 +91,7 @@ public class EnemieSpawning : MonoBehaviour
         for(int enemy = 0; enemy < index; enemy ++){
             for(int i = 0; i < spawnMulti[enemy]; i++)
             {
-                for(int j = 0; j < 5; j++)
+                for(int j = 0; j < 5/Mathf.Abs(index-i); j++)
                 {
                     // Spawn amount
                     spawn(prefabs[enemy]);
