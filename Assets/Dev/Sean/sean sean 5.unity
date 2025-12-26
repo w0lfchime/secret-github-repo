@@ -15208,12 +15208,17 @@ MonoBehaviour:
   - {fileID: 5666236704730309116, guid: 13e97726d48bd694795f73203eafe4dc, type: 3}
   - {fileID: 5666236704730309116, guid: ca9605900017ef345ae2a25dbb62a0de, type: 3}
   - {fileID: 5666236704730309116, guid: 65804e16dc9597c49a6edad2c1554ec5, type: 3}
+  playerIcons:
+  - {fileID: 8400000, guid: 1c466e0601f03d64c885da842015ff43, type: 2}
+  - {fileID: 8400000, guid: d00ca9fa364b31a4ba529bc0a4ae1535, type: 2}
+  - {fileID: 0}
   sliderHandlers: {fileID: 699771391}
   cameraPivotSpringFollow: {fileID: 445980182}
   mirrorSpaceFollowerXZ: {fileID: 1282046184}
   mirrowFollow: {fileID: 1282046183}
   frameSprayEmitter: {fileID: 1282046182}
   itemSelectionUI: {fileID: 2126504427}
+  playerIcon: {fileID: 0}
 --- !u!64 &1540729500
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25744,12 +25749,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3dcd4f65b5188ba45a5207fcf53a54e1, type: 2}
   - {fileID: 11400000, guid: b059d6af184a2a344987680e755617a7, type: 2}
   - {fileID: 11400000, guid: e460cfbc0b9f462439c9c921ac47d594, type: 2}
+  - {fileID: 11400000, guid: 63661416159a30c499fc96fa2e364fe0, type: 2}
+  - {fileID: 11400000, guid: 9a41ec3992456724f964da20218e6161, type: 2}
   itemSelectionUI: {fileID: 2126504427}
   hotbarContainer: {fileID: 2049054624}
   hotbarSlotPrefab: {fileID: 829297921}
   triggerKey: 32
   itemChoiceCount: 3
-  maxHotbarSlots: 14
+  maxHotbarSlots: 16
 --- !u!114 &2126504427
 MonoBehaviour:
   m_ObjectHideFlags: 0
