@@ -7,7 +7,7 @@ public class MirrowFollow : MonoBehaviour
     public float distance = 1;
     public float yOffset;
 
-    void Update()
+    void FixedUpdate()
     {
         if (target == null)
         {

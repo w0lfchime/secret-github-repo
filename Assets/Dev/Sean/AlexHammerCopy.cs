@@ -41,6 +41,9 @@ public class AlexHammerCopy : MonoBehaviour
     public bool canDash = true;
     public Vector3 hammerScale = new Vector3(1, 1, 1);
     public GameObject DamageText;
+    public GameObject phantomHammer;
+    public int PhantomHammers;
+    private float phantomHammerTimer;
 
     void Update()
     {
@@ -73,7 +76,9 @@ public class AlexHammerCopy : MonoBehaviour
         {
             StartCoroutine(doTheDash());
         }
-
+    }
+    void FixedUpdate()
+    {
         woosh.pitch = Math.Abs(speed) / limit;
         
         if(!woosh.isPlaying)
@@ -81,9 +86,14 @@ public class AlexHammerCopy : MonoBehaviour
             woosh.pitch = Math.Abs(speed) / limit;
             woosh.Play();
         }
-    }
-    void FixedUpdate()
-    {
+
+        phantomHammerTimer+=PhantomHammers*Time.deltaTime;
+        if(phantomHammerTimer > 15)
+        {
+            phantomHammerTimer = 0;
+            GameObject phantomHammerIns = Instantiate(phantomHammer, transform.position, Quaternion.identity);
+            Destroy(phantomHammerIns, 10);
+        }
 
         speed += spinMultiplier * direction * dashMulti;
         speed = Mathf.Clamp(speed, -limit, limit);
