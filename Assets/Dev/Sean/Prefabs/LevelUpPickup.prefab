@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1457260596193103062}
   - component: {fileID: 2326784447718628816}
   m_Layer: 0
-  m_Name: ManaPickup
+  m_Name: LevelUpPickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5605289326131794027, guid: 28a9a622f30448a4388ef45977a48955, type: 3}
+  - {fileID: 4874126678125670354, guid: 46c2975c7b9084245b1d6e4acecf46fa, type: 3}
   - {fileID: -6922793697723135513, guid: 1f43585388073d3429167657734a731a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0d4d4c1e7f5684ca6d02191b839e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 4
   increaseBy: 5
-  particle: {fileID: 2140479475659021138, guid: 57f4df7e0a9a14645b8ca049b551f140, type: 3}
+  particle: {fileID: 2140479475659021138, guid: 7e27222388e8cc14f81aa59cc5d77966, type: 3}
 --- !u!1001 &261205428802443540
 PrefabInstance:
   m_ObjectHideFlags: 0

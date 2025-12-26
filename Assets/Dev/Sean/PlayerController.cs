@@ -227,6 +227,9 @@ public class PlayerController : MonoBehaviour
             } else if(pickup.type == 3)
             {
                 StartCoroutine(speedBonus());
+            } else if(pickup.type == 4)
+            {
+                levelUp();
             }
             Instantiate(pickup.particle, pickup.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
