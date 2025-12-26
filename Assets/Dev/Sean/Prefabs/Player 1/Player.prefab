@@ -178,7 +178,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.415
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5685,6 +5685,8 @@ MonoBehaviour:
   canDash: 1
   hammerScale: {x: 1, y: 1, z: 1}
   DamageText: {fileID: 8675329595145213890, guid: 331f1d8c71591274abe88b0742a18ac4, type: 3}
+  phantomHammer: {fileID: 184937620978409872, guid: 4bce6e6cc887f45438b4a590e70f81c1, type: 3}
+  PhantomHammers: 0
 --- !u!82 &8434549657846205872
 AudioSource:
   m_ObjectHideFlags: 0
